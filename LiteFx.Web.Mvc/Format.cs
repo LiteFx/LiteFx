@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace LiteFx.Web.Mvc
+{
+    /// <summary>
+    /// Enumerador utilizado para verificar o formato requerido pelo usuário.
+    /// </summary>
+    public enum Format
+    {
+        /// <summary>
+        /// Formato Html (HiperText Markup Language).
+        /// </summary>
+        Html,
+        /// <summary>
+        /// Formato Json (Javascript Object Notation).
+        /// </summary>
+        Json,
+        /// <summary>
+        /// Formato Xml (eXtensible Markup Language).
+        /// </summary>
+        Xml,
+        /// <summary>
+        /// Formato Pdf (Portrait Document Format).
+        /// </summary>
+        Pdf,
+        /// <summary>
+        /// Formato Excel.
+        /// </summary>
+        Xls,
+        /// <summary>
+        /// Fomato Csv (Comma separated value).
+        /// </summary>
+        Csv
+    }
+}

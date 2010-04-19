@@ -1,0 +1,294 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Practices.EnterpriseLibrary.Validation;
+
+namespace LiteFx.Bases
+{
+    /// <summary>
+    /// Classe base para implementação de códigos de regras de negócio.
+    /// </summary>
+    /// <typeparam name="T">Tipo do contexto baseado no Entity Framework.</typeparam>
+    public abstract class BaseBll<T> where T : IDisposable
+    {
+        /// <summary>
+        /// Membro privado para o contexto do banco de dados.
+        /// </summary>
+        private T dbContext;        
+
+        /// <summary>
+        /// Propriedade para encapsular o contexto.
+        /// </summary>
+        protected T DBContext
+        {
+            get { return dbContext; }
+        }
+
+        /// <summary>
+        /// Membro privado para os resultados das validações.
+        /// </summary>
+        private ValidationResults validationResults;
+
+        /// <summary>
+        /// Resultados das validações realizadas na Bll.
+        /// </summary>
+        protected ValidationResults Results
+        {
+            get 
+            {
+                //Se o validationResults estiver nulo cria uma nova instância.
+                if (validationResults == null)
+                    validationResults = new ValidationResults();
+                return validationResults; 
+            }
+        }
+
+        /// <summary>
+        /// Construtor base da classe de regras de negócio.
+        /// </summary>
+        /// <param name="dbContext">Contexto do banco de dados baseado no Entity Framework.</param>
+        /// <example>
+        /// <code lang="cs" title="Utilizando a BaseBLL">
+        /// <![CDATA[
+        /// public class ClienteBLL : BaseBLL<MyEntity>
+        /// {
+        ///     public ClientesBLL(MyEntity dbContext) : base(dbContext)
+        ///     {
+        ///         //Alguma logica de construção pode ser adicionada aqui
+        ///     }
+        ///     
+        ///     public Cliente GetCliente(int ideCli)
+        ///     {
+        ///         return (new ClienteBLL(DbContext)).GetCliente(ideCli);
+        ///     }
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        protected BaseBll(T dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
+        #region Validações
+
+        /// <summary>
+        /// Adiciona uma mensagem de erro nos resultados da validação.
+        /// </summary>
+        /// <param name="mensagem">Mensagem de erro.</param>
+        /// <param name="key">Chave.</param>
+        protected void AdicionarResultadoDeErro(string mensagem, string key) 
+        {
+            Results.AddResult(new ValidationResult(mensagem, null, key, key, null));
+        }
+
+        /// <summary>
+        /// Verifica se uma expressão é valida.
+        /// </summary>
+        /// <param name="valorVerificacao">Valor a ser verificado.</param>
+        /// <param name="expressao">Expressão a ser verificada. Se o resultado da expresão for true um resultado de validação é criado na coleção de resultados.</param>
+        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
+        /// <param name="key">Chave do campo que esta sendo validado.</param>
+        /// <example>
+        /// <code lang="cs" title="Utilizando a BaseBLL">
+        /// <![CDATA[
+        /// public class Cliente : BaseBLL<MyEntity>
+        /// {
+        ///     public void ValidaCliente(Cliente cliente)
+        ///     {
+        ///         
+        ///         Verificar<Cliente>(cliente, 
+        ///                          cli => cli.PessoaFisica && (cli.Idade < 18 && cli.Idade > 120), 
+        ///                          Properties.Resources.IdadeInvalida, "idade");
+        ///         
+        ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
+        ///         ValidarResultados();
+        ///     }
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        protected bool Verificar<TVal>(TVal valorVerificacao, Func<TVal, bool> expressao, string mensagem, string key)
+        {
+            if (expressao(valorVerificacao))
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor ou a expressão booleana é verdadeira e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <param name="valorOuExpressaoBooleano"></param>
+        /// <param name="mensagem"></param>
+        /// <param name="key"></param>
+        protected bool VerificarSeEVerdadeiro(bool valorOuExpressaoBooleano, string mensagem, string key)
+        {
+            if (valorOuExpressaoBooleano)
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor ou a expressão booleana é falsa e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <param name="valorOuExpressaoBooleano"></param>
+        /// <param name="mensagem"></param>
+        /// <param name="key"></param>
+        protected bool VerificarSeEFalso(bool valorOuExpressaoBooleano, string mensagem, string key)
+        {
+            if (!valorOuExpressaoBooleano)
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor esperado e o valor atual não são iguais e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <typeparam name="TVal"></typeparam>
+        /// <param name="esperado"></param>
+        /// <param name="atual"></param>
+        /// <param name="mensagem"></param>
+        /// <param name="key"></param>
+        protected bool VerificarSeNaoSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
+        {
+            if (!esperado.Equals(atual))
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor esperado e o valor atual são iguais e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <typeparam name="TVal"></typeparam>
+        /// <param name="esperado"></param>
+        /// <param name="atual"></param>
+        /// <param name="mensagem"></param>
+        /// <param name="key"></param>
+        protected bool VerificarSeSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
+        {
+            if (esperado.Equals(atual))
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor é nulo e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <param name="valor">Valor que será verificado.</param>
+        /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
+        /// <param name="key">Chave de verificação.</param>
+        protected bool VerificarSeENulo(object valor, string mensagem, string key)
+        {
+            if (valor == null)
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se o valor não é nulo e adiciona um erro nos resultados da validação.
+        /// </summary>
+        /// <param name="valor">Valor a ser verificado.</param>
+        /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
+        /// <param name="key">Chave de verificação.</param>
+        protected bool VerificarSeNaoENulo(object valor, string mensagem, string key)
+        {
+            if (valor != null)
+            {
+                AdicionarResultadoDeErro(mensagem, key);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Verifica se é um valor valido.
+        /// </summary>
+        /// <param name="valorVerificacao">Valor a ser verificado.</param>
+        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
+        /// <param name="key">Chave do campo que esta sendo validado.</param>
+        /// <example>
+        /// <code lang="cs" title="Utilizando a BaseBLL">
+        /// <![CDATA[
+        /// public class ClienteBLL : BaseBLL<MyEntity>
+        /// {
+        ///     public void ValidaCliente(Cliente cliente)
+        ///     {
+        ///         VerificarStringNulaOuVazia(cliente.Nome, Properties.Resources.InformeNome, "nome");
+        ///         
+        ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
+        ///         ValidarResultados();
+        ///     }
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        protected bool VerificarStringNulaOuVazia(string valorVerificacao, string mensagem, string key) 
+        {
+            return Verificar(valorVerificacao, x => string.IsNullOrEmpty(x), mensagem, key);
+        }
+
+        /// <summary>
+        /// Verifica se é um valor valido.
+        /// </summary>
+        /// <param name="valorVerificacao">Valor a ser verificado.</param>
+        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
+        /// <param name="key">Chave do campo que esta sendo validado.</param>
+        protected bool VerificarIntMenorIgualAZero(int valorVerificacao, string mensagem, string key)
+        {
+            return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
+        }
+
+        /// <summary>
+        /// Verifica se é um valor valido.
+        /// </summary>
+        /// <param name="valorVerificacao">Valor a ser verificado.</param>
+        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
+        /// <param name="key">Chave do campo que esta sendo validado.</param>
+        protected bool VerificarInt64MenorIgualAZero(long valorVerificacao, string mensagem, string key)
+        {
+            return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
+        }
+
+        /// <summary>
+        /// Verifica se é um valor valido.
+        /// </summary>
+        /// <param name="valorVerificacao">Valor a ser verificado.</param>
+        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
+        /// <param name="key">Chave do campo que esta sendo validado.</param>
+        protected bool VerificarDecimalMenorIgualAZero(decimal valorVerificacao, string mensagem, string key)
+        {
+            return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
+        }
+        
+        /// <summary>
+        /// Verifia se o membro Results do tipo ValidationResults esta inválido e dispara uma BusinessException.
+        /// Se o membro Results do tipo ValidationResults estiver válido nada acontece.
+        /// </summary>
+        protected void ValidarResultados() 
+        {
+            if (!Results.IsValid)
+                throw new BusinessException(Results);
+        }
+
+        #endregion
+    }
+}
