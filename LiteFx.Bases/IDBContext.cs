@@ -12,6 +12,13 @@ namespace LiteFx.Bases
     public interface IDBContext
     {
         /// <summary>
+        /// Get a queryable object of an especifique entity.
+        /// </summary>
+        /// <typeparam name="T">Entity type.</typeparam>
+        /// <returns>A queryable object.</returns>
+        IQueryable<T> GetQueryableObject<T>() where T : EntityBase;
+
+        /// <summary>
         /// Reflete as modificações feitas no contexto para a base de dados.
         /// </summary>
         void SaveContext();

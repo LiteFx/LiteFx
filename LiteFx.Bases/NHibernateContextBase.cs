@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Linq;
 using FluentNHibernate.Cfg;
 
 namespace LiteFx.Bases
@@ -143,6 +144,16 @@ namespace LiteFx.Bases
             transaction.Rollback();
             transaction.Dispose();
             openTransaction = false;
+        }
+
+        /// <summary>
+        /// Get a queryable object of an especifique entity.
+        /// </summary>
+        /// <typeparam name="T">Entity type.</typeparam>
+        /// <returns>Queryable object.</returns>
+        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase
+        {
+            return currentSession.Linq<T>();
         }
 
         /// <summary>
