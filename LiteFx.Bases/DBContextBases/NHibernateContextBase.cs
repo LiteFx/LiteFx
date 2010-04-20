@@ -10,7 +10,8 @@ using FluentNHibernate.Cfg;
 
 namespace LiteFx.Bases
 {
-    public class NHibernateContextBase : IDBContext, IDisposable
+    public class NHibernateContextBase<TIdentificator> : IDBContext<TIdentificator>, IDisposable
+        where TIdentificator : IEquatable<TIdentificator>
     {
         #region NHibernate Configuration and SessionFactory Cache
         private static Configuration _cfg;
@@ -28,7 +29,16 @@ namespace LiteFx.Bases
             }
         }
 
+        /// <summary>
+        /// Has to be setted on constructor.
+        /// </summary>
+        protected static Assembly AssemblyToConfigure { get; set; }
+
+        /// <summary>
+        /// Private sessionFactory.
+        /// </summary>
         private static ISessionFactory _sessionFactory;
+
         /// <summary>
         /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
         /// </summary>
@@ -38,7 +48,7 @@ namespace LiteFx.Bases
             {
                 if (_sessionFactory == null)
                     _sessionFactory = Fluently.Configure(cfg)
-                        /* PODEMOS USAR ESTA FUNCIONALIDADE NO FUTURO
+                        /* TODO: PODEMOS USAR ESTA FUNCIONALIDADE NO FUTURO
                         .ExposeConfiguration(config =>
                         {
                             SchemaExport se = new SchemaExport(config);
@@ -47,8 +57,8 @@ namespace LiteFx.Bases
                         })*/
                                               .Mappings(m =>
                                               {
-                                                  m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly());
-                                                  m.HbmMappings.AddFromAssembly(Assembly.GetExecutingAssembly());
+                                                  m.FluentMappings.AddFromAssembly(AssemblyToConfigure);
+                                                  m.HbmMappings.AddFromAssembly(AssemblyToConfigure);
                                               })
                                               .BuildSessionFactory();
 
@@ -60,8 +70,9 @@ namespace LiteFx.Bases
         /// <summary>
         /// The NHibernate Database Context Constructor.
         /// </summary>
-        protected NHibernateContextBase()
+        protected NHibernateContextBase(Assembly assemblyToConfigure)
         {
+            AssemblyToConfigure = assemblyToConfigure;
             OpenSession();
         }
 
@@ -151,7 +162,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>Queryable object.</returns>
-        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase
+        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TIdentificator>
         {
             return currentSession.Linq<T>();
         }
@@ -161,7 +172,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do entidade.</typeparam>
         /// <param name="id">Identificador do entidade.</param>
-        public virtual T Delete<T>(long id)
+        public virtual T Delete<T>(TIdentificator id)
         {
             T obj = currentSession.Get<T>(id);
             Delete(obj);

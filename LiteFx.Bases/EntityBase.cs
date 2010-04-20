@@ -5,8 +5,15 @@ using System.Text;
 
 namespace LiteFx.Bases
 {
-    public class EntityBase
+    /// <summary>
+    /// Base class for entities.
+    /// </summary>
+    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
+    public class EntityBase<TIdentificator> where TIdentificator : IEquatable<TIdentificator>
     {
-        public virtual int Identificador { get; set; }
+        /// <summary>
+        /// Entity identificator.
+        /// </summary>
+        public virtual TIdentificator Identificador { get; set; }
     }
 }

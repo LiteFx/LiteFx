@@ -9,14 +9,15 @@ namespace LiteFx.Bases
     /// <summary>
     /// Interface que deve ser utilizada na classe que representará o contexto do banco de dados.
     /// </summary>
-    public interface IDBContext
+    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
+    public interface IDBContext<TIdentificator> where TIdentificator : IEquatable<TIdentificator>
     {
         /// <summary>
         /// Get a queryable object of an especifique entity.
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>A queryable object.</returns>
-        IQueryable<T> GetQueryableObject<T>() where T : EntityBase;
+        IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TIdentificator>;
 
         /// <summary>
         /// Reflete as modificações feitas no contexto para a base de dados.
@@ -40,7 +41,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do Objeto.</typeparam>
         /// <param name="id">Identificador do objeto.</param>
-        T Delete<T>(long id);
+        T Delete<T>(TIdentificator id);
 
         /// <summary>
         /// Inicia uma transação no contexto.
