@@ -5,40 +5,47 @@ using System.Text;
 
 namespace LiteFx.Bases
 {
-    public class RepositoryBase<T, TDBContext> : IRepository<T, TDBContext> 
-        where T : EntityBase 
-        where TDBContext : IDBContext
+    /// <summary>
+    /// Repository base.
+    /// </summary>
+    /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
+    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
+    /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
+    public class RepositoryBase<TEntity, TIdentificator, TDBContext> : IRepository<TEntity, TIdentificator, TDBContext> 
+        where TEntity : EntityBase<TIdentificator>
+        where TDBContext : IDBContext<TIdentificator>
+        where TIdentificator : IEquatable<TIdentificator>
     {
         #region IRepository<T,IGerenciadorEventoDB> Members
 
         public TDBContext DBContext { get; set; }
 
-        public T GetById(int id)
+        public TEntity GetById(TIdentificator id)
         {
-            return (from e in DBContext.GetQueryableObject<T>()
-                    where e.Identificador == id
+            return (from e in DBContext.GetQueryableObject<TEntity>()
+                    where e.Identificador.Equals(id)
                     select e).FirstOrDefault();
         }
 
-        public IList<T> GetAll()
+        public IList<TEntity> GetAll()
         {
-            return (from e in DBContext.GetQueryableObject<T>()
+            return (from e in DBContext.GetQueryableObject<TEntity>()
                     select e).ToList();
         }
 
-        public void Save(T entity)
+        public void Save(TEntity entity)
         {
             DBContext.Save(entity);
         }
 
-        public void Delete(T entity)
+        public void Delete(TEntity entity)
         {
             DBContext.Delete(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(TIdentificator id)
         {
-            DBContext.Delete<T>(id);
+            DBContext.Delete<TEntity>(id);
         }
 
         #endregion

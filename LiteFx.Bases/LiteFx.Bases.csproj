@@ -111,6 +111,7 @@
   <ItemGroup>
     <Compile Include="BaseBll.cs" />
     <Compile Include="BaseDal.cs" />
+    <Compile Include="DBContextBases\EntityFrameworkContextBase.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="EntityFramework1BaseWkr.cs" />
     <Compile Include="BusinessException.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="IDBContext.cs" />
     <Compile Include="BaseWkr.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="NHibernateContextBase.cs" />
+    <Compile Include="DBContextBases\NHibernateContextBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -157,6 +158,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

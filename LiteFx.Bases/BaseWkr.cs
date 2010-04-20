@@ -11,7 +11,9 @@ namespace LiteFx.Bases
     /// Classe base para implementação de códigos de integração.
     /// </summary>
     /// <typeparam name="T">Tipo do contexto baseado no NHibernate.</typeparam>
-    public abstract class BaseWkr<T> : IDisposable where T : IDBContext, IDisposable, new()
+    public abstract class BaseWkr<T, TIdentificator> : IDisposable 
+        where T : IDBContext<TIdentificator>, IDisposable, new()
+        where TIdentificator : IEquatable<TIdentificator>
     {
         /// <summary>
         /// Implementação do Dipose Pattern.
