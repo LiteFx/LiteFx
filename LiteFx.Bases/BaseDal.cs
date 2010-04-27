@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace LiteFx.Bases
 {
@@ -49,6 +51,10 @@ namespace LiteFx.Bases
         protected BaseDal(T dbContext)
         {
             this.dbContext = dbContext;
+
+            /*IUnityContainer uc = new UnityContainer();
+            uc.AddNewExtension<Interception>()
+                .RegisterInstance<;*/
         }
     }
 }

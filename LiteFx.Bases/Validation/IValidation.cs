@@ -17,6 +17,10 @@ namespace LiteFx.Bases.Validation
         /// </summary>
         ValidationResults Results { get; }
 
-        void ValidateResults();
+        void AddValidationResult(string mensagem, string key);
+
+        void Validate();
+
+        bool IsValid();
     }
 }
