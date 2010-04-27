@@ -6,13 +6,13 @@ using System.Text;
 namespace LiteFx.Bases
 {
     /// <summary>
-    /// To be used when a object needs to bee unique identified.
+    /// To be used when a entity needs to be unique identified.
     /// </summary>
-    public interface IIdentificator
+    public interface IIdentificator<T>
     {
         /// <summary>
-        /// Object unique identifier.
+        /// Entity unique identifier.
         /// </summary>
-        long Identificator { get; set; }
+        T Identificator { get; set; }
     }
 }

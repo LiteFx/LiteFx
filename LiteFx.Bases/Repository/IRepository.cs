@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LiteFx.Bases
+namespace LiteFx.Bases.Repository
 {
     /// <summary>
     /// Repository interface.
@@ -21,26 +21,40 @@ namespace LiteFx.Bases
         TDBContext DBContext { get; set; }
 
         /// <summary>
-        /// Get the object instance by id.
+        /// Get the entity instance by id.
         /// </summary>
-        /// <param name="id">Object identificator.</param>
-        /// <returns>A object instance.</returns>
+        /// <param name="id">Entity identificator.</param>
+        /// <returns>An entity instance.</returns>
         TEntity GetById(TIdentificator id);
 
         /// <summary>
-        /// Get all objects.
+        /// Get a list of entities that satisfy the specificaton.
         /// </summary>
-        /// <returns>List of objects.</returns>
+        /// <param name="specification">Specification filter.</param>
+        /// <returns>List of entities.</returns>
+        IList<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
+
+        /// <summary>
+        /// Get the first entity that satisfy the specification.
+        /// </summary>
+        /// <param name="specification">Specification filter.</param>
+        /// <returns>An entity instance.</returns>
+        TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification);
+
+        /// <summary>
+        /// Get all entities.
+        /// </summary>
+        /// <returns>List of entities.</returns>
         IList<TEntity> GetAll();
 
         /// <summary>
-        /// Save object in the context.
+        /// Save entity in the context.
         /// </summary>
         /// <param name="entity">Entity to be saved.</param>
         void Save(TEntity entity);
 
         /// <summary>
-        /// Delete a object in the context.
+        /// Delete a entity in the context.
         /// </summary>
         /// <param name="entity">Entity to be deleted.</param>
         void Delete(TEntity entity);

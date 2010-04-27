@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
+using LiteFx.Bases.Validation;
 
 namespace LiteFx.Bases
 {
@@ -10,7 +11,8 @@ namespace LiteFx.Bases
     /// Classe base para implementação de códigos de regras de negócio.
     /// </summary>
     /// <typeparam name="T">Tipo do contexto baseado no Entity Framework.</typeparam>
-    public abstract class BaseBll<T> where T : IDisposable
+    public abstract class BaseBll<T> : IValidation
+        where T : IDisposable
     {
         /// <summary>
         /// Membro privado para o contexto do banco de dados.
@@ -23,25 +25,6 @@ namespace LiteFx.Bases
         protected T DBContext
         {
             get { return dbContext; }
-        }
-
-        /// <summary>
-        /// Membro privado para os resultados das validações.
-        /// </summary>
-        private ValidationResults validationResults;
-
-        /// <summary>
-        /// Resultados das validações realizadas na Bll.
-        /// </summary>
-        protected ValidationResults Results
-        {
-            get 
-            {
-                //Se o validationResults estiver nulo cria uma nova instância.
-                if (validationResults == null)
-                    validationResults = new ValidationResults();
-                return validationResults; 
-            }
         }
 
         /// <summary>
@@ -71,17 +54,93 @@ namespace LiteFx.Bases
             this.dbContext = dbContext;
         }
 
-        #region Validações
+        #region IValidation Members
+
+        /// <summary>
+        /// Membro privado para os resultados das validações.
+        /// </summary>
+        private ValidationResults validationResults;
+
+        /// <summary>
+        /// Resultados das validações realizadas na Bll.
+        /// </summary>
+        public ValidationResults Results
+        {
+            get
+            {
+                //Se o validationResults estiver nulo cria uma nova instância.
+                if (validationResults == null)
+                    validationResults = new ValidationResults();
+                return validationResults;
+            }
+        }
 
         /// <summary>
         /// Adiciona uma mensagem de erro nos resultados da validação.
         /// </summary>
         /// <param name="mensagem">Mensagem de erro.</param>
         /// <param name="key">Chave.</param>
-        protected void AdicionarResultadoDeErro(string mensagem, string key) 
+        public void AddValidationResult(string mensagem, string key)
         {
             Results.AddResult(new ValidationResult(mensagem, null, key, key, null));
         }
+
+        /// <summary>
+        /// Adiciona uma mensagem de erro nos resultados da validação.
+        /// </summary>
+        /// <param name="mensagem">Mensagem de erro.</param>
+        /// <param name="key">Chave.</param>
+        public void AdicionarResultadoDeErro(string mensagem, string key)
+        {
+            AddValidationResult(mensagem, key);
+        }
+
+        /// <summary>
+        /// Verifia se o membro Results do tipo ValidationResults esta inválido e dispara uma BusinessException.
+        /// Se o membro Results do tipo ValidationResults estiver válido nada acontece.
+        /// </summary>
+        public void Validate()
+        {
+            if (!Results.IsValid)
+                throw new BusinessException(Results);
+        }
+
+        /// <summary>
+        /// Verifia se o membro Results do tipo ValidationResults esta inválido e dispara uma BusinessException.
+        /// Se o membro Results do tipo ValidationResults estiver válido nada acontece.
+        /// </summary>
+        public void ValidarResultados()
+        {
+            Validate();
+        }
+
+        public bool IsValid() 
+        {
+            return Results.IsValid;
+        }
+
+        #endregion
+
+        #region IDataErrorInfo Members
+
+        public string Error
+        {
+            get { return string.Empty; }
+        }
+
+        public string this[string columnName]
+        {
+            get 
+            {
+                return (from e in Results
+                        where e.Key == columnName
+                        select e.Message).SingleOrDefault();
+            }
+        }
+
+        #endregion
+
+        #region Validações
 
         /// <summary>
         /// Verifica se uma expressão é valida.
@@ -100,7 +159,7 @@ namespace LiteFx.Bases
         ///         
         ///         Verificar<Cliente>(cliente, 
         ///                          cli => cli.PessoaFisica && (cli.Idade < 18 && cli.Idade > 120), 
-        ///                          Properties.Resources.IdadeInvalida, "idade");
+        ///                          Resources.IdadeInvalida, "idade");
         ///         
         ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
         ///         ValidarResultados();
@@ -109,11 +168,11 @@ namespace LiteFx.Bases
         /// ]]>
         /// </code>
         /// </example>
-        protected bool Verificar<TVal>(TVal valorVerificacao, Func<TVal, bool> expressao, string mensagem, string key)
+        public bool Verificar<TVal>(TVal valorVerificacao, Func<TVal, bool> expressao, string mensagem, string key)
         {
             if (expressao(valorVerificacao))
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -125,11 +184,11 @@ namespace LiteFx.Bases
         /// <param name="valorOuExpressaoBooleano"></param>
         /// <param name="mensagem"></param>
         /// <param name="key"></param>
-        protected bool VerificarSeEVerdadeiro(bool valorOuExpressaoBooleano, string mensagem, string key)
+        public bool VerificarSeEVerdadeiro(bool valorOuExpressaoBooleano, string mensagem, string key)
         {
             if (valorOuExpressaoBooleano)
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -141,11 +200,11 @@ namespace LiteFx.Bases
         /// <param name="valorOuExpressaoBooleano"></param>
         /// <param name="mensagem"></param>
         /// <param name="key"></param>
-        protected bool VerificarSeEFalso(bool valorOuExpressaoBooleano, string mensagem, string key)
+        public bool VerificarSeEFalso(bool valorOuExpressaoBooleano, string mensagem, string key)
         {
             if (!valorOuExpressaoBooleano)
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -159,11 +218,11 @@ namespace LiteFx.Bases
         /// <param name="atual"></param>
         /// <param name="mensagem"></param>
         /// <param name="key"></param>
-        protected bool VerificarSeNaoSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
+        public bool VerificarSeNaoSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
         {
             if (!esperado.Equals(atual))
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -177,11 +236,11 @@ namespace LiteFx.Bases
         /// <param name="atual"></param>
         /// <param name="mensagem"></param>
         /// <param name="key"></param>
-        protected bool VerificarSeSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
+        public bool VerificarSeSaoIguais<TVal>(TVal esperado, TVal atual, string mensagem, string key)
         {
             if (esperado.Equals(atual))
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -193,11 +252,11 @@ namespace LiteFx.Bases
         /// <param name="valor">Valor que será verificado.</param>
         /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
         /// <param name="key">Chave de verificação.</param>
-        protected bool VerificarSeENulo(object valor, string mensagem, string key)
+        public bool VerificarSeENulo(object valor, string mensagem, string key)
         {
             if (valor == null)
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -209,11 +268,11 @@ namespace LiteFx.Bases
         /// <param name="valor">Valor a ser verificado.</param>
         /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
         /// <param name="key">Chave de verificação.</param>
-        protected bool VerificarSeNaoENulo(object valor, string mensagem, string key)
+        public bool VerificarSeNaoENulo(object valor, string mensagem, string key)
         {
             if (valor != null)
             {
-                AdicionarResultadoDeErro(mensagem, key);
+                AddValidationResult(mensagem, key);
                 return false;
             }
             return true;
@@ -241,7 +300,7 @@ namespace LiteFx.Bases
         /// ]]>
         /// </code>
         /// </example>
-        protected bool VerificarStringNulaOuVazia(string valorVerificacao, string mensagem, string key) 
+        public bool VerificarStringNulaOuVazia(string valorVerificacao, string mensagem, string key)
         {
             return Verificar(valorVerificacao, x => string.IsNullOrEmpty(x), mensagem, key);
         }
@@ -252,7 +311,7 @@ namespace LiteFx.Bases
         /// <param name="valorVerificacao">Valor a ser verificado.</param>
         /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
         /// <param name="key">Chave do campo que esta sendo validado.</param>
-        protected bool VerificarIntMenorIgualAZero(int valorVerificacao, string mensagem, string key)
+        public bool VerificarIntMenorIgualAZero(int valorVerificacao, string mensagem, string key)
         {
             return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
         }
@@ -263,7 +322,7 @@ namespace LiteFx.Bases
         /// <param name="valorVerificacao">Valor a ser verificado.</param>
         /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
         /// <param name="key">Chave do campo que esta sendo validado.</param>
-        protected bool VerificarInt64MenorIgualAZero(long valorVerificacao, string mensagem, string key)
+        public bool VerificarInt64MenorIgualAZero(long valorVerificacao, string mensagem, string key)
         {
             return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
         }
@@ -274,21 +333,11 @@ namespace LiteFx.Bases
         /// <param name="valorVerificacao">Valor a ser verificado.</param>
         /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
         /// <param name="key">Chave do campo que esta sendo validado.</param>
-        protected bool VerificarDecimalMenorIgualAZero(decimal valorVerificacao, string mensagem, string key)
+        public bool VerificarDecimalMenorIgualAZero(decimal valorVerificacao, string mensagem, string key)
         {
             return Verificar(valorVerificacao, x => x <= 0, mensagem, key);
         }
-        
-        /// <summary>
-        /// Verifia se o membro Results do tipo ValidationResults esta inválido e dispara uma BusinessException.
-        /// Se o membro Results do tipo ValidationResults estiver válido nada acontece.
-        /// </summary>
-        protected void ValidarResultados() 
-        {
-            if (!Results.IsValid)
-                throw new BusinessException(Results);
-        }
-
         #endregion
+
     }
 }
