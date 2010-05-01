@@ -24,23 +24,23 @@ namespace LiteFx.Bases
             Assert = new Assert();
         }
 
-        protected Assert Assert { get; set; }
+        protected virtual Assert Assert { get; set; }
 
         #region IValidation Members
 
-        public ValidationResults Results { get { return Assert.Results; } }
+        public virtual ValidationResults Results { get { return Assert.Results; } }
 
-        public void AddValidationResult(string mensagem, string key)
+        public virtual void AddValidationResult(string mensagem, string key)
         {
             Assert.AddValidationResult(mensagem, key);
         }
 
-        public void Validate()
+        public virtual void Validate()
         {
             Assert.Validate();
         }
 
-        public bool IsValid() 
+        public virtual bool IsValid() 
         {
             return Assert.IsValid();
         }
@@ -49,12 +49,12 @@ namespace LiteFx.Bases
 
         #region IDataErrorInfo Members
 
-        public string Error
+        public virtual string Error
         {
             get { return Assert.Error; }
         }
 
-        public string this[string columnName]
+        public virtual string this[string columnName]
         {
             get { return Assert[columnName]; }
         }
