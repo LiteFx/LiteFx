@@ -105,9 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseController.cs" />
-    <Compile Include="BaseViewPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="BaseViewPage.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CultureInfo.cs" />
     <Compile Include="CustomActionResults\ActionResultHelper.cs" />
