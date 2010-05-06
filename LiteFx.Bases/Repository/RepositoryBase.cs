@@ -42,7 +42,7 @@ namespace LiteFx.Bases.Repository
         public TEntity GetById(TIdentificator id)
         {
             return (from e in DBContext.GetQueryableObject<TEntity>()
-                    where e.Identificador.Equals(id)
+                    where e.Id.Equals(id)
                     select e).FirstOrDefault();
         }
 

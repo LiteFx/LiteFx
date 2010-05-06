@@ -9,15 +9,15 @@ namespace LiteFx.Bases
     /// <summary>
     /// Interface que deve ser utilizada na classe que representará o contexto do banco de dados.
     /// </summary>
-    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
-    public interface IDBContext<TIdentificator> where TIdentificator : IEquatable<TIdentificator>
+    /// <typeparam name="TId">Type of id.</typeparam>
+    public interface IDBContext<TId> where TId : IEquatable<TId>
     {
         /// <summary>
         /// Get a queryable object of an especifique entity.
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>A queryable object.</returns>
-        IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TIdentificator>;
+        IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>;
 
         /// <summary>
         /// Reflete as modificações feitas no contexto para a base de dados.
@@ -27,13 +27,13 @@ namespace LiteFx.Bases
         /// <summary>
         /// Salva um objeto no contexto.
         /// </summary>
-        /// <param name="entity">Objeto a ser salvo.</param>
+        /// <param name="entity">Entidade a ser salva.</param>
         void Save(object entity);
 
         /// <summary>
         /// Exclui um objeto do contexto.
         /// </summary>
-        /// <param name="entity">Objeto a ser excluido.</param>
+        /// <param name="entity">Entidade a ser excluida.</param>
         void Delete(object entity);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do Objeto.</typeparam>
         /// <param name="id">Identificador do objeto.</param>
-        T Delete<T>(TIdentificator id);
+        T Delete<T>(TId id);
 
         /// <summary>
         /// Inicia uma transação no contexto.

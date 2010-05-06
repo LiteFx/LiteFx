@@ -10,14 +10,14 @@ namespace LiteFx.Bases
     /// <summary>
     /// Base class for entities.
     /// </summary>
-    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
-    public class EntityBase<TIdentificator> : IValidation
-        where TIdentificator : IEquatable<TIdentificator>
+    /// <typeparam name="TId">Type of id.</typeparam>
+    public class EntityBase<TId> : IValidation
+        where TId : IEquatable<TId>
     {
         /// <summary>
-        /// Entity identificator.
+        /// Entity id.
         /// </summary>
-        public virtual TIdentificator Identificador { get; set; }
+        public virtual TId Id { get; set; }
 
         public EntityBase()
         {

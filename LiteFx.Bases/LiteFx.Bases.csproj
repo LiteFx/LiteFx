@@ -121,7 +121,6 @@
     <Compile Include="BusinessException.cs" />
     <Compile Include="Context\EntityFrameworkExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IIdentificador.cs" />
     <Compile Include="Context\IDBContext.cs" />
     <Compile Include="BaseWkr.cs" />
     <Compile Include="Repository\ILambdaSpecification.cs" />

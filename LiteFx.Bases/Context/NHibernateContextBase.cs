@@ -10,8 +10,12 @@ using FluentNHibernate.Cfg;
 
 namespace LiteFx.Bases
 {
-    public class NHibernateContextBase<TIdentificator> : IDBContext<TIdentificator>, IDisposable
-        where TIdentificator : IEquatable<TIdentificator>
+    /// <summary>
+    /// NHibernate base context.
+    /// </summary>
+    /// <typeparam name="TId"></typeparam>
+    public class NHibernateContextBase<TId> : IDBContext<TId>, IDisposable
+        where TId : IEquatable<TId>
     {
         #region NHibernate Configuration and SessionFactory Cache
         private static Configuration _cfg;
@@ -162,7 +166,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>Queryable object.</returns>
-        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TIdentificator>
+        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>
         {
             return currentSession.Linq<T>();
         }
@@ -172,7 +176,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do entidade.</typeparam>
         /// <param name="id">Identificador do entidade.</param>
-        public virtual T Delete<T>(TIdentificator id)
+        public virtual T Delete<T>(TId id)
         {
             T obj = currentSession.Get<T>(id);
             Delete(obj);
