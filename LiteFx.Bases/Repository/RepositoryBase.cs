@@ -10,17 +10,17 @@ namespace LiteFx.Bases.Repository
     /// Repository base.
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
-    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
+    /// <typeparam name="TId">Type of identificator.</typeparam>
     /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
-    public abstract class RepositoryBase<TEntity, TIdentificator, TDBContext> : IRepository<TEntity, TIdentificator, TDBContext> , IDisposable
-        where TEntity : EntityBase<TIdentificator>
-        where TDBContext : IDBContext<TIdentificator>, IDisposable, new()
-        where TIdentificator : IEquatable<TIdentificator>
+    public abstract class RepositoryBase<TEntity, TId, TDBContext> : IRepository<TEntity, TId, TDBContext> , IDisposable
+        where TEntity : EntityBase<TId>
+        where TDBContext : IDBContext<TId>, IDisposable, new()
+        where TId : IEquatable<TId>
     {
         #region IRepository<T,IGerenciadorEventoDB> Members
 
         /// <summary>
-        /// The data base context.
+        /// The database context.
         /// </summary>
         public TDBContext DBContext { get; set; }
 
@@ -28,10 +28,10 @@ namespace LiteFx.Bases.Repository
         /// Get all entities instances.
         /// </summary>
         /// <returns>List with entities instances.</returns>
-        public IList<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
-            return (from e in DBContext.GetQueryableObject<TEntity>()
-                    select e).ToList();
+            return from e in DBContext.GetQueryableObject<TEntity>()
+                   select e;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="id">Entity identificator.</param>
         /// <returns>The entity instance.</returns>
-        public TEntity GetById(TIdentificator id)
+        public virtual TEntity GetById(TId id)
         {
             return (from e in DBContext.GetQueryableObject<TEntity>()
                     where e.Id.Equals(id)
@@ -51,9 +51,9 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="specification">Specification filter.</param>
         /// <returns>List of entities.</returns>
-        public IList<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification)
+        public virtual IQueryable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification)
         {
-            return DBContext.GetQueryableObject<TEntity>().Where(specification.Predicate).ToList();
+            return DBContext.GetQueryableObject<TEntity>().Where(specification.Predicate);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="specification">Specification filter.</param>
         /// <returns>An entity instance.</returns>
-        public TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification)
+        public virtual TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification)
         {
             return DBContext.GetQueryableObject<TEntity>().Where(specification.Predicate).FirstOrDefault();
         }
@@ -70,7 +70,7 @@ namespace LiteFx.Bases.Repository
         /// Save entity in the context.
         /// </summary>
         /// <param name="entity">Entity to be saved.</param>
-        public void Save(TEntity entity)
+        public virtual void Save(TEntity entity)
         {
             DBContext.Save(entity);
             DBContext.SaveContext();
@@ -80,7 +80,7 @@ namespace LiteFx.Bases.Repository
         /// Delete a entity in the context.
         /// </summary>
         /// <param name="entity">Entity to be deleted.</param>
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             DBContext.Delete(entity);
             DBContext.SaveContext();
@@ -90,7 +90,7 @@ namespace LiteFx.Bases.Repository
         /// Delete an entity by the identificator.
         /// </summary>
         /// <param name="id">Entity identificator.</param>
-        public void Delete(TIdentificator id)
+        public virtual void Delete(TId id)
         {
             DBContext.Delete<TEntity>(id);
             DBContext.SaveContext();

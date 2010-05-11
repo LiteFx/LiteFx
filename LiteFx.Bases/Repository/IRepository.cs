@@ -32,7 +32,7 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="specification">Specification filter.</param>
         /// <returns>List of entities.</returns>
-        IList<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
+        IQueryable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
 
         /// <summary>
         /// Get the first entity that satisfy the specification.
@@ -45,7 +45,7 @@ namespace LiteFx.Bases.Repository
         /// Get all entities.
         /// </summary>
         /// <returns>List of entities.</returns>
-        IList<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
 
         /// <summary>
         /// Save entity in the context.
