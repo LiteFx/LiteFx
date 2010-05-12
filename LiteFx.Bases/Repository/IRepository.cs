@@ -11,15 +11,9 @@ namespace LiteFx.Bases.Repository
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
     /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
-    public interface IRepository<TEntity, TIdentificator, TDBContext> 
-        where TDBContext : IDBContext<TIdentificator>
+    public interface IRepository<TEntity, TIdentificator> 
         where TIdentificator : IEquatable<TIdentificator>
     {
-        /// <summary>
-        /// Database Context.
-        /// </summary>
-        TDBContext DBContext { get; set; }
-
         /// <summary>
         /// Get the entity instance by id.
         /// </summary>

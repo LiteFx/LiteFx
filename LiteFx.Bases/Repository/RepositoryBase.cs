@@ -12,7 +12,7 @@ namespace LiteFx.Bases.Repository
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
     /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
-    public abstract class RepositoryBase<TEntity, TId, TDBContext> : IRepository<TEntity, TId, TDBContext> , IDisposable
+    public abstract class RepositoryBase<TEntity, TId, TDBContext> : IRepository<TEntity, TId> , IDisposable
         where TEntity : EntityBase<TId>
         where TDBContext : IDBContext<TId>, IDisposable, new()
         where TId : IEquatable<TId>
@@ -22,7 +22,7 @@ namespace LiteFx.Bases.Repository
         /// <summary>
         /// The database context.
         /// </summary>
-        public TDBContext DBContext { get; set; }
+        protected TDBContext DBContext { get; set; }
 
         /// <summary>
         /// Get all entities instances.
