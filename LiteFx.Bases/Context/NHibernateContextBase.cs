@@ -14,7 +14,7 @@ namespace LiteFx.Bases
     /// NHibernate base context.
     /// </summary>
     /// <typeparam name="TId"></typeparam>
-    public class NHibernateContextBase<TId> : IDBContext<TId>, IDisposable
+    public class NHibernateContextBase<TId> : IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
         #region NHibernate Configuration and SessionFactory Cache
@@ -176,7 +176,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do entidade.</typeparam>
         /// <param name="id">Identificador do entidade.</param>
-        public virtual T Delete<T>(TId id)
+        public virtual T Delete<T>(TId id) where T : EntityBase<TId>, new()
         {
             T obj = currentSession.Get<T>(id);
             Delete(obj);

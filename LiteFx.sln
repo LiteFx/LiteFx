@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{BA2551D4-ADD2-4F76-9F8C-60D52E21769C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BA2551D4-ADD2-4F76-9F8C-60D52E21769C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Bases", "LiteFx.Bases\LiteFx.Bases.csproj", "{C3434A18-591A-4622-9021-6DBC60561C24}"
 EndProject
@@ -18,9 +18,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Util", "LiteFx.Util\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Web.Mvc", "LiteFx.Web.Mvc\LiteFx.Web.Mvc.csproj", "{6326ADAB-6749-4666-B7DA-A4287D1B4CCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Cryptography.Util.Testes", "LiteFx.Cryptography.Util.Testes\LiteFx.Cryptography.Util.Testes.csproj", "{4E0A1E16-FFAA-44B2-AC16-F64981C88696}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Cryptography.Util.Tests", "LiteFx.Cryptography.Util.Testes\LiteFx.Cryptography.Util.Tests.csproj", "{4E0A1E16-FFAA-44B2-AC16-F64981C88696}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Linq.Extensions", "LiteFx.Linq.Extensions\LiteFx.Linq.Extensions.csproj", "{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Bases.EntityFramework", "LiteFx.Bases.EntityFramework\LiteFx.Bases.EntityFramework.csproj", "{EFF9B88D-5D36-450E-82B6-DCE9A7140157}"
+EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "LiteFx.Modeling", "LiteFx.Modeling\LiteFx.Modeling.modelproj", "{00184382-7996-4BD8-887F-86EC9EB3831C}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -55,6 +59,14 @@ Global
 		{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF9B88D-5D36-450E-82B6-DCE9A7140157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF9B88D-5D36-450E-82B6-DCE9A7140157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF9B88D-5D36-450E-82B6-DCE9A7140157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF9B88D-5D36-450E-82B6-DCE9A7140157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00184382-7996-4BD8-887F-86EC9EB3831C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00184382-7996-4BD8-887F-86EC9EB3831C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00184382-7996-4BD8-887F-86EC9EB3831C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00184382-7996-4BD8-887F-86EC9EB3831C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

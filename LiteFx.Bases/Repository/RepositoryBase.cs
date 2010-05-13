@@ -11,10 +11,10 @@ namespace LiteFx.Bases.Repository
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
-    /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
-    public abstract class RepositoryBase<TEntity, TId, TDBContext> : IRepository<TEntity, TId> , IDisposable
-        where TEntity : EntityBase<TId>
-        where TDBContext : IDBContext<TId>, IDisposable, new()
+    /// <typeparam name="TContext">Type of the Database Context.</typeparam>
+    public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId> , IDisposable
+        where TEntity : EntityBase<TId>, new()
+        where TContext : IContext<TId>, IDisposable, new()
         where TId : IEquatable<TId>
     {
         #region IRepository<T,IGerenciadorEventoDB> Members
@@ -22,7 +22,7 @@ namespace LiteFx.Bases.Repository
         /// <summary>
         /// The database context.
         /// </summary>
-        protected TDBContext DBContext { get; set; }
+        protected TContext Context { get; set; }
 
         /// <summary>
         /// Get all entities instances.
@@ -30,7 +30,7 @@ namespace LiteFx.Bases.Repository
         /// <returns>List with entities instances.</returns>
         public virtual IQueryable<TEntity> GetAll()
         {
-            return from e in DBContext.GetQueryableObject<TEntity>()
+            return from e in Context.GetQueryableObject<TEntity>()
                    select e;
         }
 
@@ -41,7 +41,7 @@ namespace LiteFx.Bases.Repository
         /// <returns>The entity instance.</returns>
         public virtual TEntity GetById(TId id)
         {
-            return (from e in DBContext.GetQueryableObject<TEntity>()
+            return (from e in Context.GetQueryableObject<TEntity>()
                     where e.Id.Equals(id)
                     select e).FirstOrDefault();
         }
@@ -53,7 +53,7 @@ namespace LiteFx.Bases.Repository
         /// <returns>List of entities.</returns>
         public virtual IQueryable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification)
         {
-            return DBContext.GetQueryableObject<TEntity>().Where(specification.Predicate);
+            return Context.GetQueryableObject<TEntity>().Where(specification.Predicate);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace LiteFx.Bases.Repository
         /// <returns>An entity instance.</returns>
         public virtual TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification)
         {
-            return DBContext.GetQueryableObject<TEntity>().Where(specification.Predicate).FirstOrDefault();
+            return Context.GetQueryableObject<TEntity>().Where(specification.Predicate).FirstOrDefault();
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace LiteFx.Bases.Repository
         /// <param name="entity">Entity to be saved.</param>
         public virtual void Save(TEntity entity)
         {
-            DBContext.Save(entity);
-            DBContext.SaveContext();
+            Context.Save(entity);
+            Context.SaveContext();
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace LiteFx.Bases.Repository
         /// <param name="entity">Entity to be deleted.</param>
         public virtual void Delete(TEntity entity)
         {
-            DBContext.Delete(entity);
-            DBContext.SaveContext();
+            Context.Delete(entity);
+            Context.SaveContext();
         }
 
         /// <summary>
@@ -92,8 +92,8 @@ namespace LiteFx.Bases.Repository
         /// <param name="id">Entity identificator.</param>
         public virtual void Delete(TId id)
         {
-            DBContext.Delete<TEntity>(id);
-            DBContext.SaveContext();
+            Context.Delete<TEntity>(id);
+            Context.SaveContext();
         }
 
         #endregion
@@ -117,8 +117,8 @@ namespace LiteFx.Bases.Repository
             if (!disposed)
             {
                 if (disposing)
-                    if (DBContext != null)
-                        DBContext.Dispose();
+                    if (Context != null)
+                        Context.Dispose();
 
                 disposed = true;
             }

@@ -7,10 +7,11 @@ using NHibernate;
 namespace LiteFx.Bases
 {
     /// <summary>
-    /// Interface que deve ser utilizada na classe que representará o contexto do banco de dados.
+    /// Interface that will be implemented by classes that represent contexts.
+    /// These contexts could persist the modifications in a DataBase, XML Files, memory and etc.
     /// </summary>
     /// <typeparam name="TId">Type of id.</typeparam>
-    public interface IDBContext<TId> where TId : IEquatable<TId>
+    public interface IContext<TId> where TId : IEquatable<TId>
     {
         /// <summary>
         /// Get a queryable object of an especifique entity.
@@ -20,42 +21,42 @@ namespace LiteFx.Bases
         IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>;
 
         /// <summary>
-        /// Reflete as modificações feitas no contexto para a base de dados.
+        /// Save all modifications made over the context.
         /// </summary>
         void SaveContext();
 
         /// <summary>
-        /// Salva um objeto no contexto.
+        /// Save entity in context.
         /// </summary>
-        /// <param name="entity">Entidade a ser salva.</param>
+        /// <param name="entity">Entity to be saved.</param>
         void Save(object entity);
 
         /// <summary>
-        /// Exclui um objeto do contexto.
+        /// Delete entity in context.
         /// </summary>
-        /// <param name="entity">Entidade a ser excluida.</param>
+        /// <param name="entity">Entity to be deleted.</param>
         void Delete(object entity);
 
         /// <summary>
-        /// Exclui um objeto do contexto pelo seu ID.
+        /// Delete an entity by id.
         /// </summary>
-        /// <typeparam name="T">Tipo do Objeto.</typeparam>
-        /// <param name="id">Identificador do objeto.</param>
-        T Delete<T>(TId id);
+        /// <typeparam name="T">Entity type.</typeparam>
+        /// <param name="id">Entity id.</param>
+        T Delete<T>(TId id) where T : EntityBase<TId>, new();
 
         /// <summary>
-        /// Inicia uma transação no contexto.
+        /// Begins a transaction in context.
         /// </summary>
-        /// <returns>Objeto da transação como um IDisposable </returns>
+        /// <returns>Returns the transaction object as an <see cref="System.IDisposable"/></returns>
         IDisposable BeginTransaction();
 
         /// <summary>
-        /// Fecha a transação com sucesso. E salva as modificações no banco.
+        /// Commits the transaction and close all resources.
         /// </summary>
         void CommitTransaction();
 
         /// <summary>
-        /// Finaliza a transação com falha. As modificações não são refletidas no banco.
+        /// Rollbacks the transaction and close all resources.
         /// </summary>
         void RollBackTransaction();
     }

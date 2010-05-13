@@ -102,6 +102,7 @@
       <HintPath>..\Lib\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -122,13 +123,12 @@
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="BaseBll.cs" />
     <Compile Include="BaseDal.cs" />
-    <Compile Include="Context\EntityFrameworkContextBase.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="EntityFramework1BaseWkr.cs" />
     <Compile Include="BusinessException.cs" />
     <Compile Include="Context\EntityFrameworkExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Context\IDBContext.cs" />
+    <Compile Include="Context\IContext.cs" />
     <Compile Include="BaseWkr.cs" />
     <Compile Include="Repository\ILambdaSpecification.cs" />
     <Compile Include="Repository\IRepository.cs" />

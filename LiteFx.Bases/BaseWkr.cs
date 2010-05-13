@@ -12,7 +12,7 @@ namespace LiteFx.Bases
     /// </summary>
     /// <typeparam name="T">Tipo do contexto baseado no NHibernate.</typeparam>
     public abstract class BaseWkr<T, TIdentificator> : IDisposable 
-        where T : IDBContext<TIdentificator>, IDisposable, new()
+        where T : IContext<TIdentificator>, IDisposable, new()
         where TIdentificator : IEquatable<TIdentificator>
     {
         /// <summary>

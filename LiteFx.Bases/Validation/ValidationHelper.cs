@@ -7,6 +7,7 @@ using LiteFx.Bases.Repository;
 
 namespace LiteFx.Bases.Validation
 {
+
     public static class ValidationHelper
     {
         #region Validações
@@ -21,17 +22,17 @@ namespace LiteFx.Bases.Validation
         /// <example>
         /// <code lang="cs" title="Utilizando a BaseBLL">
         /// <![CDATA[
-        /// public class Cliente : BaseBLL<MyEntity>
+        /// public class Cliente : EntityBase<int>
         /// {
-        ///     public void ValidaCliente(Cliente cliente)
+        ///     public override void Validate()
         ///     {
         ///         
-        ///         Verificar<Cliente>(cliente, 
+        ///         Assert.IsSatisfied<Cliente>(this, 
         ///                          cli => cli.PessoaFisica && (cli.Idade < 18 && cli.Idade > 120), 
         ///                          Resources.IdadeInvalida, "idade");
         ///         
         ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
-        ///         ValidarResultados();
+        ///         Assert.Validate();
         ///     }
         /// }
         /// ]]>
