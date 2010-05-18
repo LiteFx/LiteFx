@@ -7,10 +7,15 @@ using System.Data;
 
 namespace LiteFx.Bases.EntityFramework
 {
+    /// <summary>
+    /// Entity Framework Context Base.
+    /// </summary>
+    /// <typeparam name="TId">Type of Entity identificador.</typeparam>
     public class EntityFrameworkContextBase<TId> : ObjectContext, IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
         public EntityFrameworkContextBase(string connectionString) : base(connectionString) { }
+
         #region IDBContext Members
 
         /// <summary>
