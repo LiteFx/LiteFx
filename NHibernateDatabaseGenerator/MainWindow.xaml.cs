@@ -73,7 +73,6 @@ namespace NHibernateDatabaseGenerator
                 {
                     SchemaExport se = new SchemaExport(config);
                     se.SetOutputFile(fileName);
-                    //se.Create(script => txtBlockScript.Text = script, false);
                     se.Create(false, false);
                     MessageBox.Show(string.Format("Script successful created! See the '{0}' file.", fileName));
                 }).BuildConfiguration();
