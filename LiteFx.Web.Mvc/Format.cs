@@ -33,6 +33,10 @@ namespace LiteFx.Web.Mvc
         /// <summary>
         /// Fomato Csv (Comma separated value).
         /// </summary>
-        Csv
+        Csv,
+        /// <summary>
+        /// Portable Network Graphics (PNG) is a bitmapped image format that employs lossless data compression.
+        /// </summary>
+        Png
     }
 }
