@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.ObjectBuilder;
+using Microsoft.Practices.Unity.Configuration;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace LiteFx.Bases
 {
@@ -50,5 +54,42 @@ namespace LiteFx.Bases
         {
             this.dbContext = dbContext;
         }
+
+        /// <summary>
+        /// metodo de teste
+        /// </summary>
+        /// <typeparam name="TProxedType"></typeparam>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        public TProxedType CreateProxedInstance<TProxedType>(T dbContext) where TProxedType : BaseDal<T> 
+        {
+            IUnityContainer uc = new UnityContainer();
+            uc.AddNewExtension<Interception>()
+                .RegisterInstance<ICallHandler>("QueryableHandler", new QueryableHandler())
+                .RegisterType<TProxedType>(new InjectionConstructor(dbContext))
+                .Configure<Interception>()
+                .SetInterceptorFor<TProxedType>(new VirtualMethodInterceptor())
+                .AddPolicy("QueryableHandlerPolicy")
+                    .AddMatchingRule(new ReturnTypeMatchingRule(typeof(IQueryable)))
+                    .AddCallHandler("QueryableHandler");
+
+
+            /*uc.Configure<InjectedMembers>()
+                .ConfigureInjectionFor<TProxedType>(new InjectionConstructor(dbContext));*/
+
+            return uc.Resolve<TProxedType>();
+        }
+    }
+
+    public class QueryableHandler : ICallHandler
+    {
+        #region ICallHandler Members
+        public int Order { get; set; }
+
+        public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
+        {
+            return getNext()(input, getNext);
+        }
+        #endregion
     }
 }

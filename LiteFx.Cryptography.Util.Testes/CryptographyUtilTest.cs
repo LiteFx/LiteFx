@@ -1,6 +1,6 @@
 ﻿using LiteFx.Cryptography.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace LiteFx.Cryptography.Util.Testes
+namespace LiteFx.Cryptography.Util.Tests
 {
     
     

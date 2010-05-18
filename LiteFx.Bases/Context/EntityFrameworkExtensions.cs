@@ -11,7 +11,7 @@ namespace LiteFx.Bases
     /// <summary>
     /// Extensões para o EntityFramework.
     /// </summary>
-    public static class EntityExtensions
+    public static class EntityFrameworkExtensions
     {
         /// <summary>
         /// Helper provisorio para realizar um update no entity sem precisar de ir ao banco de dados.
