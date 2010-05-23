@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace LiteFx.Bases.Repository
+namespace LiteFx.Bases.Specification
 {
     /// <summary>
     /// Specification pattern implementation using lambda expressions.
@@ -78,7 +78,7 @@ namespace LiteFx.Bases.Repository
         /// Verifies the entity over the predicate.
         /// </summary>
         /// <param name="entity">Entity to be verified.</param>
-        /// <returns>Tru if the specification is satisfied and false if it is not.</returns>
+        /// <returns>True if the specification is satisfied and false if it is not.</returns>
         public bool IsSatisfiedBy(T entity)
         {
             return PredicateCompiledCache(entity);

@@ -21,6 +21,6 @@ namespace LiteFx.Bases.Validation
 
         void Validate();
 
-        bool IsValid();
+        bool IsValid { get; }
     }
 }

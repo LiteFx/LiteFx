@@ -11,7 +11,7 @@ namespace LiteFx.Bases
     /// Classe base para implementação de códigos de regras de negócio.
     /// </summary>
     /// <typeparam name="T">Tipo do contexto baseado no Entity Framework.</typeparam>
-    public abstract class BaseBll<T> : IValidation
+    public abstract class BaseBll<T>
         where T : IDisposable
     {
         /// <summary>
@@ -53,8 +53,6 @@ namespace LiteFx.Bases
         {
             this.dbContext = dbContext;
         }
-
-        #region IValidation Members
 
         /// <summary>
         /// Membro privado para os resultados das validações.
@@ -113,32 +111,6 @@ namespace LiteFx.Bases
         {
             Validate();
         }
-
-        public bool IsValid() 
-        {
-            return Results.IsValid;
-        }
-
-        #endregion
-
-        #region IDataErrorInfo Members
-
-        public string Error
-        {
-            get { return string.Empty; }
-        }
-
-        public string this[string columnName]
-        {
-            get 
-            {
-                return (from e in Results
-                        where e.Key == columnName
-                        select e.Message).SingleOrDefault();
-            }
-        }
-
-        #endregion
 
         #region Validações
 

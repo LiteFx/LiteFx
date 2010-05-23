@@ -4,222 +4,135 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
 using LiteFx.Bases.Repository;
+using LiteFx.Bases.Specification;
+using System.Linq.Expressions;
+using LiteFx.Bases.Properties;
 
 namespace LiteFx.Bases.Validation
 {
 
     public static class ValidationHelper
     {
-        #region Validações
-
-        /// <summary>
-        /// Verifica se uma expressão é valida.
-        /// </summary>
-        /// <param name="valorVerificacao">Valor a ser verificado.</param>
-        /// <param name="expressao">Expressão a ser verificada. Se o resultado da expresão for true um resultado de validação é criado na coleção de resultados.</param>
-        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
-        /// <param name="key">Chave do campo que esta sendo validado.</param>
-        /// <example>
-        /// <code lang="cs" title="Utilizando a BaseBLL">
-        /// <![CDATA[
-        /// public class Cliente : EntityBase<int>
-        /// {
-        ///     public override void Validate()
-        ///     {
-        ///         
-        ///         Assert.IsSatisfied<Cliente>(this, 
-        ///                          cli => cli.PessoaFisica && (cli.Idade < 18 && cli.Idade > 120), 
-        ///                          Resources.IdadeInvalida, "idade");
-        ///         
-        ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
-        ///         Assert.Validate();
-        ///     }
-        /// }
-        /// ]]>
-        /// </code>
-        /// </example>
-        public static Assert IsSatisfied<TVal>(this Assert validation, TVal valorVerificacao, Func<TVal, bool> expressao, string mensagem, string key)
+        public static Validator<T, TResult> That<T, TResult>(this Assert<T> assert, Expression<Func<T, TResult>> accessor)
         {
-            if (expressao(valorVerificacao))
+            var assertion = new Assertion<T, TResult>(accessor);
+            return new Validator<T,TResult>(assertion, assert);
+        }
+
+        public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message)
+        {
+            return IsSatisfied(validator, expression, message, true);
+        }
+
+        public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message, bool accessorCanBeNull)
+        {
+            validator.Assertion.Predicate = expression;
+            validator.Assertion.ValidationMessage = message;
+            validator.Assertion.AccessorCanBeNull = accessorCanBeNull;
+            validator.EndValidation();
+            return That(validator.AssertReference, validator.Assertion.Accessor);
+        }
+
+        public static Validator<T, TResult> IsNull<T, TResult>(this Validator<T, TResult> validator)
+        {
+            return IsSatisfied(validator, p => p == null, Resources.TheFieldXMustBeNull);
+        }
+
+        public static Validator<T, TResult> IsNotNull<T, TResult>(this Validator<T, TResult> validator)
+        {
+            return IsSatisfied(validator, p => p != null, Resources.TheFieldXMustBeNull);
+        }
+
+        public static Validator<T, string> IsNullOrEmpty<T>(this Validator<T, string> validator)
+        {
+            return IsSatisfied(validator, p => string.IsNullOrEmpty(p), Resources.TheFieldXMustBeNullOrEmpty);
+        }
+
+        public static Validator<T, string> IsNotNullOrEmpty<T>(this Validator<T, string> validator)
+        {
+            return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXCanNotBeNullOrEmpty);
+        }
+
+        public static Validator<T, string> MaxLength<T>(this Validator<T, string> validator, int maxLength)
+        {
+            return IsSatisfied(validator, p => 
+            { 
+                if (p == null) return true; 
+                return p.Trim().Length <= maxLength; 
+            }, string.Format(Resources.TheFieldXCanNotHaveMoreThanYCharacters, "{0}", maxLength));
+        }
+
+        public static Validator<T, string> MinLength<T>(this Validator<T, string> validator, int minLength)
+        {
+            return IsSatisfied(validator, p =>
             {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+                if (p == null) return true;
+                return p.Trim().Length >= minLength;
+            }, string.Format(Resources.TheFieldXCanNotHaveLessThanYCharacters, "{0}", minLength));
         }
 
-        /// <summary>
-        /// Verifica se o valor ou a expressão booleana é verdadeira e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <param name="valorOuExpressaoBooleano"></param>
-        /// <param name="mensagem"></param>
-        /// <param name="key"></param>
-        public static Assert IsTrue(this Assert validation, bool valorOuExpressaoBooleano, string mensagem, string key)
+        public static Validator<T, string> Length<T>(this Validator<T, string> validator, int length)
         {
-            if (valorOuExpressaoBooleano)
+            return IsSatisfied(validator, p =>
             {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+                if (p == null) return true;
+                return p.Trim().Length == length;
+            }, string.Format(Resources.TheFieldXMustHaveYCharacters, "{0}", length));
         }
 
-        /// <summary>
-        /// Verifica se o valor ou a expressão booleana é falsa e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <param name="valorOuExpressaoBooleano"></param>
-        /// <param name="mensagem"></param>
-        /// <param name="key"></param>
-        public static Assert IsFalse(this Assert validation, bool valorOuExpressaoBooleano, string mensagem, string key)
+        public static Validator<T, TResult> Max<T, TResult>(this Validator<T, TResult> validator, TResult max)
+            where TResult : IComparable<TResult>
         {
-            if (!valorOuExpressaoBooleano)
+            return IsSatisfied(validator, p =>
+                {
+                    if(p == null) return true;
+                    return p.CompareTo(max) <= 0;
+                }, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", max));
+        }
+
+        public static Validator<T, TResult> Min<T, TResult>(this Validator<T, TResult> validator, TResult min)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
+                {
+                    if(p == null) return true;
+                    return p.CompareTo(min) >= 0;
+                }, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", min));
+        }
+
+        public static Validator<T, TResult> Range<T, TResult>(this Validator<T, TResult> validator, TResult min, TResult max)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
             {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+                if (p == null) return true;
+                return p.CompareTo(min) >= 0 && p.CompareTo(max) <= 0;
+            }, string.Format(Resources.TheFieldXMustBeBetweenYandZ, "{0}", min, max));
         }
 
-        /// <summary>
-        /// Verifica se o valor esperado e o valor atual não são iguais e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <typeparam name="TVal"></typeparam>
-        /// <param name="esperado"></param>
-        /// <param name="atual"></param>
-        /// <param name="mensagem"></param>
-        /// <param name="key"></param>
-        public static Assert AreEqual<TVal>(this Assert validation, TVal esperado, TVal atual, string mensagem, string key)
+        public static Validator<T, TResult> Equals<T, TResult>(this Validator<T, TResult> validator, TResult other)
+            where TResult : IEquatable<TResult>
         {
-            if (!esperado.Equals(atual))
+            return IsSatisfied(validator, p =>
             {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+                if (p == null) return true;
+                return p.Equals(other);
+            }, string.Format(Resources.TheFieldXMustBeEqualsY, "{0}", other));
         }
 
-        /// <summary>
-        /// Verifica se o valor esperado e o valor atual são iguais e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <typeparam name="TVal"></typeparam>
-        /// <param name="esperado"></param>
-        /// <param name="atual"></param>
-        /// <param name="mensagem"></param>
-        /// <param name="key"></param>
-        public static Assert AreNotEqual<TVal>(this Assert validation, TVal esperado, TVal atual, string mensagem, string key)
+        public static Validator<T, TResult> NotEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
+            where TResult : IEquatable<TResult>
         {
-            if (esperado.Equals(atual))
+            return IsSatisfied(validator, p =>
             {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+                if (p == null) return true;
+                return !p.Equals(other);
+            }, string.Format(Resources.TheFieldXMustBeDifferentThanY, "{0}", other));
         }
 
-        /// <summary>
-        /// Verifica se o valor é nulo e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <param name="valor">Valor que será verificado.</param>
-        /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
-        /// <param name="key">Chave de verificação.</param>
-        public static Assert IsNull(this Assert validation, object valor, string mensagem, string key)
+        public static Validator<T, T> IsSatisfiedBy<T>(this Validator<T, T> validator, ISpecification<T> spec) 
         {
-            if (valor == null)
-            {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
+            return IsSatisfied(validator, p => spec.IsSatisfiedBy(p), "Spec Failure.");
         }
-
-        /// <summary>
-        /// Verifica se o valor não é nulo e adiciona um erro nos resultados da validação.
-        /// </summary>
-        /// <param name="valor">Valor a ser verificado.</param>
-        /// <param name="mensagem">Mensagem para caso a verificação falhe.</param>
-        /// <param name="key">Chave de verificação.</param>
-        public static Assert IsNotNull(this Assert validation, object valor, string mensagem, string key)
-        {
-            if (valor != null)
-            {
-                validation.AddValidationResult(mensagem, key);
-                validation.LastAssertionIsValid = false;
-            }
-            validation.LastAssertionIsValid = true;
-            return validation;
-        }
-
-        /// <summary>
-        /// Verifica se é um valor valido.
-        /// </summary>
-        /// <param name="valorVerificacao">Valor a ser verificado.</param>
-        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
-        /// <param name="key">Chave do campo que esta sendo validado.</param>
-        /// <example>
-        /// <code lang="cs" title="Utilizando a BaseBLL">
-        /// <![CDATA[
-        /// public class ClienteBLL : BaseBLL<MyEntity>
-        /// {
-        ///     public void ValidaCliente(Cliente cliente)
-        ///     {
-        ///         VerificarStringNulaOuVazia(cliente.Nome, Properties.Resources.InformeNome, "nome");
-        ///         
-        ///         // Se os resultados não forem válidos uma exceção de negócio é disparada.
-        ///         ValidarResultados();
-        ///     }
-        /// }
-        /// ]]>
-        /// </code>
-        /// </example>
-        public static Assert IsNullOrEmpty(this Assert validation, string valorVerificacao, string mensagem, string key)
-        {
-            return validation.IsSatisfied(valorVerificacao, x => string.IsNullOrEmpty(x), mensagem, key);
-        }
-
-        /// <summary>
-        /// Verifica se é um valor valido.
-        /// </summary>
-        /// <param name="valorVerificacao">Valor a ser verificado.</param>
-        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
-        /// <param name="key">Chave do campo que esta sendo validado.</param>
-        public static Assert IsEqualOrLessThanZero(this Assert validation, int valorVerificacao, string mensagem, string key)
-        {
-            return validation.IsSatisfied(valorVerificacao, x => x <= 0, mensagem, key);
-        }
-
-        /// <summary>
-        /// Verifica se é um valor valido.
-        /// </summary>
-        /// <param name="valorVerificacao">Valor a ser verificado.</param>
-        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
-        /// <param name="key">Chave do campo que esta sendo validado.</param>
-        public static Assert IsEqualOrLessThanZero(this Assert validation, long valorVerificacao, string mensagem, string key)
-        {
-            return validation.IsSatisfied(valorVerificacao, x => x <= 0, mensagem, key);
-        }
-
-        /// <summary>
-        /// Verifica se é um valor valido.
-        /// </summary>
-        /// <param name="valorVerificacao">Valor a ser verificado.</param>
-        /// <param name="mensagem">Mensagem para caso o valor seja inválido.</param>
-        /// <param name="key">Chave do campo que esta sendo validado.</param>
-        public static Assert IsEqualOrLessThanZero(this Assert validation, decimal valorVerificacao, string mensagem, string key)
-        {
-            return validation.IsSatisfied(valorVerificacao, x => x <= 0, mensagem, key);
-        }
-
-        public static Assert IsSatisfiedBySpecification<T>(this Assert validation, T entity, ISpecification<T> specification, string mensagem, string key)
-        {
-            validation.LastAssertionIsValid = specification.IsSatisfiedBy(entity);
-            return validation;
-        }
-        #endregion
     }
 }
