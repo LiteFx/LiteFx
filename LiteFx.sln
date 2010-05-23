@@ -30,6 +30,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelperApps", "HelperApps", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateDatabaseGenerator", "NHibernateDatabaseGenerator\NHibernateDatabaseGenerator.csproj", "{B9313C10-D0F4-4BB2-B4A3-122F2E852705}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{D3F5771B-FCDC-444B-9610-A7D7ECAE30C4}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Antlr3.Runtime.dll = Lib\Antlr3.Runtime.dll
+		Lib\Castle.Core.dll = Lib\Castle.Core.dll
+		Lib\Castle.Core.xml = Lib\Castle.Core.xml
+		Lib\Castle.DynamicProxy2.dll = Lib\Castle.DynamicProxy2.dll
+		Lib\Castle.DynamicProxy2.xml = Lib\Castle.DynamicProxy2.xml
+		Lib\FluentNHibernate.dll = Lib\FluentNHibernate.dll
+		Lib\FluentNHibernate.XML = Lib\FluentNHibernate.XML
+		Lib\Iesi.Collections.dll = Lib\Iesi.Collections.dll
+		Lib\Iesi.Collections.xml = Lib\Iesi.Collections.xml
+		Lib\itextsharp.dll = Lib\itextsharp.dll
+		Lib\log4net.dll = Lib\log4net.dll
+		Lib\log4net.xml = Lib\log4net.xml
+		Lib\Microsoft.Practices.EnterpriseLibrary.Common.dll = Lib\Microsoft.Practices.EnterpriseLibrary.Common.dll
+		Lib\Microsoft.Practices.EnterpriseLibrary.Common.xml = Lib\Microsoft.Practices.EnterpriseLibrary.Common.xml
+		Lib\Microsoft.Practices.EnterpriseLibrary.Validation.dll = Lib\Microsoft.Practices.EnterpriseLibrary.Validation.dll
+		Lib\Microsoft.Practices.EnterpriseLibrary.Validation.XML = Lib\Microsoft.Practices.EnterpriseLibrary.Validation.XML
+		Lib\Microsoft.Practices.Unity.Configuration.dll = Lib\Microsoft.Practices.Unity.Configuration.dll
+		Lib\Microsoft.Practices.Unity.Configuration.xml = Lib\Microsoft.Practices.Unity.Configuration.xml
+		Lib\Microsoft.Practices.Unity.dll = Lib\Microsoft.Practices.Unity.dll
+		Lib\Microsoft.Practices.Unity.Interception.Configuration.dll = Lib\Microsoft.Practices.Unity.Interception.Configuration.dll
+		Lib\Microsoft.Practices.Unity.Interception.Configuration.xml = Lib\Microsoft.Practices.Unity.Interception.Configuration.xml
+		Lib\Microsoft.Practices.Unity.Interception.dll = Lib\Microsoft.Practices.Unity.Interception.dll
+		Lib\Microsoft.Practices.Unity.Interception.xml = Lib\Microsoft.Practices.Unity.Interception.xml
+		Lib\Microsoft.Practices.Unity.StaticFactory.dll = Lib\Microsoft.Practices.Unity.StaticFactory.dll
+		Lib\Microsoft.Practices.Unity.xml = Lib\Microsoft.Practices.Unity.xml
+		Lib\NHibernate.ByteCode.Castle.dll = Lib\NHibernate.ByteCode.Castle.dll
+		Lib\NHibernate.ByteCode.Castle.xml = Lib\NHibernate.ByteCode.Castle.xml
+		Lib\NHibernate.dll = Lib\NHibernate.dll
+		Lib\NHibernate.Linq.dll = Lib\NHibernate.Linq.dll
+		Lib\NHibernate.Linq.xml = Lib\NHibernate.Linq.xml
+		Lib\NHibernate.xml = Lib\NHibernate.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LiteFx.vsmdi

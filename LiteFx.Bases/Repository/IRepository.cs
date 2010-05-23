@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Repository
 {

@@ -47,11 +47,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\LiteFx.Bases.XML</DocumentationFile>
+    <DocumentationFile>..\Debug\LiteFx.Bases.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -120,6 +120,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityBaseWithValidation.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="BaseBll.cs" />
     <Compile Include="BaseDal.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Context\IContext.cs" />
     <Compile Include="BaseWkr.cs" />
-    <Compile Include="Repository\ILambdaSpecification.cs" />
+    <Compile Include="Specification\ILambdaSpecification.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Context\NHibernateContextBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,11 +140,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Repository\ISpecification.cs" />
-    <Compile Include="Repository\LambdaSpecification.cs" />
+    <Compile Include="Specification\ISpecification.cs" />
+    <Compile Include="Specification\LambdaSpecification.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Validation\Assertion.cs" />
     <Compile Include="Validation\IValidation.cs" />
+    <Compile Include="Validation\PtBr\ValidationHelperPtBr.cs" />
     <Compile Include="Validation\ValidationHelper.cs" />
+    <Compile Include="Validation\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

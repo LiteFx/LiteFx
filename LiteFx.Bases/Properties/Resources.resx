@@ -123,4 +123,40 @@
   <data name="ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido" xml:space="preserve">
     <value>Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido.</value>
   </data>
+  <data name="TheFieldXCanNotBeGreaterThanY" xml:space="preserve">
+    <value>The field '{0}' can not be greater than '{1}'.</value>
+  </data>
+  <data name="TheFieldXCanNotBeLessThanY" xml:space="preserve">
+    <value>The field '{0}' can not be less than '{1}'.</value>
+  </data>
+  <data name="TheFieldXCanNotBeNull" xml:space="preserve">
+    <value>The field '{0}' can not be null.</value>
+  </data>
+  <data name="TheFieldXCanNotBeNullOrEmpty" xml:space="preserve">
+    <value>The field '{0}' can not be null or empty.</value>
+  </data>
+  <data name="TheFieldXCanNotHaveLessThanYCharacters" xml:space="preserve">
+    <value>The field '{0}' can not have less than '{1}' characters.</value>
+  </data>
+  <data name="TheFieldXCanNotHaveMoreThanYCharacters" xml:space="preserve">
+    <value>The field '{0}' can not have more than '{1}' characters.</value>
+  </data>
+  <data name="TheFieldXMustBeBetweenYandZ" xml:space="preserve">
+    <value>The field '{0}' must be between '{1}' and '{2}'.</value>
+  </data>
+  <data name="TheFieldXMustBeDifferentThanY" xml:space="preserve">
+    <value>The field '{0}' must be different than '{1}'.</value>
+  </data>
+  <data name="TheFieldXMustBeEqualsY" xml:space="preserve">
+    <value>The field '{0}' must be equals '{1}'.</value>
+  </data>
+  <data name="TheFieldXMustBeNull" xml:space="preserve">
+    <value>The field '{0}' must be null.</value>
+  </data>
+  <data name="TheFieldXMustBeNullOrEmpty" xml:space="preserve">
+    <value>The field '{0}' must be null or empty.</value>
+  </data>
+  <data name="TheFieldXMustHaveYCharacters" xml:space="preserve">
+    <value>The field '{0}' must have '{1}' characters.</value>
+  </data>
 </root>
