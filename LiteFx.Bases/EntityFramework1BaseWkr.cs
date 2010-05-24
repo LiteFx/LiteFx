@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using System.Configuration;
@@ -20,20 +18,12 @@ namespace LiteFx.Bases.Entity
         /// Implementação do Dipose Pattern.
         /// </summary>
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        private bool disposed = false;
-
-        /// <summary>
-        /// Membro privado para o contexto do banco de dados.
-        /// </summary>
-        private T dbContext;
+        private bool disposed;
 
         /// <summary>
         /// Propriedade para encapsular o contexto.
         /// </summary>
-        protected T DBContext
-        {
-            get { return dbContext; }
-        }
+        protected T DBContext { get; private set; }
 
         /// <summary>
         /// Container para a criação do contexto.
@@ -115,8 +105,8 @@ namespace LiteFx.Bases.Entity
                 UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("entityConfig");
                 section.Containers["entityModel"].Configure(container);
 
-                this.dbContext = container.Resolve<T>();
-                this.dbContext.SavingChanges += new EventHandler(dbContext_SavingChanges);
+                this.DBContext = container.Resolve<T>();
+                this.DBContext.SavingChanges += new EventHandler(dbContext_SavingChanges);
         }
 
         /// <summary>
@@ -152,10 +142,6 @@ namespace LiteFx.Bases.Entity
             {
                 throw new BusinessException(Resources.NaoFoiPossivelExcluirORegistro, uex);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         #region Dispose pattern implementation
@@ -171,9 +157,9 @@ namespace LiteFx.Bases.Entity
             {
                 if (disposing)
                 {
-                    if (dbContext != null)
+                    if (DBContext != null)
                     {
-                        dbContext.Dispose();
+                        DBContext.Dispose();
                     }
 
                     container.Dispose();

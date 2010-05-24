@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -14,7 +11,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 {
     public class PdfResult : ActionResult
     {
-        private string[] _headers = null;
+        private string[] _headers;
 
         public string FileName { get; internal set; }
 

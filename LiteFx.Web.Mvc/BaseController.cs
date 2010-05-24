@@ -31,7 +31,8 @@ namespace LiteFx.Web.Mvc
 
             if (acceptEncoding == null)
                 return;
-            else if (acceptEncoding.ToLower().Contains("gzip"))
+
+            if (acceptEncoding.ToLower().Contains("gzip"))
             {
                 response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
                 response.AppendHeader("Content-Encoding", "gzip");
@@ -91,7 +92,7 @@ namespace LiteFx.Web.Mvc
             Response.Clear();
             Response.AddHeader("content-disposition", "attachment;filename=" + string.Format("{0}.xls", fileName));
             Response.Charset = "utf-8";
-            Response.ContentEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+            Response.ContentEncoding = Encoding.GetEncoding("iso-8859-1");
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.ContentType = ContentType.Excel;
         }

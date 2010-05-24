@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
 
 namespace LiteFx.Bases.Validation
@@ -20,12 +17,7 @@ namespace LiteFx.Bases.Validation
         private Func<T, TProperty> compiledAccessor;
         private Func<T, TProperty> CompiledAccessor
         {
-            get
-            {
-                if (compiledAccessor == null)
-                    compiledAccessor = Accessor.Compile();
-                return compiledAccessor;
-            }
+            get { return compiledAccessor ?? (compiledAccessor = Accessor.Compile()); }
         }
 
         public Func<TProperty, bool> Predicate { get; internal set; }

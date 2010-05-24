@@ -59,7 +59,7 @@ namespace LiteFx.Web.Mvc.Extensions
                 string className = name.Split('.')[0];
                 string propertyName = name.Split('.')[1].Split('_')[0];
 
-                int maxlengthValue = 0;
+                int maxlengthValue;
                 bool isRequired = false;
 
                 Type type = Type.GetType(string.Format("PortalSim.Model.{0}, PortalSim.Dal", className));
@@ -67,7 +67,7 @@ namespace LiteFx.Web.Mvc.Extensions
 
                 if (property != null)
                 {
-                    object[] attributes = null;
+                    object[] attributes;
                     attributes = property.GetCustomAttributes(typeof(StringLengthAttribute), true);
                     if (attributes.Length > 0)
                     {
@@ -85,7 +85,6 @@ namespace LiteFx.Web.Mvc.Extensions
                             dicHtmlAttributes.Add("size", (int)(maxlengthValue + (maxlengthValue * 0.1)));
                     }
 
-                    attributes = null;
                     attributes = property.GetCustomAttributes(typeof(RequiredAttribute), true);
 
                     isRequired = attributes.Length > 0;
@@ -108,7 +107,7 @@ namespace LiteFx.Web.Mvc.Extensions
                 string className = name.Split('.')[0];
                 string propertyName = name.Split('.')[1].Split('_')[0];
 
-                int maxlengthValue = 0;
+                int maxlengthValue;
                 bool isRequired = false;
 
                 Type type = Type.GetType(string.Format("PortalSim.Model.{0}, PortalSim.Dal", className));
@@ -116,7 +115,7 @@ namespace LiteFx.Web.Mvc.Extensions
 
                 if (property != null)
                 {
-                    object[] attributes = null;
+                    object[] attributes;
                     attributes = property.GetCustomAttributes(typeof(StringLengthAttribute), true);
                     if (attributes.Length > 0)
                     {
@@ -137,7 +136,6 @@ namespace LiteFx.Web.Mvc.Extensions
                             dicHtmlAttributes.Add("size", (int)(maxlengthValue + (maxlengthValue * 0.1)));
                     }
 
-                    attributes = null;
                     attributes = property.GetCustomAttributes(typeof(RequiredAttribute), true);
 
                     isRequired = attributes.Length > 0;
@@ -320,12 +318,12 @@ namespace LiteFx.Web.Mvc.Extensions
             string propertyName = name.Split('.')[1].Split('_')[0];
             Type type = Type.GetType(string.Format("PortalSim.Model.{0}, PortalSim.Dal", className));
 
-            bool isRequired = false;
+            bool isRequired;
             isRequired = type.GetProperty(propertyName).GetCustomAttributes(typeof(RequiredAttribute), true).Length > 0;
 
             TagBuilder tbLabel = new TagBuilder("label")
             {
-                InnerHtml = string.Format("{0} {1} {2} {3}", label, isRequired ? "<SPAN class=\"field-validation-error\">*</SPAN>" : string.Empty, tbDiv.ToString(), tbInput.ToString())
+                InnerHtml = string.Format("{0} {1} {2} {3}", label, isRequired ? "<SPAN class=\"field-validation-error\">*</SPAN>" : string.Empty, tbDiv, tbInput)
             };
 
             return tbLabel.ToString();

@@ -6,9 +6,8 @@ using System.Text;
 namespace LiteFx.Web.Mvc
 {
     [Obsolete("Use the System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute(false) instead.")]
-    [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class HideFromViewAttribute : Attribute
     {
-        public HideFromViewAttribute() { }
     }
 }

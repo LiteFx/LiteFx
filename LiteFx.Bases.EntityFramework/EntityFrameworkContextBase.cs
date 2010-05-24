@@ -11,7 +11,7 @@ namespace LiteFx.Bases.EntityFramework
     /// Entity Framework Context Base.
     /// </summary>
     /// <typeparam name="TId">Type of Entity identificador.</typeparam>
-    public class EntityFrameworkContextBase<TId> : ObjectContext, IContext<TId>, IDisposable
+    public abstract class EntityFrameworkContextBase<TId> : ObjectContext, IContext<TId>
         where TId : IEquatable<TId>
     {
         public EntityFrameworkContextBase(string connectionString) : base(connectionString) { }
@@ -21,7 +21,7 @@ namespace LiteFx.Bases.EntityFramework
         /// <summary>
         /// Flag usado para identificar se há uma transação aberta.
         /// </summary>
-        protected bool openTransaction = false;
+        protected bool openTransaction;
 
         /// <summary>
         /// Variavel que mantem a transação.
@@ -37,7 +37,7 @@ namespace LiteFx.Bases.EntityFramework
             if (openTransaction)
                 return transaction;
 
-            transaction = base.Connection.BeginTransaction();
+            transaction = Connection.BeginTransaction();
             openTransaction = true;
             return transaction;
         }
@@ -53,10 +53,6 @@ namespace LiteFx.Bases.EntityFramework
             try
             {
                 transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -86,7 +82,7 @@ namespace LiteFx.Bases.EntityFramework
         /// <returns>Queryable object.</returns>
         public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>
         {
-            return base.CreateObjectSet<T>();
+            return CreateObjectSet<T>();
         }
 
         /// <summary>
@@ -98,7 +94,7 @@ namespace LiteFx.Bases.EntityFramework
         {
             T entity = new T();
             entity.Id = id;
-            entity = (T)base.GetObjectByKey(base.CreateEntityKey(typeof(T).Name, entity));
+            entity = (T)GetObjectByKey(CreateEntityKey(typeof(T).Name, entity));
             Delete(entity);
             return entity;
         }
@@ -110,7 +106,7 @@ namespace LiteFx.Bases.EntityFramework
         public virtual void Delete(object entity)
         {
             BeginTransaction();
-            base.DeleteObject(entity);
+            DeleteObject(entity);
         }
 
         /// <summary>
@@ -125,7 +121,7 @@ namespace LiteFx.Bases.EntityFramework
             //    EntityBase<TId> ent = (EntityBase<TId>)entity;
 
             //    if(ent.Id.Equals(default(TId)))
-            base.AddObject(entity.GetType().Name, entity);
+            AddObject(entity.GetType().Name, entity);
             //    else
             //        base.Attach(
             //}
@@ -137,7 +133,7 @@ namespace LiteFx.Bases.EntityFramework
         /// <param name="entity">Objeto a ser removido do cache.</param>
         public virtual void RemoveFromCache(object entity)
         {
-            base.Detach(entity);
+            Detach(entity);
         }
 
         /// <summary>
@@ -145,14 +141,7 @@ namespace LiteFx.Bases.EntityFramework
         /// </summary>
         public virtual void SaveContext()
         {
-            try
-            {
-                CommitTransaction();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            CommitTransaction();
         }
 
         #endregion

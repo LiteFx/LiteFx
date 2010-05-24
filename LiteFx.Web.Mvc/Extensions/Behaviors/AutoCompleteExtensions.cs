@@ -30,10 +30,7 @@ namespace LiteFx.Web.Mvc.Extensions.Behaviors
             // Create properties
             var props = new
             {
-                serviceMethod = "GetCompletionList",
-                servicePath = servicePath,
-                minimumPrefixLength = minimumPrefixLength,
-                completionSetCount = completionSetCount
+                serviceMethod = "GetCompletionList", servicePath, minimumPrefixLength, completionSetCount
             };
 
             // Perform $create

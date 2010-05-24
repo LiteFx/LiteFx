@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.IO;
@@ -12,7 +10,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 {
     public class CsvResult : ActionResult
     {
-        private string[] _headers = null;
+        private string[] _headers;
 
         public string FileName { get; internal set; }
 
@@ -38,7 +36,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 
             ResourceManager resm = new ResourceManager(ResourceSource);
 
-            string header = string.Empty;
+            string header;
 
             var enumerator = Rows.GetEnumerator();
             if (enumerator.MoveNext())

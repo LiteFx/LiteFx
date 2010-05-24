@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Threading;
 using System.Globalization;
-using System.Web.UI;
 
 namespace LiteFx.Web.Mvc.Extensions
 {
@@ -203,7 +201,7 @@ namespace LiteFx.Web.Mvc.Extensions
             sb.AppendLine();
             sb.AppendLine("var head = document.getElementsByTagName('head')[0];");
             sb.AppendLine("head.appendChild(link);");
-            return string.Format(CultureInfo.CurrentCulture, Constants.ScriptFormat, sb.ToString());
+            return string.Format(CultureInfo.CurrentCulture, Constants.ScriptFormat, sb);
         }
 
         /// <summary>
@@ -235,7 +233,7 @@ namespace LiteFx.Web.Mvc.Extensions
             sb.AppendLine("Sys.Application.add_init(function(){");
             sb.AppendFormat("$create({0},{1},null,null,$get('{2}'))", clientType, strProps, elementId);
             sb.AppendLine("});");
-            return string.Format(CultureInfo.CurrentCulture, Constants.ScriptFormat, sb.ToString());
+            return string.Format(CultureInfo.CurrentCulture, Constants.ScriptFormat, sb);
         }
 
         /// <summary>

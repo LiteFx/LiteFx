@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
-using LiteFx.Bases.Validation;
 
 namespace LiteFx.Bases
 {
@@ -15,17 +11,9 @@ namespace LiteFx.Bases
         where T : IDisposable
     {
         /// <summary>
-        /// Membro privado para o contexto do banco de dados.
-        /// </summary>
-        private T dbContext;        
-
-        /// <summary>
         /// Propriedade para encapsular o contexto.
         /// </summary>
-        protected T DBContext
-        {
-            get { return dbContext; }
-        }
+        protected T DBContext { get; private set; }
 
         /// <summary>
         /// Construtor base da classe de regras de negócio.
@@ -51,7 +39,7 @@ namespace LiteFx.Bases
         /// </example>
         protected BaseBll(T dbContext)
         {
-            this.dbContext = dbContext;
+            DBContext = dbContext;
         }
 
         /// <summary>
@@ -67,9 +55,7 @@ namespace LiteFx.Bases
             get
             {
                 //Se o validationResults estiver nulo cria uma nova instância.
-                if (validationResults == null)
-                    validationResults = new ValidationResults();
-                return validationResults;
+                return validationResults ?? (validationResults = new ValidationResults());
             }
         }
 

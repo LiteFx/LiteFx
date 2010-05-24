@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
@@ -43,8 +41,6 @@ namespace LiteFx.Cryptography.Util
         /// <returns>Texto criptografado.</returns>
         public static string Encrypt(string textToEncrypt) 
         {
-            string encryptedText = string.Empty;
-
             RijndaelManaged rijn = new RijndaelManaged();
 
             byte[] salt = Encoding.ASCII.GetBytes(stringForSalt);
@@ -65,7 +61,7 @@ namespace LiteFx.Cryptography.Util
 
             cryptoStream.FlushFinalBlock();
 
-            encryptedText = Convert.ToBase64String(outMemoryStream.ToArray());
+            var encryptedText = Convert.ToBase64String(outMemoryStream.ToArray());
 
             cryptoStream.Close();
             outMemoryStream.Close();
@@ -80,8 +76,6 @@ namespace LiteFx.Cryptography.Util
         /// <returns>Texto descriptografado.</returns>
         public static string Decrypt(string textToDecrypt)
         {
-            string decryptedText = string.Empty;
-
             RijndaelManaged rijn = new RijndaelManaged();
 
             byte[] salt = Encoding.ASCII.GetBytes(stringForSalt);
@@ -99,7 +93,7 @@ namespace LiteFx.Cryptography.Util
 
             StreamReader streamReader = new StreamReader(cryptoStream);
 
-            decryptedText = streamReader.ReadToEnd();
+            var decryptedText = streamReader.ReadToEnd();
 
             streamReader.Close();
             cryptoStream.Close();

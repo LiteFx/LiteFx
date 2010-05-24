@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace LiteFx.Bases
@@ -16,17 +12,9 @@ namespace LiteFx.Bases
     public abstract class BaseDal<T> where T : IDisposable
     {
         /// <summary>
-        /// Membro privado para o contexto do banco de dados.
-        /// </summary>
-        private T dbContext;
-
-        /// <summary>
         /// Propriedade para encapsular o contexto.
         /// </summary>
-        protected T DBContext
-        {
-            get { return dbContext; }
-        }
+        protected T DBContext { get; private set; }
 
         /// <summary>
         /// Construtor base da classe de acesso a dados.
@@ -52,7 +40,7 @@ namespace LiteFx.Bases
         /// </example>
         protected BaseDal(T dbContext)
         {
-            this.dbContext = dbContext;
+            DBContext = dbContext;
         }
 
         /// <summary>

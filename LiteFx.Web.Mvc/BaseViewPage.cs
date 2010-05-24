@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.UI.HtmlControls;
 using System.Web;
@@ -29,8 +26,8 @@ namespace LiteFx.Web.Mvc
         /// </summary>
         public BaseViewPage()
         {
-            this.PreInit += new EventHandler(Page_PreInit);
-            this.Load += new EventHandler(Page_Load);
+            PreInit += Page_PreInit;
+            Load += Page_Load;
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace LiteFx.Web.Mvc
         /// <param name="e">Argumentos do evento.</param>
         private void Page_PreInit(object sender, EventArgs e)
         {
-            BaseViewPage.SetarTema(Page);
+            SetarTema(Page);
         }
 
         /// <summary>
@@ -50,7 +47,7 @@ namespace LiteFx.Web.Mvc
         /// <param name="e">Argumentos do evento.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            BaseViewPage.SetarCabecalho(this.Header, Request);
+            SetarCabecalho(Header, Request);
         }
         #endregion
 
@@ -92,8 +89,8 @@ namespace LiteFx.Web.Mvc
         /// </summary>
         public BaseViewPage()
         {
-            this.PreInit += new EventHandler(Page_PreInit);
-            this.Load += new EventHandler(Page_Load);
+            PreInit += Page_PreInit;
+            Load += Page_Load;
         }
 
         /// <summary>
@@ -113,7 +110,7 @@ namespace LiteFx.Web.Mvc
         /// <param name="e">Argumentos do evento.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            BaseViewPage.SetarCabecalho(this.Header, Request);
+            BaseViewPage.SetarCabecalho(Header, Request);
         }
         #endregion
     }

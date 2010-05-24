@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Resources;
 
 namespace LiteFx.Util
@@ -37,7 +36,7 @@ namespace LiteFx.Util
         /// <returns>Retorna um Dictionary&lt;int, string&gt; construido baseado em uma enum.</returns>
         public static Dictionary<int, string> ToDictionary(this Enum enumerator, Type resourceSource) 
         {
-            return EnumUtil.EnumToDictionary(enumerator, resourceSource);
+            return EnumToDictionary(enumerator, resourceSource);
         }
 
         /// <summary>

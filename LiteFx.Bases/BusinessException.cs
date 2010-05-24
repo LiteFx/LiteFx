@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
 using System.Security.Permissions;
 
@@ -12,17 +9,12 @@ namespace LiteFx.Bases
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
     [Serializable]
-    public class BusinessException : System.Exception
+    public class BusinessException : Exception
     {
-        private ValidationResults validationResults;
-
         /// <summary>
         /// Resultados dos erros encontrados na validação de um objeto.
         /// </summary>
-        public ValidationResults ValidationResults
-        {
-            get { return validationResults; }
-        }
+        public ValidationResults ValidationResults { get; private set; }
 
         /// <summary>
         /// Constroi um BusinessException baseado nos resultados da validação.
@@ -62,7 +54,7 @@ namespace LiteFx.Bases
             {
                 throw new ArgumentException(Properties.Resources.ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido);
             }
-            this.validationResults = validationResults;
+            ValidationResults = validationResults;
         }
 
         /// <summary>
@@ -121,7 +113,7 @@ namespace LiteFx.Bases
         /// ]]>
         /// </code>
         /// </example>
-        public BusinessException(string message, System.Exception innerException) : base(message, innerException) { }
+        public BusinessException(string message, Exception innerException) : base(message, innerException) { }
 
         /// <summary>
         /// 
@@ -141,10 +133,10 @@ namespace LiteFx.Bases
         /// <param name="key">Chave.</param>
         public void AdicionarResultadoDeErro(string mensagem, string key)
         {
-            if (validationResults == null)
-                validationResults = new ValidationResults();
+            if (ValidationResults == null)
+                ValidationResults = new ValidationResults();
 
-            validationResults.AddResult(new ValidationResult(mensagem, null, key, key, null));
+            ValidationResults.AddResult(new ValidationResult(mensagem, null, key, key, null));
         }
     }
 }

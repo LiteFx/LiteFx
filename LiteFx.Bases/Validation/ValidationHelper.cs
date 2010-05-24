@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
-using LiteFx.Bases.Repository;
 using LiteFx.Bases.Specification;
 using System.Linq.Expressions;
 using LiteFx.Bases.Properties;

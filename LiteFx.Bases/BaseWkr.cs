@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate;
 
 namespace LiteFx.Bases
 {
@@ -11,28 +7,21 @@ namespace LiteFx.Bases
     /// Classe base para implementação de códigos de integração.
     /// </summary>
     /// <typeparam name="T">Tipo do contexto baseado no NHibernate.</typeparam>
-    public abstract class BaseWkr<T, TIdentificator> : IDisposable 
-        where T : IContext<TIdentificator>, IDisposable, new()
-        where TIdentificator : IEquatable<TIdentificator>
+    /// <typeparam name="TId">Type of Id.</typeparam>
+    public abstract class BaseWkr<T, TId> : IDisposable 
+        where T : class, IContext<TId>, IDisposable, new()
+        where TId : IEquatable<TId>
     {
         /// <summary>
         /// Implementação do Dipose Pattern.
         /// </summary>
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        private bool disposed = false;
-
-        /// <summary>
-        /// Membro privado para o contexto do banco de dados.
-        /// </summary>
-        private T dbContext;
+        private bool disposed;
 
         /// <summary>
         /// Propriedade para encapsular o contexto.
         /// </summary>
-        protected T DBContext
-        {
-            get { return dbContext; }
-        }
+        protected T DBContext { get; private set; }
 
         /// <summary>
         /// Constroi um objeto Worker.
@@ -68,7 +57,7 @@ namespace LiteFx.Bases
         /// </example>
         protected BaseWkr()
         {
-            this.dbContext = new T();
+            DBContext = new T();
         }
 
         /// <summary>
@@ -76,14 +65,7 @@ namespace LiteFx.Bases
         /// </summary>
         protected void SalvarContexto()
         {
-            try
-            {
-                DBContext.SaveContext();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            DBContext.SaveContext();
         }
 
         /// <summary>
@@ -121,14 +103,13 @@ namespace LiteFx.Bases
         /// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
-            {
-                if (disposing)
-                    if (dbContext != null)
-                        dbContext.Dispose();
+            if (disposed) return;
 
-                disposed = true;
-            }
+            if (disposing)
+                if (DBContext != null)
+                    DBContext.Dispose();
+
+            disposed = true;
         }
 
         /// <summary>
@@ -138,7 +119,7 @@ namespace LiteFx.Bases
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
         ~BaseWkr()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         #region IDisposable Members
@@ -173,7 +154,7 @@ namespace LiteFx.Bases
         /// </example>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 

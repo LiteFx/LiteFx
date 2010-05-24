@@ -9,8 +9,8 @@ namespace LiteFx.Web.Mvc.Models
     /// View default para telas Adição/Alteração.
     /// </summary>
     /// <typeparam name="T">Entidade.</typeparam>
-    /// <typeparam name="S">Tipo do settings.</typeparam>
-    public class BaseViewModel<T, S> : ISecurity
+    /// <typeparam name="TSetting">Tipo do settings.</typeparam>
+    public class BaseViewModel<T, TSetting> : ISecurity
     {
         /// <summary>
         /// Modelo
@@ -19,7 +19,7 @@ namespace LiteFx.Web.Mvc.Models
         /// <summary>
         /// Identificador do Parent do Modelo
         /// </summary>
-        public S Setting { get; set; }
+        public TSetting Setting { get; set; }
         /// <summary>
         /// Filtro Corrente
         /// </summary>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -10,10 +8,9 @@ namespace LiteFx.Web.UI
     /// <summary>
     /// Página base do LiteFx
     /// </summary>
-    public class BasePage : System.Web.UI.Page
+    public class BasePage : Page
     {        
         #region Constantes
-        const string Basic = "Basic";
         const string Rtl = "Rtl";
         const string Rel = "rel";
         const string ShortcutIcon = "shortcut icon";
@@ -27,8 +24,8 @@ namespace LiteFx.Web.UI
         /// </summary>
         public BasePage()
         {
-            this.PreInit += new EventHandler(Page_PreInit);
-            this.Load += new EventHandler(Page_Load);
+            PreInit += Page_PreInit;
+            Load += Page_Load;
         }
 
         /// <summary>
@@ -48,12 +45,12 @@ namespace LiteFx.Web.UI
         /// <param name="e">Argumentos do evento.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.Header.Title = Lite;
+            Header.Title = Lite;
 
             HtmlLink favIcon = new HtmlLink();
             favIcon.Attributes.Add(Rel, ShortcutIcon);
             favIcon.Href = FavIco;
-            this.Header.Controls.Add(favIcon);
+            Header.Controls.Add(favIcon);
         }
         #endregion
  
@@ -61,7 +58,7 @@ namespace LiteFx.Web.UI
         /// <summary>
         /// Formato para chamada da função alert do javascript.
         /// </summary>
-        private const string alertFormat = "alert(\"{0}\");";
+        private const string AlertFormat = "alert(\"{0}\");";
 
         /// <summary>
         /// Exibe uma menssagem no browser.
@@ -79,7 +76,7 @@ namespace LiteFx.Web.UI
         /// </example>
         protected void Alert(string key, string message) 
         {
-            ScriptManager.RegisterClientScriptBlock(this.Page, Page.GetType(), key, string.Format(alertFormat, message), true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), key, string.Format(AlertFormat, message), true);
         }
         #endregion
 
@@ -92,7 +89,7 @@ namespace LiteFx.Web.UI
         /// <returns>Valor resgatado pelo query string.</returns>
         protected string GetString(string key, bool throwOnNull)
         {
-            string result = this.Request.QueryString[key];
+            string result = Request.QueryString[key];
 
             if (result == null)
             {
@@ -100,13 +97,10 @@ namespace LiteFx.Web.UI
                 {
                     throw new Exception(string.Format(Properties.Resources.QueryStringNaoPodeSerNula, key));
                 }
-                else
-                {
-                    result = string.Empty;
-                }
+                result = string.Empty;
             }
 
-            return this.Server.UrlDecode(result);
+            return Server.UrlDecode(result);
         }
 
         /// <summary>

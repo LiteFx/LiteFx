@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace LiteFx.Bases.Specification
 {
@@ -27,12 +25,7 @@ namespace LiteFx.Bases.Specification
         /// </summary>
         protected Func<T, bool> PredicateCompiledCache
         {
-            get
-            {
-                if (predicateCompiledCache == null)
-                    predicateCompiledCache = Predicate.Compile();
-                return predicateCompiledCache;
-            }
+            get { return predicateCompiledCache ?? (predicateCompiledCache = Predicate.Compile()); }
         }
 
         /// <summary>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 using NHibernate;
 using NHibernate.Cfg;
@@ -14,7 +12,7 @@ namespace LiteFx.Bases
     /// NHibernate base context.
     /// </summary>
     /// <typeparam name="TId"></typeparam>
-    public class NHibernateContextBase<TId> : IContext<TId>, IDisposable
+    public abstract class NHibernateContextBase<TId> : IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
         #region NHibernate Configuration and SessionFactory Cache
@@ -24,13 +22,7 @@ namespace LiteFx.Bases
         /// </summary>
         protected static Configuration cfg
         {
-            get
-            {
-                if (_cfg == null)
-                    _cfg = new NHibernate.Cfg.Configuration();
-
-                return _cfg;
-            }
+            get { return _cfg ?? (_cfg = new Configuration()); }
         }
 
         /// <summary>
@@ -98,7 +90,7 @@ namespace LiteFx.Bases
         /// <summary>
         /// Flag usado para identificar se há uma transação aberta.
         /// </summary>
-        protected bool openTransaction = false;
+        protected bool openTransaction;
 
         /// <summary>
         /// Variavel que mantem a transação.
@@ -119,7 +111,9 @@ namespace LiteFx.Bases
 
             OpenSession();
 
-            transaction = currentSession.BeginTransaction();
+            if (currentSession != null) 
+                transaction = currentSession.BeginTransaction();
+
             openTransaction = true;
             return transaction;
         }
@@ -135,10 +129,6 @@ namespace LiteFx.Bases
             try
             {
                 transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -217,14 +207,7 @@ namespace LiteFx.Bases
         /// </summary>
         public virtual void SaveContext()
         {
-            try
-            {
-                CommitTransaction();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            CommitTransaction();
         }
 
         #endregion
@@ -235,7 +218,7 @@ namespace LiteFx.Bases
         /// Implementação do Dipose Pattern.
         /// </summary>
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Libera todos os recursos utilizados pela classe.
@@ -269,7 +252,7 @@ namespace LiteFx.Bases
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
         ~NHibernateContextBase()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -279,7 +262,7 @@ namespace LiteFx.Bases
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
         #endregion

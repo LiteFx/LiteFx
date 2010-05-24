@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI.WebControls;
 using System.Drawing;
 using System.IO;
@@ -16,7 +13,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
     public class ExcelResult : ActionResult
     {
         private string _fileName;
-        private string[] _headers = null;
+        private string[] _headers;
 
         private TableStyle _tableStyle;
         private TableItemStyle _headerStyle;
@@ -88,16 +85,17 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 
             // Create Header Row
             tw.RenderBeginTag(HtmlTextWriterTag.Thead);
-            foreach (String header in _headers)
-            {
-                ResourceManager resm = new ResourceManager(ResourceSource);
+            if (_headers != null)
+                foreach (var header in _headers)
+                {
+                    var resm = new ResourceManager(ResourceSource);
 
-                if (_headerStyle != null)
-                    _headerStyle.AddAttributesToRender(tw);
-                tw.RenderBeginTag(HtmlTextWriterTag.Th);
-                tw.Write(resm.GetString(header));
-                tw.RenderEndTag();
-            }
+                    if (_headerStyle != null)
+                        _headerStyle.AddAttributesToRender(tw);
+                    tw.RenderBeginTag(HtmlTextWriterTag.Th);
+                    tw.Write(resm.GetString(header));
+                    tw.RenderEndTag();
+                }
             tw.RenderEndTag();
 
 

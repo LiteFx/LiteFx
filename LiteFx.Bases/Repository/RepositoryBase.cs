@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using LiteFx.Bases;
 using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Repository
@@ -15,7 +12,7 @@ namespace LiteFx.Bases.Repository
     /// <typeparam name="TContext">Type of the Database Context.</typeparam>
     public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId> , IDisposable
         where TEntity : EntityBase<TId>, new()
-        where TContext : IContext<TId>, IDisposable, new()
+        where TContext : class, IContext<TId>, IDisposable, new()
         where TId : IEquatable<TId>
     {
         #region IRepository<T,IGerenciadorEventoDB> Members
@@ -105,7 +102,7 @@ namespace LiteFx.Bases.Repository
         /// Implementação do Dipose Pattern.
         /// </summary>
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Libera todos os recursos utilizados pela classe.
@@ -115,14 +112,13 @@ namespace LiteFx.Bases.Repository
         /// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
-            {
-                if (disposing)
-                    if (Context != null)
-                        Context.Dispose();
+            if (disposed) return;
 
-                disposed = true;
-            }
+            if (disposing)
+                if (Context != null)
+                    Context.Dispose();
+
+            disposed = true;
         }
 
         /// <summary>
@@ -132,7 +128,7 @@ namespace LiteFx.Bases.Repository
         /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
         ~RepositoryBase()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -165,7 +161,7 @@ namespace LiteFx.Bases.Repository
         /// </example>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 

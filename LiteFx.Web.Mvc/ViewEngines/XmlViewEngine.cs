@@ -54,11 +54,8 @@ namespace LiteFx.Web.Mvc.ViewEngines
                     // If BuildManager returns a 404 (Not Found) that means the file did not exist
                     return false;
                 }
-                else
-                {
-                    // All other error codes imply other errors such as compilation or parsing errors
-                    throw;
-                }
+                // All other error codes imply other errors such as compilation or parsing errors
+                throw;
             }
             catch
             {

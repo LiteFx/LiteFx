@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LiteFx.Bases.Validation;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
@@ -13,7 +10,7 @@ namespace LiteFx.Bases
     /// </summary>
     /// <typeparam name="T">Type of the entity. It will help the validation engine to discover wich object it will handle.</typeparam>
     /// <typeparam name="TId">Type of id.</typeparam>
-    public class EntityBaseWithValidation<T, TId> : EntityBase<TId>, IValidation
+    public abstract class EntityBaseWithValidation<T, TId> : EntityBase<TId>, IValidation
         where T : EntityBaseWithValidation<T, TId>
         where TId : IEquatable<TId>
     {

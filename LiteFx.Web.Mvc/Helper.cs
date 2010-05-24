@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using LiteFx.Bases;
 using System.Collections;
@@ -77,12 +74,11 @@ namespace LiteFx.Web.Mvc
                 modelState.AddModelError(string.Empty, ex.Message);
             }
 
-            if (ex.ValidationResults != null)
+            if (ex.ValidationResults == null) return;
+
+            foreach (var erro in ex.ValidationResults)
             {
-                foreach (var erro in ex.ValidationResults)
-                {
-                    modelState.AddModelError(erro.Key, erro.Message);
-                }
+                modelState.AddModelError(erro.Key, erro.Message);
             }
         }
 
@@ -99,13 +95,12 @@ namespace LiteFx.Web.Mvc
                 modelState.AddModelError(string.Empty, ex.Message);
             }
 
-            if (ex.ValidationResults != null)
+            if (ex.ValidationResults == null) return;
+
+            foreach (var erro in ex.ValidationResults)
             {
-                foreach (var erro in ex.ValidationResults)
-                {
-                    modelState.AddModelError(erro.Key, erro.Message);
-                    modelState.SetModelValue(erro.Key, valueProvider[erro.Key]);
-                }
+                modelState.AddModelError(erro.Key, erro.Message);
+                modelState.SetModelValue(erro.Key, valueProvider[erro.Key]);
             }
         }
     }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Repository
@@ -10,17 +8,17 @@ namespace LiteFx.Bases.Repository
     /// Repository interface.
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
-    /// <typeparam name="TIdentificator">Type of identificator.</typeparam>
+    /// <typeparam name="TId">Type of identificator.</typeparam>
     /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
-    public interface IRepository<TEntity, TIdentificator> 
-        where TIdentificator : IEquatable<TIdentificator>
+    public interface IRepository<TEntity, in TId> 
+        where TId : IEquatable<TId>
     {
         /// <summary>
         /// Get the entity instance by id.
         /// </summary>
         /// <param name="id">Entity identificator.</param>
         /// <returns>An entity instance.</returns>
-        TEntity GetById(TIdentificator id);
+        TEntity GetById(TId id);
 
         /// <summary>
         /// Get a list of entities that satisfy the specificaton.
@@ -58,6 +56,6 @@ namespace LiteFx.Bases.Repository
         /// Delete an entity by the identificator.
         /// </summary>
         /// <param name="id">Entity identificator.</param>
-        void Delete(TIdentificator id);
+        void Delete(TId id);
     }
 }

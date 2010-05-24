@@ -55,16 +55,18 @@ namespace NHibernateDatabaseGenerator
             IPersistenceConfigurer databaseConfig = null;
             string fileName = "Domain Database Script - {0}.sql";
 
-            if (rdbSqlServer.IsChecked.Value)
-            {
-                databaseConfig = MsSqlConfiguration.MsSql2005;
-                fileName = string.Format(fileName, "Sql Server 2005");
-            }
-            else if (rdbOracle.IsChecked.Value)
-            {
-                databaseConfig = OracleDataClientConfiguration.Oracle9;
-                fileName = string.Format(fileName, "Oracle 9g");
-            }
+            if (rdbSqlServer.IsChecked != null)
+                if (rdbSqlServer.IsChecked.Value)
+                {
+                    databaseConfig = MsSqlConfiguration.MsSql2005;
+                    fileName = string.Format(fileName, "Sql Server 2005");
+                }
+                else if (rdbOracle.IsChecked != null)
+                    if (rdbOracle.IsChecked.Value)
+                    {
+                        databaseConfig = OracleDataClientConfiguration.Oracle9;
+                        fileName = string.Format(fileName, "Oracle 9g");
+                    }
 
             Fluently.Configure()
                 .Mappings(m => m.FluentMappings.AddFromAssembly(assembly))

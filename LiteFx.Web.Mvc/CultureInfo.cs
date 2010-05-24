@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace LiteFx.Web.Mvc
@@ -37,9 +34,9 @@ namespace LiteFx.Web.Mvc
         /// <param name="cultureInfo">Informações da cultura.</param>
         public ClientCultureInfo(CultureInfo cultureInfo)
         {
-            this.name = cultureInfo.Name;
-            this.numberFormat = cultureInfo.NumberFormat;
-            this.dateTimeFormat = cultureInfo.DateTimeFormat;
+            name = cultureInfo.Name;
+            numberFormat = cultureInfo.NumberFormat;
+            dateTimeFormat = cultureInfo.DateTimeFormat;
         }
     }
 }

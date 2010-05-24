@@ -24,7 +24,7 @@ namespace LiteFx.Bases
             if (entity.EntityKey == null)
                 entity.EntityKey = context.CreateEntityKey(entitySetName, entity);
 
-            if (entity.EntityState == System.Data.EntityState.Detached)
+            if (entity.EntityState == EntityState.Detached)
                 context.Attach(entity);
 
             var stateEntry = context.ObjectStateManager.GetObjectStateEntry(entity.EntityKey);
@@ -52,11 +52,11 @@ namespace LiteFx.Bases
 
             if (entity.EntityState == EntityState.Detached)
             {
-                object currentEntityInDb = null;
+                object currentEntityInDb;
                 if (context.TryGetObjectByKey(entity.EntityKey, out currentEntityInDb))
                 {
                     context.ApplyPropertyChanges(entity.EntityKey.EntitySetName, entity);
-                    context.ApplyReferencePropertyChanges((IEntityWithRelationships)entity,
+                    context.ApplyReferencePropertyChanges(entity,
                                                       (IEntityWithRelationships)currentEntityInDb);  //extension
                 }
                 else
@@ -77,11 +77,9 @@ namespace LiteFx.Bases
             foreach (var relatedEnd in oldEntity.RelationshipManager.GetAllRelatedEnds())
             {
                 var oldRef = relatedEnd as EntityReference;
-                if (oldRef != null)
-                {
-                    var newRef = newEntity.RelationshipManager.GetRelatedEnd(oldRef.RelationshipName, oldRef.TargetRoleName) as EntityReference;
-                    oldRef.EntityKey = newRef.EntityKey;
-                }
+                if (oldRef == null) continue;
+                var newRef = newEntity.RelationshipManager.GetRelatedEnd(oldRef.RelationshipName, oldRef.TargetRoleName) as EntityReference;
+                if (newRef != null) oldRef.EntityKey = newRef.EntityKey;
             }
         }
     }
