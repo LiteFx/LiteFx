@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using System.Configuration;
 using System.Data.Objects;
 using LiteFx.Bases.Properties;
+using System.Configuration;
 
-namespace LiteFx.Bases.Entity
+namespace LiteFx.Bases
 {
     /// <summary>
     /// Classe base para implementação de códigos de integração.
@@ -140,7 +140,7 @@ namespace LiteFx.Bases.Entity
             }
             catch (System.Data.UpdateException uex) 
             {
-                throw new BusinessException(Resources.NaoFoiPossivelExcluirORegistro, uex);
+                throw new BusinessException("Não foi possivel excluir o registro.", uex);
             }
         }
 

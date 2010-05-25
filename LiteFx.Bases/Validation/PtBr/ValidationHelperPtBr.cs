@@ -30,7 +30,7 @@ namespace LiteFx.Bases.Validation.PtBr
             return ValidationHelper.IsNotNullOrEmpty(validator);
         }
 
-        public static Validator<T, string> Tamanho<T>(this Validator<T, string> validator, int maxLength)
+        public static Validator<T, string> TamanhoMaximo<T>(this Validator<T, string> validator, int maxLength)
         {
             return ValidationHelper.Length(validator, maxLength);
         }

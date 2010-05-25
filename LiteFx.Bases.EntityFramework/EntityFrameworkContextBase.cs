@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Data.Objects;
 using System.Data;
 
-namespace LiteFx.Bases.EntityFramework
+namespace LiteFx.Bases.Context.EntityFramework
 {
     /// <summary>
     /// Entity Framework Context Base.
@@ -90,13 +88,15 @@ namespace LiteFx.Bases.EntityFramework
         /// </summary>
         /// <typeparam name="T">Tipo do entidade.</typeparam>
         /// <param name="id">Identificador do entidade.</param>
-        public virtual T Delete<T>(TId id) where T : EntityBase<TId>, new()
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual T Delete<T>(TId id)
         {
-            T entity = new T();
-            entity.Id = id;
-            entity = (T)GetObjectByKey(CreateEntityKey(typeof(T).Name, entity));
-            Delete(entity);
-            return entity;
+            //T entity = new T();
+            //entity.Id = id;
+            //entity = (T)GetObjectByKey(CreateEntityKey(typeof(T).Name, entity));
+            //Delete(entity);
+            //return entity;
+            throw new NotImplementedException();
         }
 
         /// <summary>

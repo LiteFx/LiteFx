@@ -8,8 +8,8 @@
     <ProjectGuid>{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LiteFx.Linq.Extensions</RootNamespace>
-    <AssemblyName>LiteFx.Linq.Extensions</AssemblyName>
+    <RootNamespace>System.Linq.Dynamic</RootNamespace>
+    <AssemblyName>System.Linq.Dynamic</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -60,7 +60,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\Release\LiteFx.Linq.Extensions.XML</DocumentationFile>
+    <DocumentationFile>..\Release\System.Linq.Dynamic.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>

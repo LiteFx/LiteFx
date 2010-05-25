@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace LiteFx.Web.Mvc
+﻿namespace LiteFx.Web.Mvc
 {
     /// <summary>
     /// Constantes utilizadas neste projeto

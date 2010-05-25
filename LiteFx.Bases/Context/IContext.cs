@@ -39,7 +39,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <param name="id">Entity id.</param>
-        T Delete<T>(TId id) where T : EntityBase<TId>, new();
+        T Delete<T>(TId id);
 
         /// <summary>
         /// Begins a transaction in context.

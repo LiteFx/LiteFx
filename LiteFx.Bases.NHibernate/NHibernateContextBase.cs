@@ -6,7 +6,7 @@ using NHibernate.Cfg;
 using NHibernate.Linq;
 using FluentNHibernate.Cfg;
 
-namespace LiteFx.Bases
+namespace LiteFx.Bases.Context.NHibernate
 {
     /// <summary>
     /// NHibernate base context.
@@ -20,7 +20,7 @@ namespace LiteFx.Bases
         /// <summary>
         /// Propriedade privada para fazer o cache da configuração do NHibernate.
         /// </summary>
-        protected static Configuration cfg
+        protected static Configuration Cfg
         {
             get { return _cfg ?? (_cfg = new Configuration()); }
         }
@@ -38,27 +38,19 @@ namespace LiteFx.Bases
         /// <summary>
         /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
         /// </summary>
-        protected static ISessionFactory sessionFactory
+        protected static ISessionFactory SessionFactory
         {
             get
             {
-                if (_sessionFactory == null)
-                    _sessionFactory = Fluently.Configure(cfg)
-                        /* TODO: PODEMOS USAR ESTA FUNCIONALIDADE NO FUTURO
-                        .ExposeConfiguration(config =>
-                        {
-                            SchemaExport se = new SchemaExport(config);
-                            se.SetOutputFile(@"E:\SWFontes\PortalSim\Desenvolvimento\PortalSim.Web.Mvc\teste.txt");
-                            se.Create(false, false);
-                        })*/
-                                              .Mappings(m =>
-                                              {
-                                                  m.FluentMappings.AddFromAssembly(AssemblyToConfigure);
-                                                  m.HbmMappings.AddFromAssembly(AssemblyToConfigure);
-                                              })
-                                              .BuildSessionFactory();
-
-                return _sessionFactory;
+                return _sessionFactory ?? (_sessionFactory = Fluently.Configure(Cfg)
+                                                                 .Mappings(m =>
+                                                                               {
+                                                                                   m.FluentMappings.AddFromAssembly(
+                                                                                       AssemblyToConfigure);
+                                                                                   m.HbmMappings.AddFromAssembly(
+                                                                                       AssemblyToConfigure);
+                                                                               })
+                                                                 .BuildSessionFactory());
             }
         }
         #endregion
@@ -77,7 +69,7 @@ namespace LiteFx.Bases
         /// </summary>
         protected virtual void OpenSession()
         {
-            currentSession = sessionFactory.OpenSession();
+            currentSession = SessionFactory.OpenSession();
         }
 
         #region IDBContext Members
@@ -166,9 +158,9 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Tipo do entidade.</typeparam>
         /// <param name="id">Identificador do entidade.</param>
-        public virtual T Delete<T>(TId id) where T : EntityBase<TId>, new()
+        public virtual T Delete<T>(TId id)
         {
-            T obj = currentSession.Get<T>(id);
+            var obj = currentSession.Get<T>(id);
             Delete(obj);
             return obj;
         }
@@ -228,21 +220,20 @@ namespace LiteFx.Bases
         /// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    if (openTransaction)
-                    {
-                        RollBackTransaction();
-                    }
+            if (disposed) return;
 
-                    if (currentSession != null)
-                        currentSession.Dispose();
+            if (disposing)
+            {
+                if (openTransaction)
+                {
+                    RollBackTransaction();
                 }
 
-                disposed = true;
+                if (currentSession != null)
+                    currentSession.Dispose();
             }
+
+            disposed = true;
         }
 
         /// <summary>

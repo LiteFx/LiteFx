@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.Data;
 
-namespace LiteFx.Bases
+namespace LiteFx.Bases.Context.EntityFramework
 {
     /// <summary>
     /// Extensões para o EntityFramework.
