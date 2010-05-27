@@ -61,15 +61,6 @@ namespace LiteFx.Bases.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível excluir o registro. Ele esta relacionado a outros registros..
-        /// </summary>
-        internal static string NaoFoiPossivelExcluirORegistro {
-            get {
-                return ResourceManager.GetString("NaoFoiPossivelExcluirORegistro", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido..
         /// </summary>
         internal static string ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido {

@@ -1,63 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.Practices.EnterpriseLibrary.Validation;
 
 namespace LiteFx.Bases.Validation
 {
     public abstract class Assertion
     {
-        public abstract bool IsValid(object obj);
-        internal abstract string MemberName { get; }
-        internal abstract string ValidationMessage { get; set; }
+        public abstract bool Evaluate(object obj, ValidationResults results);
     }
 
     public class Assertion<T, TProperty> : Assertion
     {
-        public Expression<Func<T, TProperty>> Accessor { get; protected set; }
-
-        private Func<T, TProperty> compiledAccessor;
-        private Func<T, TProperty> CompiledAccessor
-        {
-            get { return compiledAccessor ?? (compiledAccessor = Accessor.Compile()); }
-        }
-
-        public Func<TProperty, bool> Predicate { get; internal set; }
-
-        public bool AccessorCanBeNull { get; set; }
-
-        public Assertion(Expression<Func<T, TProperty>> accessor) : this(accessor, null) { }
-
-        public Assertion(Expression<Func<T, TProperty>> accessor, Func<TProperty, bool> evalExpression)
-        {
-            if (accessor == null)
-                throw new ArgumentNullException("accessor");
-
-            if (accessor.Body.NodeType != ExpressionType.MemberAccess && accessor.Body.NodeType != ExpressionType.Parameter)
-                throw new ArgumentException("accessor should be ExpressionType.MemberAccess or ExpressionType.Parameter");
-
-            Accessor = accessor;
-            Predicate = evalExpression;
-            AccessorCanBeNull = true;
-        }
-
-        public override bool IsValid(object obj)
-        {
-            TProperty property = CompiledAccessor((T)obj);
-
-            if (!AccessorCanBeNull && property == null)
-                return true;
-
-            return Predicate(property);
-        }
-
-        internal override string MemberName
-        {
-            get { return ((MemberExpression)Accessor.Body).Member.Name; }
-        }
-
-        internal override string ValidationMessage
+        public List<Accessor<T, TProperty>> Accessors
         {
             get;
-            set;
+            private set;
+        }
+
+        public List<Predicate<TProperty>> Predicates { get; private set; }
+
+        public Assertion WhenAssertion { get; set; }
+
+        public Assertion()
+        {
+            Accessors = new List<Accessor<T, TProperty>>();
+            Predicates = new List<Predicate<TProperty>>();
+        }
+
+        public override bool Evaluate(object obj, ValidationResults results)
+        {
+            if (WhenAssertion != null && !WhenAssertion.Evaluate(obj, null)) return true;
+
+            bool allPredicatesAreValid = true;
+
+            foreach (var predicate in Predicates)
+            {
+                foreach (var accessor in Accessors)
+                {
+                    if (!predicate.EvalPredicate(accessor.CompiledAccessor((T)obj)))
+                    {
+                        if (results != null)
+                            results.AddResult(
+                                new ValidationResult(string.Format(predicate.ValidationMessage, accessor.MemberName),
+                                                     null,
+                                                     accessor.MemberName, accessor.MemberName, null));
+                        allPredicatesAreValid = false;
+                    }
+                }
+            }
+
+            return allPredicatesAreValid;
         }
     }
 }

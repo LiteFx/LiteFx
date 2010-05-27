@@ -9,12 +9,7 @@ namespace LiteFx.Bases.Validation
         private List<Assertion> assertions;
         public List<Assertion> Assertions
         {
-            get
-            {
-                if (assertions == null)
-                    assertions = new List<Assertion>();
-                return assertions;
-            }
+            get { return assertions ?? (assertions = new List<Assertion>()); }
         }
 
         public T InstanceReference { get; set; }
@@ -46,13 +41,13 @@ namespace LiteFx.Bases.Validation
 
         private void Validate(bool throwsExcepetion) 
         {
-            Results = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate<T>(InstanceReference);
+            Results = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(InstanceReference);
 
-            foreach (var item in Assertions.AsEnumerable())
+            foreach (var item in Assertions)
             {
-                if (!item.IsValid(InstanceReference))
-                    AddValidationResult(string.Format(item.ValidationMessage, item.MemberName), item.MemberName);
+                item.Evaluate(InstanceReference, Results);
             }
+
             assertionsExecuted = true;
 
             if (throwsExcepetion)
@@ -87,8 +82,11 @@ namespace LiteFx.Bases.Validation
         {
             get
             {
+                if(columnName == "Error" || columnName == "IsValid") return null;
+
                 if (!assertionsExecuted)
                     Validate(false);
+
                 return (from e in Results
                         where e.Key == columnName
                         select e.Message).FirstOrDefault();

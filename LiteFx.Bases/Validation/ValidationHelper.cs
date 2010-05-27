@@ -10,22 +10,30 @@ namespace LiteFx.Bases.Validation
     {
         public static Validator<T, TResult> That<T, TResult>(this Assert<T> assert, Expression<Func<T, TResult>> accessor)
         {
-            var assertion = new Assertion<T, TResult>(accessor);
-            return new Validator<T,TResult>(assertion, assert);
+            var assertion = new Assertion<T, TResult>();
+            assertion.Accessors.Add(new Accessor<T, TResult>(accessor));
+            assert.Assertions.Add(assertion);
+            return new Validator<T,TResult>(assertion);
+        }
+
+        public static Validator<T, TResult> And<T, TResult>(this Validator<T, TResult> validator, Expression<Func<T, TResult>> accessor)
+        {
+            validator.Assertion.Accessors.Add(new Accessor<T, TResult>(accessor));
+            return validator;
+        }
+
+        public static Validator<T, TResult2> When<T, TResult1, TResult2>(this Validator<T, TResult1> validator, Expression<Func<T, TResult2>> accessor)
+        {
+            var whenAssertion = new Assertion<T, TResult2>();
+            whenAssertion.Accessors.Add(new Accessor<T, TResult2>(accessor));
+            validator.Assertion.WhenAssertion = whenAssertion;
+            return new Validator<T, TResult2>(whenAssertion);
         }
 
         public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message)
         {
-            return IsSatisfied(validator, expression, message, true);
-        }
-
-        public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message, bool accessorCanBeNull)
-        {
-            validator.Assertion.Predicate = expression;
-            validator.Assertion.ValidationMessage = message;
-            validator.Assertion.AccessorCanBeNull = accessorCanBeNull;
-            validator.EndValidation();
-            return That(validator.AssertReference, validator.Assertion.Accessor);
+            validator.Assertion.Predicates.Add(new Predicate<TResult>(expression, message));
+            return validator;
         }
 
         public static Validator<T, TResult> IsNull<T, TResult>(this Validator<T, TResult> validator)
@@ -108,11 +116,7 @@ namespace LiteFx.Bases.Validation
         public static Validator<T, TResult> Equals<T, TResult>(this Validator<T, TResult> validator, TResult other)
             where TResult : IEquatable<TResult>
         {
-            return IsSatisfied(validator, p =>
-            {
-                if (p == null) return true;
-                return p.Equals(other);
-            }, string.Format(Resources.TheFieldXMustBeEqualsY, "{0}", other));
+            return IsSatisfied(validator, p => p == null || p.Equals(other), string.Format(Resources.TheFieldXMustBeEqualsY, "{0}", other));
         }
 
         public static Validator<T, TResult> NotEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
@@ -127,7 +131,7 @@ namespace LiteFx.Bases.Validation
 
         public static Validator<T, T> IsSatisfiedBy<T>(this Validator<T, T> validator, ISpecification<T> spec) 
         {
-            return IsSatisfied(validator, p => spec.IsSatisfiedBy(p), "Spec Failure.");
+            return IsSatisfied(validator, spec.IsSatisfiedBy, "Spec Failure.");
         }
     }
 }
