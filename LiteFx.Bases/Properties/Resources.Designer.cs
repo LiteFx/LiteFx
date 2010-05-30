@@ -70,6 +70,24 @@ namespace LiteFx.Bases.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; can not be a number..
+        /// </summary>
+        internal static string TheFieldXCanNotBeANumber {
+            get {
+                return ResourceManager.GetString("TheFieldXCanNotBeANumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; can not be empty..
+        /// </summary>
+        internal static string TheFieldXCanNotBeEmpty {
+            get {
+                return ResourceManager.GetString("TheFieldXCanNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &apos;{0}&apos; can not be greater than &apos;{1}&apos;..
         /// </summary>
         internal static string TheFieldXCanNotBeGreaterThanY {
@@ -124,11 +142,29 @@ namespace LiteFx.Bases.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; must be a number..
+        /// </summary>
+        internal static string TheFieldXMustBeANumber {
+            get {
+                return ResourceManager.GetString("TheFieldXMustBeANumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &apos;{0}&apos; must be between &apos;{1}&apos; and &apos;{2}&apos;..
         /// </summary>
         internal static string TheFieldXMustBeBetweenYandZ {
             get {
                 return ResourceManager.GetString("TheFieldXMustBeBetweenYandZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field length &apos;{0}&apos; must be between &apos;{1}&apos; and &apos;{2}&apos; characters..
+        /// </summary>
+        internal static string TheFieldXMustBeBetweenYandZCharacters {
+            get {
+                return ResourceManager.GetString("TheFieldXMustBeBetweenYandZCharacters", resourceCulture);
             }
         }
         
@@ -142,11 +178,29 @@ namespace LiteFx.Bases.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; must be empty..
+        /// </summary>
+        internal static string TheFieldXMustBeEmpty {
+            get {
+                return ResourceManager.GetString("TheFieldXMustBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &apos;{0}&apos; must be equals &apos;{1}&apos;..
         /// </summary>
         internal static string TheFieldXMustBeEqualsY {
             get {
                 return ResourceManager.GetString("TheFieldXMustBeEqualsY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; must be False..
+        /// </summary>
+        internal static string TheFieldXMustBeFalse {
+            get {
+                return ResourceManager.GetString("TheFieldXMustBeFalse", resourceCulture);
             }
         }
         
@@ -165,6 +219,15 @@ namespace LiteFx.Bases.Properties {
         internal static string TheFieldXMustBeNullOrEmpty {
             get {
                 return ResourceManager.GetString("TheFieldXMustBeNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &apos;{0}&apos; must be True..
+        /// </summary>
+        internal static string TheFieldXMustBeTrue {
+            get {
+                return ResourceManager.GetString("TheFieldXMustBeTrue", resourceCulture);
             }
         }
         

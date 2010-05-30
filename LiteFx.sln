@@ -69,6 +69,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferencedLibrary", "Refere
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Bases.NHibernate", "LiteFx.Bases.NHibernate\LiteFx.Bases.NHibernate.csproj", "{5AE35B25-5738-437A-8330-F30E84B391D8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{5C1A2F3F-6B58-45EA-A100-2CF32382E4F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.Bases.Specs", "LiteFx.Bases.Specs\LiteFx.Bases.Specs.csproj", "{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LiteFx.vsmdi
@@ -182,14 +186,25 @@ Global
 		{5AE35B25-5738-437A-8330-F30E84B391D8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5AE35B25-5738-437A-8330-F30E84B391D8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5AE35B25-5738-437A-8330-F30E84B391D8}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4E0A1E16-FFAA-44B2-AC16-F64981C88696} = {BA2551D4-ADD2-4F76-9F8C-60D52E21769C}
-		{B9313C10-D0F4-4BB2-B4A3-122F2E852705} = {6AC02AEC-97A2-4E2B-9AE3-E31AB2E2D976}
 		{D05B72F9-EA6D-4ED5-8D46-9BEB13659A93} = {B2988A13-75F0-4648-B342-3D27734EB06E}
+		{B9313C10-D0F4-4BB2-B4A3-122F2E852705} = {6AC02AEC-97A2-4E2B-9AE3-E31AB2E2D976}
+		{FC44B872-F7BC-4B72-8D4E-B7F5C43BFD4A} = {5C1A2F3F-6B58-45EA-A100-2CF32382E4F3}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

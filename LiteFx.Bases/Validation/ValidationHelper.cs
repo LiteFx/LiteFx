@@ -46,6 +46,26 @@ namespace LiteFx.Bases.Validation
             return IsSatisfied(validator, p => p != null, Resources.TheFieldXMustBeNull);
         }
 
+        public static Validator<T, bool> IsTrue<T>(this Validator<T, bool> validator)
+        {
+            return IsSatisfied(validator, p => p, Resources.TheFieldXMustBeTrue);
+        }
+
+        public static Validator<T, bool> IsFalse<T>(this Validator<T, bool> validator)
+        {
+            return IsSatisfied(validator, p => !p, Resources.TheFieldXMustBeFalse);
+        }
+
+        public static Validator<T, double> IsNaN<T>(this Validator<T, double> validator)
+        {
+            return IsSatisfied(validator, p => double.IsNaN(p), Resources.TheFieldXCanNotBeANumber);
+        }
+
+        public static Validator<T, double> IsNotNaN<T>(this Validator<T, double> validator)
+        {
+            return IsSatisfied(validator, p => !double.IsNaN(p), Resources.TheFieldXMustBeANumber);
+        }
+
         public static Validator<T, string> IsNullOrEmpty<T>(this Validator<T, string> validator)
         {
             return IsSatisfied(validator, p => string.IsNullOrEmpty(p), Resources.TheFieldXMustBeNullOrEmpty);
@@ -54,6 +74,16 @@ namespace LiteFx.Bases.Validation
         public static Validator<T, string> IsNotNullOrEmpty<T>(this Validator<T, string> validator)
         {
             return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXCanNotBeNullOrEmpty);
+        }
+
+        public static Validator<T, string> IsEmpty<T>(this Validator<T, string> validator)
+        {
+            return IsSatisfied(validator, p => string.Empty == p, Resources.TheFieldXMustBeEmpty);
+        }
+
+        public static Validator<T, string> IsNotEmpty<T>(this Validator<T, string> validator)
+        {
+            return IsSatisfied(validator, p => string.Empty != p, Resources.TheFieldXCanNotBeEmpty);
         }
 
         public static Validator<T, string> MaxLength<T>(this Validator<T, string> validator, int maxLength)
@@ -72,6 +102,15 @@ namespace LiteFx.Bases.Validation
                 if (p == null) return true;
                 return p.Trim().Length >= minLength;
             }, string.Format(Resources.TheFieldXCanNotHaveLessThanYCharacters, "{0}", minLength));
+        }
+
+        public static Validator<T, string> RangeLength<T>(this Validator<T, string> validator, int minLength, int maxLength)
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.Trim().Length >= minLength && p.Trim().Length <= maxLength;
+            }, string.Format(Resources.TheFieldXCanNotHaveLessThanYCharacters, "{0}", minLength, maxLength));
         }
 
         public static Validator<T, string> Length<T>(this Validator<T, string> validator, int length)
