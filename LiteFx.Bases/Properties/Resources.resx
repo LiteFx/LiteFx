@@ -120,6 +120,9 @@
   <data name="ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido" xml:space="preserve">
     <value>Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido.</value>
   </data>
+  <data name="SomeBusinessRulesWasViolated" xml:space="preserve">
+    <value>Some business rules was violated.</value>
+  </data>
   <data name="TheFieldXCanNotBeANumber" xml:space="preserve">
     <value>The field '{0}' can not be a number.</value>
   </data>

@@ -70,6 +70,15 @@ namespace LiteFx.Bases.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some business rules was violated..
+        /// </summary>
+        internal static string SomeBusinessRulesWasViolated {
+            get {
+                return ResourceManager.GetString("SomeBusinessRulesWasViolated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &apos;{0}&apos; can not be a number..
         /// </summary>
         internal static string TheFieldXCanNotBeANumber {

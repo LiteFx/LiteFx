@@ -69,16 +69,17 @@ namespace LiteFx.Web.Mvc
         /// <param name="ex">Exceção de negócio.</param>
         public static void TransferirErros(this ModelStateDictionary modelState, BusinessException ex)
         {
-            if(!string.IsNullOrEmpty(ex.Message))
+            if (ex.ValidationResults != null)
             {
-                modelState.AddModelError(string.Empty, ex.Message);
+                foreach (var erro in ex.ValidationResults)
+                    modelState.AddModelError(erro.Key, erro.Message);
+
+                return;
             }
 
-            if (ex.ValidationResults == null) return;
-
-            foreach (var erro in ex.ValidationResults)
+            if (!string.IsNullOrEmpty(ex.Message))
             {
-                modelState.AddModelError(erro.Key, erro.Message);
+                modelState.AddModelError(string.Empty, ex.Message);
             }
         }
 
@@ -90,17 +91,20 @@ namespace LiteFx.Web.Mvc
         /// <pparam name="valueProvider">Valores informados pelo usuário.</pparam>
         public static void TransferirErros(this ModelStateDictionary modelState, BusinessException ex, IDictionary<string, ValueProviderResult> valueProvider)
         {
+            if (ex.ValidationResults != null)
+            {
+                foreach (var erro in ex.ValidationResults)
+                {
+                    modelState.AddModelError(erro.Key, erro.Message);
+                    modelState.SetModelValue(erro.Key, valueProvider[erro.Key]);
+                }
+
+                return;
+            }
+
             if (!string.IsNullOrEmpty(ex.Message))
             {
                 modelState.AddModelError(string.Empty, ex.Message);
-            }
-
-            if (ex.ValidationResults == null) return;
-
-            foreach (var erro in ex.ValidationResults)
-            {
-                modelState.AddModelError(erro.Key, erro.Message);
-                modelState.SetModelValue(erro.Key, valueProvider[erro.Key]);
             }
         }
     }

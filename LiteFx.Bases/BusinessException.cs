@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
 using System.Security.Permissions;
+using System.Text;
 
 namespace LiteFx.Bases
 {
@@ -47,13 +48,12 @@ namespace LiteFx.Bases
         /// ]]>
         /// </code>
         /// </example>
-        public BusinessException(ValidationResults validationResults) : base(string.Empty)
+        public BusinessException(ValidationResults validationResults) : base(Properties.Resources.SomeBusinessRulesWasViolated)
         {
             //Nao há razao para repassar uma excecao se os resultados da validacao foram positivos
             if (validationResults.IsValid)
-            {
                 throw new ArgumentException(Properties.Resources.ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido);
-            }
+
             ValidationResults = validationResults;
         }
 
@@ -137,6 +137,21 @@ namespace LiteFx.Bases
                 ValidationResults = new ValidationResults();
 
             ValidationResults.AddResult(new ValidationResult(mensagem, null, key, key, null));
+        }
+
+        public override string Message
+        {
+            get
+            {
+                var errorStringBuilder = new StringBuilder();
+
+                foreach (var businessRuleViolation in ValidationResults)
+                {
+                    errorStringBuilder.AppendFormat("{0} : {1}{2}", businessRuleViolation.Key, businessRuleViolation.Message, Environment.NewLine);
+                }
+
+                return base.Message + Environment.NewLine + errorStringBuilder;
+            }
         }
     }
 }
