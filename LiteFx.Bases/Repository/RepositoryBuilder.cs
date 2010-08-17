@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LiteFx.Bases.Repository
 {
-    class RepositoryBuilder
+    public class RepositoryBuilder
     {
     }
 }
