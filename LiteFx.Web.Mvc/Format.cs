@@ -27,7 +27,7 @@ namespace LiteFx.Web.Mvc
         /// </summary>
         Pdf,
         /// <summary>
-        /// Formato Excel.
+        /// Xls Format (Excel Office Format).
         /// </summary>
         Xls,
         /// <summary>
