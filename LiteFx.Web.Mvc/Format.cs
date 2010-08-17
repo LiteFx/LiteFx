@@ -19,7 +19,7 @@ namespace LiteFx.Web.Mvc
         /// </summary>
         Json,
         /// <summary>
-        /// Formato Xml (eXtensible Markup Language).
+        /// Format Xml (eXtensible Markup Language).
         /// </summary>
         Xml,
         /// <summary>
