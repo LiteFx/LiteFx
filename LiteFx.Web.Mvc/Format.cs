@@ -11,11 +11,11 @@ namespace LiteFx.Web.Mvc
     public enum Format
     {
         /// <summary>
-        /// Formato Html (HiperText Markup Language).
+        /// Format Html (HiperText Markup Language).
         /// </summary>
         Html,
         /// <summary>
-        /// Formato Json (Javascript Object Notation).
+        /// Format Json (Javascript Object Notation).
         /// </summary>
         Json,
         /// <summary>
