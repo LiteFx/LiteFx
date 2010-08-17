@@ -121,14 +121,12 @@
     <Compile Include="Extensions\Behaviors\AutoCompleteExtensions.cs" />
     <Compile Include="Extensions\Behaviors\CalendarExtensions.cs" />
     <Compile Include="Extensions\Behaviors\DateParseExtensions.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ResourceTracker.cs" />
     <Compile Include="Extensions\ScriptExtensions.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HideFromView.cs" />
-    <Compile Include="LiteHtmlHelper.cs" />
     <Compile Include="Models\BaseListViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\DefaultListViewModel.cs" />

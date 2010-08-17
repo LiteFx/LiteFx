@@ -152,7 +152,7 @@ namespace LiteFx.Bases.Validation
             }, string.Format(Resources.TheFieldXMustBeBetweenYandZ, "{0}", min, max));
         }
 
-        public static Validator<T, TResult> Equals<T, TResult>(this Validator<T, TResult> validator, TResult other)
+        public static Validator<T, TResult> AreEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
             where TResult : IEquatable<TResult>
         {
             return IsSatisfied(validator, p => p == null || p.Equals(other), string.Format(Resources.TheFieldXMustBeEqualsY, "{0}", other));
