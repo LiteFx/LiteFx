@@ -12,7 +12,7 @@ namespace LiteFx.Bases.Repository
     /// <typeparam name="TContext">Type of the Database Context.</typeparam>
     public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId> , IDisposable
         where TEntity : EntityBase<TId>, new()
-        where TContext : class, IContext<TId>, IDisposable, new()
+        where TContext : class, IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
         #region IRepository<T,IGerenciadorEventoDB> Members
@@ -71,7 +71,6 @@ namespace LiteFx.Bases.Repository
         public virtual void Save(TEntity entity)
         {
             Context.Save(entity);
-            Context.SaveContext();
         }
 
         /// <summary>
@@ -81,7 +80,6 @@ namespace LiteFx.Bases.Repository
         public virtual void Delete(TEntity entity)
         {
             Context.Delete(entity);
-            Context.SaveContext();
         }
 
         /// <summary>
@@ -91,6 +89,13 @@ namespace LiteFx.Bases.Repository
         public virtual void Delete(TId id)
         {
             Context.Delete<TEntity>(id);
+        }
+
+        /// <summary>
+        /// Persists all changes.
+        /// </summary>
+        public virtual void PersistAll()
+        {
             Context.SaveContext();
         }
 

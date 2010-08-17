@@ -81,9 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AuthoringTests.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\LiteFx.Util\LiteFx.Util.csproj">
       <Project>{104A1DB0-9BE5-478F-A09D-5E583266D84F}</Project>
       <Name>LiteFx.Util</Name>

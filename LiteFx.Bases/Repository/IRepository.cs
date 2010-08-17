@@ -57,5 +57,10 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="id">Entity identificator.</param>
         void Delete(TId id);
+
+        /// <summary>
+        /// Persists all changes.
+        /// </summary>
+        void PersistAll();
     }
 }

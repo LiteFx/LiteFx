@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="DomainEvents\DomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
+    <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
     <Compile Include="Validation\Accessor.cs" />
     <Compile Include="Validation\Assert.cs" />
