@@ -23,7 +23,7 @@ namespace LiteFx.Web.Mvc
         /// </summary>
         Xml,
         /// <summary>
-        /// Formato Pdf (Portrait Document Format).
+        /// Format Pdf (Portrait Document Format).
         /// </summary>
         Pdf,
         /// <summary>
