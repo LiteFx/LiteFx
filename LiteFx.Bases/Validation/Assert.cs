@@ -72,7 +72,9 @@ namespace LiteFx.Bases.Validation
         #endregion
 
         #region IDataErrorInfo Members
-
+        /// <summary>
+        /// Implemented just for supply the interface requisites. Always return an empty string.
+        /// </summary>
         public string Error
         {
             get { return string.Empty; }
