@@ -1,7 +1,9 @@
 ﻿using System;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
 using System.Security.Permissions;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LiteFx.Bases
 {
@@ -15,7 +17,7 @@ namespace LiteFx.Bases
         /// <summary>
         /// Resultados dos erros encontrados na validação de um objeto.
         /// </summary>
-        public ValidationResults ValidationResults { get; private set; }
+        public IList<ValidationResult> ValidationResults { get; private set; }
 
         /// <summary>
         /// Constroi um BusinessException baseado nos resultados da validação.
@@ -48,10 +50,10 @@ namespace LiteFx.Bases
         /// ]]>
         /// </code>
         /// </example>
-        public BusinessException(ValidationResults validationResults) : base(Properties.Resources.SomeBusinessRulesWasViolated)
+        public BusinessException(IList<ValidationResult> validationResults) : base(Properties.Resources.SomeBusinessRulesWasViolated)
         {
             //Nao há razao para repassar uma excecao se os resultados da validacao foram positivos
-            if (validationResults.IsValid)
+            if (validationResults.Count == 0)
                 throw new ArgumentException(Properties.Resources.ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido);
 
             ValidationResults = validationResults;
@@ -134,9 +136,9 @@ namespace LiteFx.Bases
         public void AdicionarResultadoDeErro(string mensagem, string key)
         {
             if (ValidationResults == null)
-                ValidationResults = new ValidationResults();
+                ValidationResults = new List<ValidationResult>();
 
-            ValidationResults.AddResult(new ValidationResult(mensagem, null, key, key, null));
+            ValidationResults.Add(new ValidationResult(mensagem, new string[]{ key }));
         }
 
         public override string Message
@@ -147,7 +149,7 @@ namespace LiteFx.Bases
 
                 foreach (var businessRuleViolation in ValidationResults)
                 {
-                    errorStringBuilder.AppendFormat("{0} : {1}{2}", businessRuleViolation.Key, businessRuleViolation.Message, Environment.NewLine);
+                    errorStringBuilder.AppendFormat("{0} : {1}{2}", businessRuleViolation.MemberNames, businessRuleViolation.ErrorMessage, Environment.NewLine);
                 }
 
                 return base.Message + Environment.NewLine + errorStringBuilder;

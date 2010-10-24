@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace LiteFx.Bases.Validation
 {
-    public class Assert<T> : IValidation
+    public class Assert<T>
     {
         private List<Assertion> assertions;
         public List<Assertion> Assertions
@@ -20,7 +20,7 @@ namespace LiteFx.Bases.Validation
         {
             InstanceReference = instanceReference;
             LastAssertionIsValid = true;
-            Results = new ValidationResults();
+            ValidationResults = new List<ValidationResult>();
             assertionsExecuted = false;
         }
 
@@ -28,71 +28,36 @@ namespace LiteFx.Bases.Validation
 
         #region IValidation Members
 
-        public ValidationResults Results
+        public IList<ValidationResult> ValidationResults
         {
             get;
             private set;
         }
 
-        public void AddValidationResult(string mensagem, string key)
+        public void AddValidationResult(string message, string key)
         {
-            Results.AddResult(new ValidationResult(mensagem, null, key, key, null));
+            ValidationResults.Add(new ValidationResult(message, new string[] { key }));
         }
 
-        private void Validate(bool throwsExcepetion) 
+        private IEnumerable<ValidationResult> Validate(bool throwsExcepetion) 
         {
-            Results = Microsoft.Practices.EnterpriseLibrary.Validation.Validation.Validate(InstanceReference);
-
             foreach (var item in Assertions)
             {
-                item.Evaluate(InstanceReference, Results);
+                item.Evaluate(InstanceReference, ValidationResults);
             }
 
             assertionsExecuted = true;
 
             if (throwsExcepetion)
-                if (!Results.IsValid)
-                    throw new BusinessException(Results);
+                if (ValidationResults.Count > 0)
+                    throw new BusinessException(ValidationResults);
+
+            return ValidationResults;
         }
 
-        public void Validate()
+        public IEnumerable<ValidationResult> Validate()
         {
-            Validate(true);
-        }
-
-        public bool IsValid
-        {
-            get
-            {
-                Validate(false);
-                return Results.IsValid;
-            }
-        }
-
-        #endregion
-
-        #region IDataErrorInfo Members
-        /// <summary>
-        /// Implemented just for supply the interface requisites. Always return an empty string.
-        /// </summary>
-        public string Error
-        {
-            get { return string.Empty; }
-        }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                if(columnName == "Error" || columnName == "IsValid") return null;
-
-                if (!assertionsExecuted)
-                    Validate(false);
-
-                return (from e in Results
-                        where e.Key == columnName
-                        select e.Message).FirstOrDefault();
-            }
+            return Validate(true);
         }
 
         #endregion

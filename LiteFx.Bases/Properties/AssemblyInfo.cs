@@ -24,7 +24,7 @@ using System.Resources;
 [assembly: CLSCompliant(true)]
 
 //Linguagem padrão da aplicação - pt-BR (portugues - brasil)
-[assembly: NeutralResourcesLanguage("pt-BR")]
+[assembly: NeutralResourcesLanguage("")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("1a4353c9-ee38-44ed-ac7c-b7d990a36f3f")]
@@ -39,5 +39,5 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.0.9.0")]
+[assembly: AssemblyFileVersion("0.0.9.0")]

@@ -1,22 +1,16 @@
 ﻿using System.ComponentModel;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace LiteFx.Bases.Validation
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IValidation : IDataErrorInfo
+    public interface IValidation : IValidatableObject
     {
-        /// <summary>
-        /// Resultados das validações realizadas na Bll.
-        /// </summary>
-        ValidationResults Results { get; }
-
         void AddValidationResult(string mensagem, string key);
 
-        void Validate();
-
-        bool IsValid { get; }
+        IEnumerable<ValidationResult> Validate();
     }
 }

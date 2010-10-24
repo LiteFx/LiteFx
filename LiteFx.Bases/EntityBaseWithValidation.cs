@@ -1,7 +1,7 @@
 ﻿using System;
 using LiteFx.Bases.Validation;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
+using System.Collections.Generic;
 
 namespace LiteFx.Bases
 {
@@ -30,9 +30,6 @@ namespace LiteFx.Bases
 
         #region IValidation Members
 
-        [ScaffoldColumn(false)]
-        public virtual ValidationResults Results { get { return Assert.Results; } }
-
         /// <summary>
         /// Adds a validation result to the ValidationResults collection.
         /// </summary>
@@ -47,37 +44,17 @@ namespace LiteFx.Bases
         /// Verify if the entity is valid, if it is not valid throws an <see cref="LiteFx.Bases.BusinessException"/>.
         /// </summary>
         /// <exception cref="LiteFx.Bases.BusinessException">This exception was throw if the Entity is not valid.</exception>
-        public virtual void Validate()
+        public virtual IEnumerable<ValidationResult> Validate()
         {
-            Assert.Validate();
+            return Assert.Validate();
         }
-
-        /// <summary>
-        /// Verify if the entity is valid.
-        /// </summary>
-        /// <returns>True if the entity is valid, false if it is not.</returns>
-        public virtual bool IsValid { get { return Assert.IsValid; } }
 
         #endregion
 
-        #region IDataErrorInfo Members
-        /// <summary>
-        /// Error property implementation for <see cref="System.ComponentModel.IDataErrorInfo"/>.
-        /// </summary>
-        [ScaffoldColumn(false)]
-        public virtual string Error
-        {
-            get { return Assert.Error; }
-        }
 
-        /// <summary>
-        /// Error indexer implementation for <see cref="System.ComponentModel.IDataErrorInfo"/>.
-        /// </summary>
-        [ScaffoldColumn(false)]
-        public virtual string this[string columnName]
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            get { return Assert[columnName]; }
+            throw new NotImplementedException();
         }
-        #endregion
     }
 }

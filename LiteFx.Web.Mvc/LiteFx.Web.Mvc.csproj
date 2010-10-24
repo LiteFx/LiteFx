@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LiteFx.Web.Mvc</RootNamespace>
     <AssemblyName>LiteFx.Web.Mvc</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -42,6 +42,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -117,12 +118,6 @@
     <Compile Include="CustomActionResults\PdfResult.cs" />
     <Compile Include="CustomActionResults\WordResult.cs" />
     <Compile Include="CustomActionResults\XmlResult.cs" />
-    <Compile Include="Extensions\AjaxExtensions.cs" />
-    <Compile Include="Extensions\Behaviors\AutoCompleteExtensions.cs" />
-    <Compile Include="Extensions\Behaviors\CalendarExtensions.cs" />
-    <Compile Include="Extensions\Behaviors\DateParseExtensions.cs" />
-    <Compile Include="Extensions\ResourceTracker.cs" />
-    <Compile Include="Extensions\ScriptExtensions.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper.cs" />

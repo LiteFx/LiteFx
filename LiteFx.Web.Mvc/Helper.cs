@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using LiteFx.Bases;
 using System.Collections;
+using LiteFx.Bases;
 
 namespace LiteFx.Web.Mvc
 {
@@ -72,7 +72,12 @@ namespace LiteFx.Web.Mvc
             if (ex.ValidationResults != null)
             {
                 foreach (var erro in ex.ValidationResults)
-                    modelState.AddModelError(erro.Key, erro.Message);
+                {
+                    foreach (var memberName in erro.MemberNames)
+                    {
+                        modelState.AddModelError(memberName, erro.ErrorMessage);
+                    }
+                }
 
                 return;
             }
@@ -95,8 +100,11 @@ namespace LiteFx.Web.Mvc
             {
                 foreach (var erro in ex.ValidationResults)
                 {
-                    modelState.AddModelError(erro.Key, erro.Message);
-                    modelState.SetModelValue(erro.Key, valueProvider[erro.Key]);
+                    foreach (var memberName in erro.MemberNames)
+                    {
+                        modelState.AddModelError(memberName, erro.ErrorMessage);
+                        modelState.SetModelValue(memberName, valueProvider[memberName]);
+                    }
                 }
 
                 return;

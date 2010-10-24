@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using LiteFx.Bases.Specification;
+using LiteFx.Bases.Properties;
 
 namespace LiteFx.Bases.Validation.PtBr
 {
@@ -30,9 +32,89 @@ namespace LiteFx.Bases.Validation.PtBr
             return ValidationHelper.IsNotNullOrEmpty(validator);
         }
 
+        public static Validator<T, bool> SejaVerdadeiro<T>(this Validator<T, bool> validator)
+        {
+            return ValidationHelper.IsTrue(validator);
+        }
+
+        public static Validator<T, bool> SejaFalso<T>(this Validator<T, bool> validator)
+        {
+            return ValidationHelper.IsFalse(validator);
+        }
+
+        public static Validator<T, double> NaoSejaUmNumero<T>(this Validator<T, double> validator)
+        {
+            return ValidationHelper.IsNaN(validator);
+        }
+
+        public static Validator<T, double> SejaUmNumero<T>(this Validator<T, double> validator)
+        {
+            return ValidationHelper.IsNotNaN(validator);
+        }
+
+        public static Validator<T, string> SejaVazio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsEmpty(validator);
+        }
+
+        public static Validator<T, string> NaoSejaVazio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsNotEmpty(validator);
+        }
+
         public static Validator<T, string> TamanhoMaximo<T>(this Validator<T, string> validator, int maxLength)
         {
-            return ValidationHelper.Length(validator, maxLength);
+            return ValidationHelper.MaxLength(validator, maxLength);
+        }
+
+        public static Validator<T, string> TamanhoMinimo<T>(this Validator<T, string> validator, int minLength)
+        {
+            return ValidationHelper.MinLength(validator, minLength);
+        }
+
+        public static Validator<T, string> TamanhoEntre<T>(this Validator<T, string> validator, int minLength, int maxLength)
+        {
+            return ValidationHelper.RangeLength(validator, minLength, maxLength);
+        }
+
+        public static Validator<T, string> Tamanho<T>(this Validator<T, string> validator, int length)
+        {
+            return ValidationHelper.Length(validator, length);
+        }
+
+        public static Validator<T, TResult> Maximo<T, TResult>(this Validator<T, TResult> validator, TResult max)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.Max(validator, max);
+        }
+
+        public static Validator<T, TResult> Minimo<T, TResult>(this Validator<T, TResult> validator, TResult min)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.Min(validator, min);
+        }
+
+        public static Validator<T, TResult> Entre<T, TResult>(this Validator<T, TResult> validator, TResult min, TResult max)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.Range(validator, min, max);
+        }
+
+        public static Validator<T, TResult> SaoIguais<T, TResult>(this Validator<T, TResult> validator, TResult other)
+            where TResult : IEquatable<TResult>
+        {
+            return ValidationHelper.AreEquals(validator, other);
+        }
+
+        public static Validator<T, TResult> NaoSaoIguais<T, TResult>(this Validator<T, TResult> validator, TResult other)
+            where TResult : IEquatable<TResult>
+        {
+            return ValidationHelper.NotEquals(validator, other);
+        }
+
+        public static Validator<T, T> SejaSatisfeitoPor<T>(this Validator<T, T> validator, ISpecification<T> spec)
+        {
+            return ValidationHelper.IsSatisfiedBy(validator, spec);
         }
     }
 }

@@ -26,6 +26,8 @@ syntax: glob
 *.DS_Store
 *.resharper
 *.suo
+*.vs10x
+*.gp[Ss]tate
 [Tt]humbs.db
 [Bb]in
 [Db]ebug*/

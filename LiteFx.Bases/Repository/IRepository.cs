@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LiteFx.Bases.Specification;
+using System.Collections.Generic;
 
 namespace LiteFx.Bases.Repository
 {
@@ -25,7 +26,7 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="specification">Specification filter.</param>
         /// <returns>List of entities.</returns>
-        IQueryable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
+        IEnumerable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
 
         /// <summary>
         /// Get the first entity that satisfy the specification.
@@ -38,7 +39,7 @@ namespace LiteFx.Bases.Repository
         /// Get all entities.
         /// </summary>
         /// <returns>List of entities.</returns>
-        IQueryable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
 
         /// <summary>
         /// Save entity in the context.

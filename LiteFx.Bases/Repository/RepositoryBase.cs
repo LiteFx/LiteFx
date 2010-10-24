@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LiteFx.Bases.Specification;
+using System.Collections.Generic;
 
 namespace LiteFx.Bases.Repository
 {
@@ -26,7 +27,7 @@ namespace LiteFx.Bases.Repository
         /// Get all entities instances.
         /// </summary>
         /// <returns>List with entities instances.</returns>
-        public virtual IQueryable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return from e in Context.GetQueryableObject<TEntity>()
                    select e;
@@ -49,7 +50,7 @@ namespace LiteFx.Bases.Repository
         /// </summary>
         /// <param name="specification">Specification filter.</param>
         /// <returns>List of entities.</returns>
-        public virtual IQueryable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification)
+        public virtual IEnumerable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification)
         {
             return Context.GetQueryableObject<TEntity>().Where(specification.Predicate);
         }

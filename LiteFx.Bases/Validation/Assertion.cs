@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.Practices.EnterpriseLibrary.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace LiteFx.Bases.Validation
 {
     public abstract class Assertion
     {
-        public abstract bool Evaluate(object obj, ValidationResults results);
+        public abstract bool Evaluate(object obj, IList<ValidationResult> results);
     }
 
     public class Assertion<T, TProperty> : Assertion
@@ -28,7 +28,7 @@ namespace LiteFx.Bases.Validation
             Predicates = new List<Predicate<TProperty>>();
         }
 
-        public override bool Evaluate(object obj, ValidationResults results)
+        public override bool Evaluate(object obj, IList<ValidationResult> results)
         {
             if (WhenAssertion != null && !WhenAssertion.Evaluate(obj, null)) return true;
 
@@ -41,10 +41,9 @@ namespace LiteFx.Bases.Validation
                     if (!predicate.EvalPredicate(accessor.CompiledAccessor((T)obj)))
                     {
                         if (results != null)
-                            results.AddResult(
+                            results.Add(
                                 new ValidationResult(string.Format(predicate.ValidationMessage, accessor.MemberName),
-                                                     null,
-                                                     accessor.MemberName, accessor.MemberName, null));
+                                                     new string[] { accessor.MemberName }));
                         allPredicatesAreValid = false;
                     }
                 }
