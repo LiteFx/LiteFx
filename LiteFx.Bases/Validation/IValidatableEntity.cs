@@ -7,10 +7,8 @@ namespace LiteFx.Bases.Validation
     /// <summary>
     /// 
     /// </summary>
-    public interface IValidation : IValidatableObject
+    public interface IValidatableEntity : IValidatableObject
     {
-        void AddValidationResult(string mensagem, string key);
-
-        IEnumerable<ValidationResult> Validate();
+        void ConfigureValidation();
     }
 }

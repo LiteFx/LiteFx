@@ -12,13 +12,10 @@ namespace LiteFx.Bases.Validation
             get { return assertions ?? (assertions = new List<Assertion>()); }
         }
 
-        public T InstanceReference { get; set; }
-
         public bool LastAssertionIsValid { get; internal set; }
 
-        public Assert(T instanceReference)
+        public Assert()
         {
-            InstanceReference = instanceReference;
             LastAssertionIsValid = true;
             ValidationResults = new List<ValidationResult>();
             assertionsExecuted = false;
@@ -39,11 +36,11 @@ namespace LiteFx.Bases.Validation
             ValidationResults.Add(new ValidationResult(message, new string[] { key }));
         }
 
-        private IEnumerable<ValidationResult> Validate(bool throwsExcepetion) 
+        private IEnumerable<ValidationResult> Validate(T instanceReference, bool throwsExcepetion) 
         {
             foreach (var item in Assertions)
             {
-                item.Evaluate(InstanceReference, ValidationResults);
+                item.Evaluate(instanceReference, ValidationResults);
             }
 
             assertionsExecuted = true;
@@ -55,9 +52,9 @@ namespace LiteFx.Bases.Validation
             return ValidationResults;
         }
 
-        public IEnumerable<ValidationResult> Validate()
+        public IEnumerable<ValidationResult> Validate(T instanceReference)
         {
-            return Validate(true);
+            return Validate(instanceReference, true);
         }
 
         #endregion
