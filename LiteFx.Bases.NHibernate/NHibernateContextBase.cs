@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using FluentNHibernate.Cfg;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Linq;
-using FluentNHibernate.Cfg;
 
 namespace LiteFx.Bases.Context.NHibernate
 {

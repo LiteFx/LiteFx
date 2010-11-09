@@ -1,7 +1,7 @@
 ﻿using System;
-using LiteFx.Bases.Specification;
 using System.Linq.Expressions;
 using LiteFx.Bases.Properties;
+using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Validation
 {

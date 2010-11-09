@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace LiteFx.Bases.Validation
 {
@@ -10,5 +9,6 @@ namespace LiteFx.Bases.Validation
     public interface IValidatableEntity : IValidatableObject
     {
         void ConfigureValidation();
+        IEnumerable<ValidationResult> Validate();
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Collections;
 using LiteFx.Bases;
 
 namespace LiteFx.Web.Mvc

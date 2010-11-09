@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using LiteFx.Bases.Specification;
-using LiteFx.Bases.Properties;
 
 namespace LiteFx.Bases.Validation.PtBr
 {

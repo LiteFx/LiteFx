@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
-using LiteFx.Bases.Specification;
 using System.Collections.Generic;
+using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Repository
 {

@@ -1,7 +1,7 @@
 ﻿using System;
-using LiteFx.Bases.Validation;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using LiteFx.Bases.Validation;
 
 namespace LiteFx.Bases
 {
@@ -27,8 +27,30 @@ namespace LiteFx.Bases
             }
         }
 
+        public EntityBaseWithValidation()
+        {
+            if (assert != null)
+                assert.AssertionsExecuted = false;
+        }
+
         #region IValidation Members
-        
+
+        public IEnumerable<ValidationResult> Validate()
+        {
+            ValidationContext validationContext = new ValidationContext(this, null, null);
+
+            List<ValidationResult> validationResults = new List<ValidationResult>();
+    
+            if (assert == null)
+                this.ConfigureValidation();
+
+            if (!Validator.TryValidateObject(this, validationContext, validationResults, true)) 
+            {
+                Assert.Validate((T)this, validationResults);
+            }
+
+            return validationResults;
+        }
 
         /// <summary>
         /// Verify if the entity is valid, if it is not valid throws an <see cref="LiteFx.Bases.BusinessException"/>.
@@ -39,11 +61,16 @@ namespace LiteFx.Bases
             if (assert == null)
                 this.ConfigureValidation();
 
-            return Assert.Validate((T)this);
+            List<ValidationResult> validationResults = new List<ValidationResult>();
+
+            return Assert.Validate((T)this, validationResults);
         }
 
         public abstract void ConfigureValidation();
         #endregion
+
+
+
 
         
     }

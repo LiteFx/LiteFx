@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
 namespace LiteFx.Bases.Validation
@@ -17,46 +16,33 @@ namespace LiteFx.Bases.Validation
         public Assert()
         {
             LastAssertionIsValid = true;
-            ValidationResults = new List<ValidationResult>();
-            assertionsExecuted = false;
+            AssertionsExecuted = false;
         }
 
-        private bool assertionsExecuted { get; set; }
+        internal bool AssertionsExecuted { get; set; }
 
-        #region IValidation Members
-
-        public IList<ValidationResult> ValidationResults
+        private IEnumerable<ValidationResult> Validate(T instanceReference, bool throwsExcepetion, IList<ValidationResult> validationResults) 
         {
-            get;
-            private set;
-        }
-
-        public void AddValidationResult(string message, string key)
-        {
-            ValidationResults.Add(new ValidationResult(message, new string[] { key }));
-        }
-
-        private IEnumerable<ValidationResult> Validate(T instanceReference, bool throwsExcepetion) 
-        {
-            foreach (var item in Assertions)
+            if (!AssertionsExecuted)
             {
-                item.Evaluate(instanceReference, ValidationResults);
+                foreach (var item in Assertions)
+                {
+                    item.Evaluate(instanceReference, validationResults);
+                }
+
+                AssertionsExecuted = true;
+
+                if (throwsExcepetion)
+                    if (validationResults.Count > 0)
+                        throw new BusinessException(validationResults);
             }
 
-            assertionsExecuted = true;
-
-            if (throwsExcepetion)
-                if (ValidationResults.Count > 0)
-                    throw new BusinessException(ValidationResults);
-
-            return ValidationResults;
+            return validationResults;
         }
 
-        public IEnumerable<ValidationResult> Validate(T instanceReference)
+        public IEnumerable<ValidationResult> Validate(T instanceReference, IList<ValidationResult> validationContext)
         {
-            return Validate(instanceReference, true);
+            return Validate(instanceReference, false, validationContext);
         }
-
-        #endregion
     }
 }

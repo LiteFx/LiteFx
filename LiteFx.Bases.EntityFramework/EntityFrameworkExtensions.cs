@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System.Data;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data;
+using System.Linq;
 
 namespace LiteFx.Bases.Context.EntityFramework
 {

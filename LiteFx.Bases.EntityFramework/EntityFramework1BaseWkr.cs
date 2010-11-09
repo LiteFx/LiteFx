@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Objects;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using System.Data.Objects;
-using LiteFx.Bases.Properties;
-using System.Configuration;
 
 namespace LiteFx.Bases
 {
