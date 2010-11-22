@@ -9,7 +9,6 @@ namespace LiteFx.Bases.Repository
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
-    /// <typeparam name="TDBContext">Type of the Database Context.</typeparam>
     public interface IRepository<TEntity, in TId> 
         where TId : IEquatable<TId>
     {

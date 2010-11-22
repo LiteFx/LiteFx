@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.Objects;
+using System.Data.Entity;
 using System.Linq;
 
 namespace LiteFx.Bases.Context.EntityFramework
@@ -35,6 +36,9 @@ namespace LiteFx.Bases.Context.EntityFramework
             if (openTransaction)
                 return transaction;
 
+            if (Connection.State == ConnectionState.Closed)
+                Connection.Open();
+
             transaction = Connection.BeginTransaction();
             openTransaction = true;
             return transaction;
@@ -50,6 +54,7 @@ namespace LiteFx.Bases.Context.EntityFramework
 
             try
             {
+                SaveChanges();
                 transaction.Commit();
             }
             finally
@@ -78,7 +83,7 @@ namespace LiteFx.Bases.Context.EntityFramework
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>Queryable object.</returns>
-        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>
+        public virtual IQueryable<T> GetQueryableObject<T>() where T : class
         {
             return CreateObjectSet<T>();
         }
@@ -91,12 +96,13 @@ namespace LiteFx.Bases.Context.EntityFramework
         /// <exception cref="NotImplementedException"></exception>
         public virtual T Delete<T>(TId id)
         {
-            //T entity = new T();
-            //entity.Id = id;
-            //entity = (T)GetObjectByKey(CreateEntityKey(typeof(T).Name, entity));
-            //Delete(entity);
-            //return entity;
-            throw new NotImplementedException();
+            EntityKey entityKey = new EntityKey(buildEntitySetName(typeof(T).Name), "Id", id);
+
+            T entity = (T)GetObjectByKey(entityKey);
+
+            Delete(entity);
+
+            return entity;
         }
 
         /// <summary>
@@ -109,6 +115,11 @@ namespace LiteFx.Bases.Context.EntityFramework
             DeleteObject(entity);
         }
 
+        private string buildEntitySetName(string entityName) 
+        {
+            return string.Format("{0}.{1}s", DefaultContainerName, entityName);
+        }
+
         /// <summary>
         /// Salva uma entidade no contexto.
         /// </summary>
@@ -116,15 +127,19 @@ namespace LiteFx.Bases.Context.EntityFramework
         public virtual void Save(object entity)
         {
             BeginTransaction();
-            //if (entity is EntityBase<TId>)
-            //{
-            //    EntityBase<TId> ent = (EntityBase<TId>)entity;
+            if (entity is EntityBase<TId>)
+            {
+                EntityBase<TId> ent = (EntityBase<TId>)entity;
 
-            //    if(ent.Id.Equals(default(TId)))
-            AddObject(entity.GetType().Name, entity);
-            //    else
-            //        base.Attach(
-            //}
+                if (ent.Id.Equals(default(TId)))
+                    
+                    AddObject(buildEntitySetName(entity.GetType().Name), entity);
+                else
+                {
+                    AttachTo(buildEntitySetName(entity.GetType().Name), entity);
+                    ObjectStateManager.ChangeObjectState(entity, EntityState.Modified);
+                }
+            }
         }
 
         /// <summary>

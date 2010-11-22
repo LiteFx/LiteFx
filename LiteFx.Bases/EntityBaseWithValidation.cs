@@ -14,8 +14,8 @@ namespace LiteFx.Bases
         where T : EntityBaseWithValidation<T, TId>
         where TId : IEquatable<TId>
     {
-
         private static Assert<T> assert;
+
         /// <summary>
         /// Instance of assertion class to perform validations.
         /// </summary>
@@ -34,7 +34,6 @@ namespace LiteFx.Bases
         }
 
         #region IValidation Members
-
         public IEnumerable<ValidationResult> Validate()
         {
             ValidationContext validationContext = new ValidationContext(this, null, null);
@@ -68,10 +67,5 @@ namespace LiteFx.Bases
 
         public abstract void ConfigureValidation();
         #endregion
-
-
-
-
-        
     }
 }

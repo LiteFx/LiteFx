@@ -9,10 +9,8 @@ namespace LiteFx.Bases.DomainEvents
     /// </summary>
     public static class DomainEvents
     {
-        [ThreadStatic]
         private static IList<Delegate> callbacks;
 
-        [ThreadStatic]
         private static IList<IDomainEventHandler> domainEventHandlers;
 
         private static IList<Delegate> Callbacks

@@ -15,7 +15,7 @@ namespace LiteFx.Bases
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>A queryable object.</returns>
-        IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>;
+        IQueryable<T> GetQueryableObject<T>() where T : class;
 
         /// <summary>
         /// Save all modifications made over the context.

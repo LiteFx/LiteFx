@@ -148,7 +148,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// </summary>
         /// <typeparam name="T">Entity type.</typeparam>
         /// <returns>Queryable object.</returns>
-        public virtual IQueryable<T> GetQueryableObject<T>() where T : EntityBase<TId>
+        public virtual IQueryable<T> GetQueryableObject<T>() where T : class
         {
             return currentSession.Linq<T>();
         }

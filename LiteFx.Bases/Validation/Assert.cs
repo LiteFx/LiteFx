@@ -11,11 +11,8 @@ namespace LiteFx.Bases.Validation
             get { return assertions ?? (assertions = new List<Assertion>()); }
         }
 
-        public bool LastAssertionIsValid { get; internal set; }
-
         public Assert()
         {
-            LastAssertionIsValid = true;
             AssertionsExecuted = false;
         }
 
