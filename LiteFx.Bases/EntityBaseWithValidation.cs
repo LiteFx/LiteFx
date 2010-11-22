@@ -34,7 +34,7 @@ namespace LiteFx.Bases
         }
 
         #region IValidation Members
-        public IEnumerable<ValidationResult> Validate()
+        public virtual IEnumerable<ValidationResult> Validate()
         {
             ValidationContext validationContext = new ValidationContext(this, null, null);
 
