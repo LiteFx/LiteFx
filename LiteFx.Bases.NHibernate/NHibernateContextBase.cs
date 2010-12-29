@@ -69,7 +69,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// </summary>
         protected virtual void OpenSession()
         {
-            currentSession = SessionFactory.OpenSession();
+            CurrentSession = SessionFactory.OpenSession();
         }
 
         #region IDBContext Members
@@ -77,7 +77,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <summary>
         /// Sessão com o banco de dados.
         /// </summary>
-        protected ISession currentSession;
+        protected ISession CurrentSession { get; private set; }
 
         /// <summary>
         /// Flag usado para identificar se há uma transação aberta.
@@ -98,13 +98,13 @@ namespace LiteFx.Bases.Context.NHibernate
             if (openTransaction)
                 return transaction;
 
-            if (currentSession != null)
-                currentSession.Dispose();
+            if (CurrentSession != null)
+                CurrentSession.Dispose();
 
             OpenSession();
 
-            if (currentSession != null) 
-                transaction = currentSession.BeginTransaction();
+            if (CurrentSession != null) 
+                transaction = CurrentSession.BeginTransaction();
 
             openTransaction = true;
             return transaction;
@@ -150,7 +150,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <returns>Queryable object.</returns>
         public virtual IQueryable<T> GetQueryableObject<T>() where T : class
         {
-            return currentSession.Linq<T>();
+            return CurrentSession.Linq<T>();
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <param name="id">Identificador do entidade.</param>
         public virtual T Delete<T>(TId id)
         {
-            var obj = currentSession.Get<T>(id);
+            var obj = CurrentSession.Get<T>(id);
             Delete(obj);
             return obj;
         }
@@ -172,7 +172,7 @@ namespace LiteFx.Bases.Context.NHibernate
         public virtual void Delete(object entity)
         {
             BeginTransaction();
-            currentSession.Delete(entity);
+            CurrentSession.Delete(entity);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace LiteFx.Bases.Context.NHibernate
         public virtual void Save(object entity)
         {
             BeginTransaction();
-            currentSession.SaveOrUpdate(entity);
+            CurrentSession.SaveOrUpdate(entity);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <param name="entity">Objeto a ser removido do cache.</param>
         public virtual void RemoveFromCache(object entity)
         {
-            currentSession.Evict(entity);
+            CurrentSession.Evict(entity);
         }
 
         /// <summary>
@@ -229,8 +229,8 @@ namespace LiteFx.Bases.Context.NHibernate
                     RollBackTransaction();
                 }
 
-                if (currentSession != null)
-                    currentSession.Dispose();
+                if (CurrentSession != null)
+                    CurrentSession.Dispose();
             }
 
             disposed = true;
