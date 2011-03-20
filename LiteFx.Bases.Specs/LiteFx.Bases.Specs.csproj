@@ -48,19 +48,19 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImmutableValueObject.cs" />
-    <Compile Include="MutableValueObject.cs" />
-    <Compile Include="ValueObjectsImmutability.feature.cs">
+    <Compile Include="ValueObjectSpecs\ImmutableValueObject.cs" />
+    <Compile Include="ValueObjectSpecs\MutableValueObject.cs" />
+    <Compile Include="ValueObjectSpecs\ValueObjectsImmutability.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ValueObjectsImmutability.feature</DependentUpon>
     </Compile>
-    <Compile Include="ValueObjectsImmutabilityStepDefinition.cs" />
+    <Compile Include="ValueObjectSpecs\ValueObjectsImmutabilityStepDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ValueObjectsImmutability.feature">
+    <None Include="ValueObjectSpecs\ValueObjectsImmutability.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ValueObjectsImmutability.feature.cs</LastGenOutput>
     </None>
