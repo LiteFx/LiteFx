@@ -137,7 +137,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
                 document.Close();
             }
 
-            WriteFile(FileName, ContentType.Pdf, stream);
+            WriteFile(FileName, ContentType.Pdf.ContentTypeString, stream);
         }
 
         private static void WriteFile(string fileName, string contentType, MemoryStream content)

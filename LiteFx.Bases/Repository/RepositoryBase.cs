@@ -16,7 +16,7 @@ namespace LiteFx.Bases.Repository
         where TContext : class, IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
-        #region IRepository<T,IGerenciadorEventoDB> Members
+        #region IRepository<TEntity, in TId> Members
 
         /// <summary>
         /// The database context.

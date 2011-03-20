@@ -54,9 +54,9 @@ namespace LiteFx.Web.Mvc.CustomActionResults
         public override void ExecuteResult(ControllerContext context)
         {
             if (Stream == null && !string.IsNullOrEmpty(FilePath))
-                WriteFile(FileName, ContentType.Doc, FilePath);
+                WriteFile(FileName, ContentType.Doc.ToString(), FilePath);
             else
-                WriteFile(FileName, ContentType.Doc, Stream);
+                WriteFile(FileName, ContentType.Doc.ToString(), Stream);
         }
 
 

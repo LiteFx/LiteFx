@@ -78,6 +78,7 @@
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
+    <Compile Include="IAggregateRoot.cs" />
     <Compile Include="Validation\Accessor.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="EntityBase.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Validation\PtBr\ValidationHelperPtBr.cs" />
     <Compile Include="Validation\ValidationHelper.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="ValueObjectBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

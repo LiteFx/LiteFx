@@ -121,7 +121,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 
             tw.RenderEndTag(); // table
 
-            WriteFile(_fileName, ContentType.Excel, sw.ToString());
+            WriteFile(_fileName, ContentType.Xls.ContentTypeString, sw.ToString());
         }
 
 

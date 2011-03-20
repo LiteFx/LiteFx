@@ -91,7 +91,7 @@ namespace LiteFx.Web.Mvc
             Response.Charset = "utf-8";
             Response.ContentEncoding = Encoding.GetEncoding("iso-8859-1");
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.ContentType = ContentType.Excel;
+            Response.ContentType = ContentType.Xls.ContentTypeString;
         }
         #endregion
 

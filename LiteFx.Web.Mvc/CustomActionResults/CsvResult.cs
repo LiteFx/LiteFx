@@ -79,7 +79,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
 
             writer.Close();
 
-            WriteFile(FileName, ContentType.Csv, stream);           
+            WriteFile(FileName, ContentType.Csv.ToString(), stream);           
 
         }
 

@@ -31,7 +31,7 @@ namespace LiteFx.Web.Mvc.CustomActionResults
             if (_objectToSerialize != null)
             {
                 var xs = new XmlSerializer(_objectToSerialize.GetType());
-                context.HttpContext.Response.ContentType = ContentType.Xml;
+                context.HttpContext.Response.ContentType = ContentType.Xml.ToString();
                 xs.Serialize(context.HttpContext.Response.Output, _objectToSerialize);
             }
         }
