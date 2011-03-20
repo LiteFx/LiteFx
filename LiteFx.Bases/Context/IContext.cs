@@ -40,21 +40,5 @@ namespace LiteFx.Bases
         /// <typeparam name="T">Entity type.</typeparam>
         /// <param name="id">Entity id.</param>
         T Delete<T>(TId id);
-
-        /// <summary>
-        /// Begins a transaction in context.
-        /// </summary>
-        /// <returns>Returns the transaction object as an <see cref="System.IDisposable"/></returns>
-        IDisposable BeginTransaction();
-
-        /// <summary>
-        /// Commits the transaction and close all resources.
-        /// </summary>
-        void CommitTransaction();
-
-        /// <summary>
-        /// Rollbacks the transaction and close all resources.
-        /// </summary>
-        void RollBackTransaction();
     }
 }

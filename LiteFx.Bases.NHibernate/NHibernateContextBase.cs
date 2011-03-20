@@ -79,69 +79,6 @@ namespace LiteFx.Bases.Context.NHibernate
         /// </summary>
         protected ISession CurrentSession { get; private set; }
 
-        /// <summary>
-        /// Flag usado para identificar se há uma transação aberta.
-        /// </summary>
-        protected bool openTransaction;
-
-        /// <summary>
-        /// Variavel que mantem a transação.
-        /// </summary>
-        protected ITransaction transaction;
-
-        /// <summary>
-        /// Inicia uma transação e retorna a referência da transação como um IDisposable.
-        /// </summary>
-        /// <returns>Referência da transação como um IDisposable.</returns>
-        public virtual IDisposable BeginTransaction()
-        {
-            if (openTransaction)
-                return transaction;
-
-            if (CurrentSession != null)
-                CurrentSession.Dispose();
-
-            OpenSession();
-
-            if (CurrentSession != null) 
-                transaction = CurrentSession.BeginTransaction();
-
-            openTransaction = true;
-            return transaction;
-        }
-
-        /// <summary>
-        /// Salva as alterações realizadas sobre a transação aberta no banco de dados.
-        /// </summary>
-        public virtual void CommitTransaction()
-        {
-            if (!openTransaction)
-                throw new Exception("Este método pode ser chamado somente após a chamada do método BeginTransaction.");
-
-            try
-            {
-                transaction.Commit();
-            }
-            finally
-            {
-                transaction.Dispose();
-                transaction = null;
-                openTransaction = false;
-            }
-        }
-
-        /// <summary>
-        /// Descarta as alterações realizadas sobre a transação aberta.
-        /// </summary>
-        public virtual void RollBackTransaction()
-        {
-            if (!openTransaction)
-                throw new Exception("Este método pode ser chamado somente após a chamada do método BeginTransaction.");
-
-            transaction.Rollback();
-            transaction.Dispose();
-            openTransaction = false;
-        }
 
         /// <summary>
         /// Get a queryable object of an especifique entity.
@@ -171,7 +108,6 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <param name="entity">Entidade que será exlcuida.</param>
         public virtual void Delete(object entity)
         {
-            BeginTransaction();
             CurrentSession.Delete(entity);
         }
 
@@ -181,7 +117,6 @@ namespace LiteFx.Bases.Context.NHibernate
         /// <param name="entity">Entidade que será salva.</param>
         public virtual void Save(object entity)
         {
-            BeginTransaction();
             CurrentSession.SaveOrUpdate(entity);
         }
 
@@ -199,7 +134,7 @@ namespace LiteFx.Bases.Context.NHibernate
         /// </summary>
         public virtual void SaveContext()
         {
-            CommitTransaction();
+            CurrentSession.Flush();
         }
 
         #endregion
@@ -224,11 +159,6 @@ namespace LiteFx.Bases.Context.NHibernate
 
             if (disposing)
             {
-                if (openTransaction)
-                {
-                    RollBackTransaction();
-                }
-
                 if (CurrentSession != null)
                     CurrentSession.Dispose();
             }
