@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="CultureInfo.cs" />
+    <Compile Include="CustomActionResults\ActionResultHelper.cs" />
     <Compile Include="CustomActionResults\CsvResult.cs" />
     <Compile Include="CustomActionResults\ExcelResult.cs" />
     <Compile Include="CustomActionResults\PdfResult.cs" />
