@@ -5,6 +5,7 @@ using FluentNHibernate.Cfg;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Linq;
+using NHibernate.Context;
 
 namespace LiteFx.Bases.Context.NHibernate
 {
@@ -15,71 +16,19 @@ namespace LiteFx.Bases.Context.NHibernate
     public abstract class NHibernateContextBase<TId> : IContext<TId>, IDisposable
         where TId : IEquatable<TId>
     {
-        #region NHibernate Configuration and SessionFactory Cache
-        private static Configuration _cfg;
+        private ISession currentSession;
         /// <summary>
-        /// Propriedade privada para fazer o cache da configuração do NHibernate.
+        /// Current NHibernate Session.
         /// </summary>
-        protected static Configuration Cfg
-        {
-            get { return _cfg ?? (_cfg = new Configuration()); }
-        }
-
-        /// <summary>
-        /// Has to be setted on constructor.
-        /// </summary>
-        protected static Assembly AssemblyToConfigure { get; set; }
-
-        /// <summary>
-        /// Private sessionFactory.
-        /// </summary>
-        private static ISessionFactory _sessionFactory;
-
-        /// <summary>
-        /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
-        /// </summary>
-        protected static ISessionFactory SessionFactory
+        protected ISession CurrentSession
         {
             get
             {
-                return _sessionFactory ?? (_sessionFactory = Fluently.Configure(Cfg)
-                                                                 .Mappings(m =>
-                                                                               {
-                                                                                   m.FluentMappings.AddFromAssembly(
-                                                                                       AssemblyToConfigure);
-                                                                                   m.HbmMappings.AddFromAssembly(
-                                                                                       AssemblyToConfigure);
-                                                                               })
-                                                                 .BuildSessionFactory());
+                return currentSession ?? (currentSession = SessionFactoryManager.GetCurrentSession());
             }
         }
-        #endregion
 
-        /// <summary>
-        /// The NHibernate Database Context Constructor.
-        /// </summary>
-        protected NHibernateContextBase(Assembly assemblyToConfigure)
-        {
-            AssemblyToConfigure = assemblyToConfigure;
-            OpenSession();
-        }
-
-        /// <summary>
-        /// Open the session with the database.
-        /// </summary>
-        protected virtual void OpenSession()
-        {
-            CurrentSession = SessionFactory.OpenSession();
-        }
-
-        #region IDBContext Members
-
-        /// <summary>
-        /// Sessão com o banco de dados.
-        /// </summary>
-        protected ISession CurrentSession { get; private set; }
-
-
+        #region IContext Members
         /// <summary>
         /// Get a queryable object of an especifique entity.
         /// </summary>
