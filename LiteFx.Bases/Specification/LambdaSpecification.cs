@@ -8,12 +8,12 @@ namespace LiteFx.Bases.Specification
     /// Specification pattern implementation using lambda expressions.
     /// </summary>
     /// <typeparam name="T">Type that will be evaluated.</typeparam>
-    public class LambdaSpecification<T> : ILambdaSpecification<T>
+    public abstract class LambdaSpecification<T> : ILambdaSpecification<T>
     {
         /// <summary>
         /// The predicated expression.
         /// </summary>
-        public Expression<Func<T, bool>> Predicate { get; private set; }
+        public abstract Expression<Func<T, bool>> Predicate { get; }
 
         /// <summary>
         /// Cached compiled predicate.
@@ -29,15 +29,6 @@ namespace LiteFx.Bases.Specification
         }
 
         /// <summary>
-        /// Lambda specification constructor.
-        /// </summary>
-        /// <param name="predicate">The predicated expression that will be used in IsSatisfiedBy method.</param>
-        public LambdaSpecification(Expression<Func<T, bool>> predicate)
-        {
-            Predicate = predicate;
-        }
-
-        /// <summary>
         /// Combine two specifications using the AndAlso (&&) operator.
         /// </summary>
         /// <param name="leftSide">Specification that will be in the left side of the operation.</param>
@@ -48,7 +39,7 @@ namespace LiteFx.Bases.Specification
             var rightInvoke = Expression.Invoke(rightSide.Predicate, leftSide.Predicate.Parameters.Cast<Expression>());
             var newExpression = Expression.MakeBinary(ExpressionType.AndAlso, leftSide.Predicate.Body, rightInvoke);
 
-            return new LambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
+            return new CombinedLambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
         }
 
         /// <summary>
@@ -62,7 +53,7 @@ namespace LiteFx.Bases.Specification
             var rightInvoke = Expression.Invoke(rightSide.Predicate, leftSide.Predicate.Parameters.Cast<Expression>());
             var newExpression = Expression.MakeBinary(ExpressionType.OrElse, leftSide.Predicate.Body, rightInvoke);
 
-            return new LambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
+            return new CombinedLambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
         }
 
         #region ISpecification<T> Members
