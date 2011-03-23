@@ -42,5 +42,18 @@ namespace LiteFx.Bases.Specs.DomainEventsSpecs
         {
             Assert.IsTrue(DomainEventHandlerWasCalled);
         }
+
+        [Given(@"I have registered a ordinary action into DomainEvent static class")]
+        public void GivenIHaveRegisteredAOrdinaryActionIntoDomainEventStaticClass()
+        {
+            Action<OrdinaryEvent> callback = (OrdinaryEvent @event) => DomainEventHandlerWasCalled = true;
+            DomainEvents.DomainEvents.RegisterCallback<OrdinaryEvent>(callback);
+        }
+
+        [Then(@"my action should be called")]
+        public void ThenMyActionShouldBeCalled()
+        {
+            Assert.IsTrue(DomainEventHandlerWasCalled);
+        }
     }
 }

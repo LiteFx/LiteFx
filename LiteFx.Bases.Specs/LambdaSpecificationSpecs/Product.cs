@@ -12,5 +12,7 @@ namespace LiteFx.Bases.Specs.LambdaSpecificationSpecs
         public int Quantity { get; set; }
 
         public bool Discontinued { get; set; }
+
+        public decimal Price { get; set; }
     }
 }

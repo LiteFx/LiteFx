@@ -73,6 +73,28 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Handling a Domain Event with an Action")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Rasing Domaind Events")]
+        public virtual void HandlingADomainEventWithAnAction()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Handling a Domain Event with an Action", ((string[])(null)));
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.Given("I have registered a ordinary action into DomainEvent static class");
+#line 16
+ testRunner.And("a ordinary subject");
+#line 17
+ testRunner.When("I set a value in the ordinary subject");
+#line 18
+ testRunner.And("the ordinary event happen");
+#line 19
+ testRunner.Then("my action should be called");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion

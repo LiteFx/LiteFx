@@ -36,10 +36,9 @@ namespace LiteFx.Bases.Specification
         /// <returns>The new combined specification.</returns>
         public static LambdaSpecification<T> operator &(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide)
         {
-            var rightInvoke = Expression.Invoke(rightSide.Predicate, leftSide.Predicate.Parameters.Cast<Expression>());
-            var newExpression = Expression.MakeBinary(ExpressionType.AndAlso, leftSide.Predicate.Body, rightInvoke);
+            Expression<Func<T, bool>> newExpression = (T t) => leftSide.IsSatisfiedBy(t) && rightSide.IsSatisfiedBy(t);
 
-            return new CombinedLambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
+            return new CombinedLambdaSpecification<T>(newExpression);
         }
 
         /// <summary>
@@ -50,10 +49,9 @@ namespace LiteFx.Bases.Specification
         /// <returns>The new combined specification.</returns>
         public static LambdaSpecification<T> operator |(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide)
         {
-            var rightInvoke = Expression.Invoke(rightSide.Predicate, leftSide.Predicate.Parameters.Cast<Expression>());
-            var newExpression = Expression.MakeBinary(ExpressionType.OrElse, leftSide.Predicate.Body, rightInvoke);
+            Expression<Func<T, bool>> newExpression = (T t) => leftSide.IsSatisfiedBy(t) || rightSide.IsSatisfiedBy(t);
 
-            return new CombinedLambdaSpecification<T>(Expression.Lambda<Func<T, bool>>(newExpression, leftSide.Predicate.Parameters));
+            return new CombinedLambdaSpecification<T>(newExpression);
         }
 
         #region ISpecification<T> Members
