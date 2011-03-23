@@ -18,14 +18,14 @@ namespace LiteFx.Bases.Specification
         /// <summary>
         /// Cached compiled predicate.
         /// </summary>
-        private Func<T, bool> predicateCompiledCache;
+        private Func<T, bool> compiledPredicate;
 
         /// <summary>
         /// Cached compiled predicate.
         /// </summary>
-        protected Func<T, bool> PredicateCompiledCache
+        protected Func<T, bool> CompiledPredicate
         {
-            get { return predicateCompiledCache ?? (predicateCompiledCache = Predicate.Compile()); }
+            get { return compiledPredicate ?? (compiledPredicate = Predicate.Compile()); }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace LiteFx.Bases.Specification
         /// <returns>True if the specification is satisfied and false if it is not.</returns>
         public bool IsSatisfiedBy(T entity)
         {
-            return PredicateCompiledCache(entity);
+            return CompiledPredicate(entity);
         }
 
         #endregion

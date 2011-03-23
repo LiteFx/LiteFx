@@ -57,6 +57,11 @@
       <DependentUpon>RaisingDomainEvents.feature</DependentUpon>
     </Compile>
     <Compile Include="DomainEventsSpecs\RaisingDomainEventsStepDefinition.cs" />
+    <Compile Include="LambdaSpecificationSpecs\WorkingWithLambdaSpecifications.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkingWithLambdaSpecifications.feature</DependentUpon>
+    </Compile>
     <Compile Include="ValueObjectSpecs\ImmutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\MutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\ValueObjectsImmutability.feature.cs">
@@ -72,6 +77,10 @@
     <None Include="DomainEventsSpecs\RaisingDomainEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RaisingDomainEvents.feature.cs</LastGenOutput>
+    </None>
+    <None Include="LambdaSpecificationSpecs\WorkingWithLambdaSpecifications.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>WorkingWithLambdaSpecifications.feature.cs</LastGenOutput>
     </None>
     <None Include="ValueObjectSpecs\ValueObjectsImmutability.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
