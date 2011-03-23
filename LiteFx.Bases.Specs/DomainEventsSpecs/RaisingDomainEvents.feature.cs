@@ -61,10 +61,12 @@ namespace LiteFx.Bases.Specs.DomainEventsSpecs
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I have registered a ordinary domain event into DomainEvent static class");
+ testRunner.Given("I have registered a ordinary domain event handler into DomainEvent static class");
 #line 9
- testRunner.When("the ordinary event happen");
+ testRunner.And("a ordinary subject");
 #line 10
+ testRunner.When("the ordinary event happen");
+#line 11
  testRunner.Then("my handler should be called");
 #line hidden
             testRunner.CollectScenarioErrors();
