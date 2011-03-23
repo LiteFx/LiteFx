@@ -48,6 +48,11 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainEventsSpecs\RaisingDomainEvents.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaisingDomainEvents.feature</DependentUpon>
+    </Compile>
     <Compile Include="ValueObjectSpecs\ImmutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\MutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\ValueObjectsImmutability.feature.cs">
@@ -60,6 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DomainEventsSpecs\RaisingDomainEvents.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RaisingDomainEvents.feature.cs</LastGenOutput>
+    </None>
     <None Include="ValueObjectSpecs\ValueObjectsImmutability.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ValueObjectsImmutability.feature.cs</LastGenOutput>
@@ -71,9 +80,7 @@
       <Name>LiteFx.Bases</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DomainEventsSpecs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
