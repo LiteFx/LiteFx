@@ -11,9 +11,9 @@ namespace LiteFx.Bases.Repository
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
     /// <typeparam name="TContext">Type of the Database Context.</typeparam>
-    public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId> , IDisposable
+    public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId>
         where TEntity : EntityBase<TId>, new()
-        where TContext : class, IContext<TId>, IDisposable
+        where TContext : class, IContext<TId>
         where TId : IEquatable<TId>
     {
         #region IRepository<TEntity, in TId> Members
@@ -91,86 +91,6 @@ namespace LiteFx.Bases.Repository
         {
             Context.Delete<TEntity>(id);
         }
-
-        /// <summary>
-        /// Persists all changes.
-        /// </summary>
-        public virtual void PersistAll()
-        {
-            Context.SaveContext();
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
-        /// <summary>
-        /// Implementação do Dipose Pattern.
-        /// </summary>
-        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        private bool disposed;
-
-        /// <summary>
-        /// Libera todos os recursos utilizados pela classe.
-        /// Implementação do Dispose Pattern.
-        /// </summary>
-        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        /// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed) return;
-
-            if (disposing)
-                if (Context != null)
-                    Context.Dispose();
-
-            disposed = true;
-        }
-
-        /// <summary>
-        /// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
-        /// Implementação do Dipose Pattern.
-        /// </summary>
-        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        ~RepositoryBase()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
-        /// Libera todos os recursos utilizados pela classe.
-        /// Implementação do Dipose Pattern.
-        /// </summary>
-        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-        /// <example>
-        /// <code lang="cs" title="Utilizando a BaseWKR">
-        /// <![CDATA[
-        /// //Como implementar uma classe Worker (WRK)
-        /// public class ProdutoRepository : RepositoryBase<Produto>, IDisposable
-        /// {
-        ///     public void Dispose()
-        ///     {
-        ///         base.Dispose();
-        ///     }
-        /// }
-        /// ]]>
-        /// </code>
-        /// <code lang="cs" title="Liberando recursos">
-        /// <![CDATA[
-        /// //Melhor pratica para liberar recursos o mais breve possivel.
-        /// using(ProdutoRepository repo = new  ProdutoRepository())
-        /// {
-        ///     // Seu codigo vem aqui.
-        /// } //Neste ponto o objeto criado na clausula using será liberado da memoria.
-        /// ]]>
-        /// </code>
-        /// </example>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         #endregion
     }
 }
