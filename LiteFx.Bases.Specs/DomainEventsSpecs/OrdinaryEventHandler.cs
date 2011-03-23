@@ -9,6 +9,7 @@ namespace LiteFx.Bases.Specs.DomainEventsSpecs
     {
         public void HandleDomainEvent(OrdinaryEvent domainEvent)
         {
+            RaisingDomainEventsStepDefinition.DomainEventHandlerWasCalled = true;
         }
     }
 }

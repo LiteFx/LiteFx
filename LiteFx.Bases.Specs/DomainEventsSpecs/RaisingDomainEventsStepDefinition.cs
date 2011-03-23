@@ -3,28 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LiteFx.Bases.Specs.DomainEventsSpecs
 {
     [Binding]
     public class RaisingDomainEventsStepDefinition
     {
-        [Given(@"I have registered a ordinary domain event into DomainEvent static class")]
-        public void GivenIHaveRegisteredAOrdinaryDomainEventIntoDomainEventStaticClass()
+        protected OrdinarySubject subject;
+        public static bool DomainEventHandlerWasCalled { get; set; }
+
+        [Given(@"I have registered a ordinary domain event handler into DomainEvent static class")]
+        public void GivenIHaveRegisteredAOrdinaryDomainEventHandlerIntoDomainEventStaticClass()
         {
             DomainEvents.DomainEvents.RegisterDomainEventHandler(new OrdinaryEventHandler());
         }
 
-        [Then(@"my handler should be called")]
-        public void ThenMyHandlerShouldBeCalled()
+        [Given(@"a ordinary subject")]
+        public void GivenAOrdinarySubject()
         {
-            ScenarioContext.Current.Pending();
+            subject = new OrdinarySubject();
+        }
+
+        [When(@"I set a value in the ordinary subject")]
+        public void WhenISetAValueInTheOrdinarySubject()
+        {
+            subject.OrdinaryValue = 5;
         }
 
         [When(@"the ordinary event happen")]
         public void WhenTheOrdinaryEventHappen()
         {
-            ScenarioContext.Current.Pending();
+            DomainEvents.DomainEvents.Raise(new OrdinaryEvent(subject));
+        }
+
+        [Then(@"my handler should be called")]
+        public void ThenMyHandlerShouldBeCalled()
+        {
+            Assert.IsTrue(DomainEventHandlerWasCalled);
         }
     }
 }
