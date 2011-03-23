@@ -7,5 +7,6 @@
 Scenario: Rasing and handling a Domain Event
 	Given I have registered a ordinary domain event handler into DomainEvent static class
 	And a ordinary subject
-	When the ordinary event happen
+	When I set a value in the ordinary subject 
+	And the ordinary event happen
 	Then my handler should be called

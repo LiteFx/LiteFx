@@ -65,8 +65,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.And("a ordinary subject");
 #line 10
- testRunner.When("the ordinary event happen");
+ testRunner.When("I set a value in the ordinary subject");
 #line 11
+ testRunner.And("the ordinary event happen");
+#line 12
  testRunner.Then("my handler should be called");
 #line hidden
             testRunner.CollectScenarioErrors();
