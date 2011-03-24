@@ -5,23 +5,23 @@ using LiteFx.Bases.Specification;
 
 namespace LiteFx.Bases.Repository
 {
+    public abstract class RepositoryBase<TContext> where TContext : class, IContext
+    {
+        protected abstract TContext Context { get; }
+    }
+
     /// <summary>
     /// Repository base.
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
     /// <typeparam name="TContext">Type of the Database Context.</typeparam>
-    public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId>
-        where TEntity : EntityBase<TId>, new()
+    public abstract class RepositoryBase<TEntity, TId, TContext> : RepositoryBase<TContext>, IRepository<TEntity, TId>
+        where TEntity : EntityBase<TId>
         where TContext : class, IContext<TId>
         where TId : IEquatable<TId>
     {
         #region IRepository<TEntity, in TId> Members
-
-        /// <summary>
-        /// The database context.
-        /// </summary>
-        protected TContext Context { get; set; }
 
         /// <summary>
         /// Get all entities instances.

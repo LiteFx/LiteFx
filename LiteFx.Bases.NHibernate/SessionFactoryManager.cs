@@ -50,41 +50,50 @@ namespace LiteFx.Bases.Context.NHibernate
             }
         }
 
+        private static bool sessionOpened = false;
+
         internal static ISession GetCurrentSession()
         {
             if (!CurrentSessionContext.HasBind(SessionFactoryManager.SessionFactory))
             {
-                ISession session = SessionFactoryManager.SessionFactory.OpenSession();
+                ISession session = SessionFactory.OpenSession();
                 session.BeginTransaction();
                 CurrentSessionContext.Bind(session);
+                sessionOpened = true;
             }
             return SessionFactory.GetCurrentSession();
         }
 
         public static void DisposeSession()
         {
-            var session = GetCurrentSession();
-            session.Close();
-            session.Dispose();
-        }
-
-        public static void BeginTransaction()
-        {
-            GetCurrentSession().BeginTransaction();
+            if (sessionOpened)
+            {
+                var session = GetCurrentSession();
+                session.Close();
+                session.Dispose();
+                CurrentSessionContext.Unbind(SessionFactory);
+                sessionOpened = false;
+            }
         }
 
         public static void CommitTransaction()
         {
-            var session = GetCurrentSession();
-            if (session.Transaction.IsActive)
-                session.Transaction.Commit();
+            if (sessionOpened)
+            {
+                var session = GetCurrentSession();
+                if (session.Transaction.IsActive)
+                    session.Transaction.Commit(); 
+            }
         }
 
         public static void RollbackTransaction()
         {
-            var session = GetCurrentSession();
-            if (session.Transaction.IsActive)
-                session.Transaction.Rollback();
+            if (sessionOpened)
+            {
+                var session = GetCurrentSession();
+                if (session.Transaction.IsActive)
+                    session.Transaction.Rollback(); 
+            }
         }
     }
 }
