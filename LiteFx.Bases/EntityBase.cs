@@ -7,7 +7,7 @@ namespace LiteFx.Bases
     /// Base class for entities.
     /// </summary>
     /// <typeparam name="TId">Type of id.</typeparam>
-    public abstract class EntityBase<TId>
+    public abstract class EntityBase<TId> : IEquatable<EntityBase<TId>>
         where TId : IEquatable<TId>
     {
         /// <summary>
@@ -15,5 +15,34 @@ namespace LiteFx.Bases
         /// </summary>
         [ScaffoldColumn(false)]
         public virtual TId Id { get; set; }
+
+
+
+        public bool Equals(EntityBase<TId> other)
+        {
+            if (!AreSameType(other)) return false;
+
+            return this.Id.Equals(other.Id);
+        }
+
+        private bool AreSameType(EntityBase<TId> other)
+        {
+            return GetType().Equals(other.GetType());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return base.Equals(obj);
+
+            if (!(obj is EntityBase<TId>))
+                return false;
+            else
+                return Equals(obj as EntityBase<TId>);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }
