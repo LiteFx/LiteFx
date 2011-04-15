@@ -78,6 +78,7 @@
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
+    <Compile Include="IAggregateMember.cs" />
     <Compile Include="IAggregateRoot.cs" />
     <Compile Include="Specification\CombinedLambdaSpecification.cs" />
     <Compile Include="Validation\Accessor.cs" />

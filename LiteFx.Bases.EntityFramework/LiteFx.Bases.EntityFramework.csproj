@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityFramework1BaseWkr.cs" />
     <Compile Include="EntityFrameworkContextBase.cs" />
     <Compile Include="EntityFrameworkExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
