@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     public class ExcelResult : ActionResult
     {

@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Xml.Serialization;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     /// <summary>
     /// Retorna um objeto serializado no formato xml.

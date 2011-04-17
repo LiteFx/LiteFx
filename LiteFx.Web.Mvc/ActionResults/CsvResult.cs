@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     public class CsvResult : ActionResult
     {

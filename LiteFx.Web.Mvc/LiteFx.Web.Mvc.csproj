@@ -119,11 +119,10 @@
     <Compile Include="CustomActionResults\XmlResult.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\BaseListViewModel.cs" />
-    <Compile Include="Models\BaseViewModel.cs" />
-    <Compile Include="Models\DefaultListViewModel.cs" />
-    <Compile Include="Models\DefaultViewModel.cs" />
-    <Compile Include="Models\ISecurity.cs" />
+    <Compile Include="ViewModels\BaseListViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DefaultListViewModel.cs" />
+    <Compile Include="ViewModels\DefaultViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     public class PdfResult : ActionResult
     {

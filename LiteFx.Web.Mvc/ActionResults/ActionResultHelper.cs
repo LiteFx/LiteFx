@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     public static class ActionResultHelper
     {

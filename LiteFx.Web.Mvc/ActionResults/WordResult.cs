@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 
-namespace LiteFx.Web.Mvc.CustomActionResults
+namespace LiteFx.Web.Mvc.ActionResults
 {
     /// <summary>
     /// Classe para construção de um WordResult

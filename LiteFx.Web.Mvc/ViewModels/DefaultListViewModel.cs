@@ -1,5 +1,5 @@
 ﻿
-namespace LiteFx.Web.Mvc.Models
+namespace LiteFx.Web.Mvc.ViewModels
 {
     /// <summary>
     /// View default para telas Listagem. 
