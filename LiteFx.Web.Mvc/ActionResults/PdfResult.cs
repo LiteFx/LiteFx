@@ -97,7 +97,7 @@ namespace LiteFx.Web.Mvc.ActionResults
                         Phrase content = new Phrase(new Chunk(resm.GetString(header), new Font(BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 12)));
 
                         PdfPCell hcell = new PdfPCell(content);
-                        hcell.BackgroundColor = Color.LIGHT_GRAY;
+                        hcell.BackgroundColor = BaseColor.LIGHT_GRAY;
                         hcell.BorderWidth = 0;
 
                         table.AddCell(hcell);
@@ -131,7 +131,7 @@ namespace LiteFx.Web.Mvc.ActionResults
                     Chunk chk = new Chunk(resm.GetString("NenhumRegistroEncontrado"));
                     Phrase p = new Phrase(chk);
                     Paragraph ph = new Paragraph(p);
-                    ph.SetAlignment("center");
+                    ph.Alignment = 50;
                     document.Add(ph);
                 }
                 document.Close();

@@ -6,7 +6,7 @@ namespace LiteFx.Web.Mvc.ViewModels
     /// </summary>
     /// <typeparam name="T">Entidade.</typeparam>
     /// <typeparam name="TSetting">Tipo do settings.</typeparam>
-    public class BaseViewModel<T, TSetting> : ISecurity
+    public class BaseViewModel<T, TSetting>
     {
         /// <summary>
         /// Modelo
@@ -32,10 +32,6 @@ namespace LiteFx.Web.Mvc.ViewModels
         /// Action do Form
         /// </summary>
         public string Action { get; set; }
-        /// <summary>
-        /// Flag para permissão de alteração na View
-        /// </summary>
-        public bool AccessDenied { get; set; }
         /// <summary>
         /// Coluna Principal da Listagem
         /// </summary>
