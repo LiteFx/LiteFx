@@ -1,0 +1,525 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LiteFx.Bases</name>
+    </assembly>
+    <members>
+        <member name="T:LiteFx.Bases.Specification.LambdaSpecification`1">
+            <summary>
+            Specification pattern implementation using lambda expressions.
+            </summary>
+            <typeparam name="T">Type that will be evaluated.</typeparam>
+        </member>
+        <member name="T:LiteFx.Bases.Specification.ILambdaSpecification`1">
+            <summary>
+            Lambda specification interface.
+            </summary>
+            <typeparam name="T">Type of the entity that will be verified.</typeparam>
+        </member>
+        <member name="T:LiteFx.Bases.Specification.ISpecification`1">
+            <summary>
+            Specification interface.
+            </summary>
+            <typeparam name="T">Type of the entity that will be verified.</typeparam>
+        </member>
+        <member name="M:LiteFx.Bases.Specification.ISpecification`1.IsSatisfiedBy(`0)">
+            <summary>
+            Verify if the entity passed by parameter will satisfy the specification.
+            </summary>
+            <param name="entity">Entity to be verified.</param>
+            <returns>True if the entity satisfy the specification and false if it not.</returns>
+        </member>
+        <member name="P:LiteFx.Bases.Specification.ILambdaSpecification`1.Predicate">
+            <summary>
+            Predicate to be used in specification validation.
+            </summary>
+        </member>
+        <member name="F:LiteFx.Bases.Specification.LambdaSpecification`1.compiledPredicate">
+            <summary>
+            Cached compiled predicate.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:LiteFx.Bases.Specification.LambdaSpecification`1.op_BitwiseAnd(LiteFx.Bases.Specification.LambdaSpecification{`0},LiteFx.Bases.Specification.LambdaSpecification{`0})" -->
+        <member name="M:LiteFx.Bases.Specification.LambdaSpecification`1.op_BitwiseOr(LiteFx.Bases.Specification.LambdaSpecification{`0},LiteFx.Bases.Specification.LambdaSpecification{`0})">
+            <summary>
+            Combine two specifications using the OrElse (||) operator.
+            </summary>
+            <param name="leftSide">Specification that will be in the left side of the operation.</param>
+            <param name="rightSide">Specification that will be in the left side of the operation.</param>
+            <returns>The new combined specification.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Specification.LambdaSpecification`1.IsSatisfiedBy(`0)">
+            <summary>
+            Verifies the entity over the predicate.
+            </summary>
+            <param name="entity">Entity to be verified.</param>
+            <returns>True if the specification is satisfied and false if it is not.</returns>
+        </member>
+        <member name="P:LiteFx.Bases.Specification.LambdaSpecification`1.Predicate">
+            <summary>
+            The predicated expression.
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Specification.LambdaSpecification`1.CompiledPredicate">
+            <summary>
+            Cached compiled predicate.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.EntityBaseWithValidation`2">
+            <summary>
+            EntityBase implementation that supports validation.
+            </summary>
+            <typeparam name="T">Type of the entity. It will help the validation engine to discover wich object it will handle.</typeparam>
+            <typeparam name="TId">Type of id.</typeparam>
+        </member>
+        <member name="T:LiteFx.Bases.EntityBase`1">
+            <summary>
+            Base class for entities.
+            </summary>
+            <typeparam name="TId">Type of id.</typeparam>
+        </member>
+        <member name="P:LiteFx.Bases.EntityBase`1.Id">
+            <summary>
+            Entity id.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.Validation.IValidatableEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:LiteFx.Bases.EntityBaseWithValidation`2.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            Verify if the entity is valid, if it is not valid throws an <see cref="T:LiteFx.Bases.BusinessException"/>.
+            </summary>
+            <exception cref="T:LiteFx.Bases.BusinessException">This exception was throw if the Entity is not valid.</exception>
+        </member>
+        <member name="P:LiteFx.Bases.EntityBaseWithValidation`2.Assert">
+            <summary>
+            Instance of assertion class to perform validations.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido">
+            <summary>
+              Looks up a localized string similar to Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.SomeBusinessRulesWasViolated">
+            <summary>
+              Looks up a localized string similar to Some business rules was violated..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeANumber">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be a number..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeEmpty">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be empty..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeGreaterThanY">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be greater than &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeLessThanY">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be less than &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeNull">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be null..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotBeNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not be null or empty..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotHaveLessThanYCharacters">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not have less than &apos;{1}&apos; characters..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXCanNotHaveMoreThanYCharacters">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; can not have more than &apos;{1}&apos; characters..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeANumber">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be a number..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeBetweenYandZ">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be between &apos;{1}&apos; and &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeBetweenYandZCharacters">
+            <summary>
+              Looks up a localized string similar to The field length &apos;{0}&apos; must be between &apos;{1}&apos; and &apos;{2}&apos; characters..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeDifferentThanY">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be different than &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeEmpty">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be empty..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeEqualsY">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be equals &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeFalse">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be False..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeNull">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be null..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be null or empty..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustBeTrue">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must be True..
+            </summary>
+        </member>
+        <member name="P:LiteFx.Bases.Properties.Resources.TheFieldXMustHaveYCharacters">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; must have &apos;{1}&apos; characters..
+            </summary>
+        </member>
+        <member name="M:LiteFx.Bases.IContext.GetQueryableObject``1">
+            <summary>
+            Get a queryable object of an especifique entity.
+            </summary>
+            <typeparam name="T">Entity type.</typeparam>
+            <returns>A queryable object.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.IContext.SaveContext">
+            <summary>
+            Save all modifications made over the context.
+            </summary>
+        </member>
+        <member name="M:LiteFx.Bases.IContext.Save(System.Object)">
+            <summary>
+            Save entity in context.
+            </summary>
+            <param name="entity">Entity to be saved.</param>
+        </member>
+        <member name="M:LiteFx.Bases.IContext.Delete(System.Object)">
+            <summary>
+            Delete entity in context.
+            </summary>
+            <param name="entity">Entity to be deleted.</param>
+        </member>
+        <member name="T:LiteFx.Bases.IContext`1">
+            <summary>
+            Interface that will be implemented by classes that represent contexts.
+            These contexts could persist the modifications in a DataBase, XML Files, memory and etc.
+            </summary>
+            <typeparam name="TId">Type of id.</typeparam>
+        </member>
+        <member name="M:LiteFx.Bases.IContext`1.Delete``1(`0)">
+            <summary>
+            Delete an entity by id.
+            </summary>
+            <typeparam name="T">Entity type.</typeparam>
+            <param name="id">Entity id.</param>
+        </member>
+        <member name="T:LiteFx.Bases.Repository.RepositoryBase`3">
+            <summary>
+            Repository base.
+            </summary>
+            <typeparam name="TEntity">Type that the repository will handle.</typeparam>
+            <typeparam name="TId">Type of identificator.</typeparam>
+            <typeparam name="TContext">Type of the Database Context.</typeparam>
+        </member>
+        <member name="T:LiteFx.Bases.Repository.IRepository`2">
+            <summary>
+            Repository interface.
+            </summary>
+            <typeparam name="TEntity">Type that the repository will handle.</typeparam>
+            <typeparam name="TId">Type of identificator.</typeparam>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.GetById(`1)">
+            <summary>
+            Get the entity instance by id.
+            </summary>
+            <param name="id">Entity identificator.</param>
+            <returns>An entity instance.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.GetBySpecification(LiteFx.Bases.Specification.ILambdaSpecification{`0})">
+            <summary>
+            Get a list of entities that satisfy the specificaton.
+            </summary>
+            <param name="specification">Specification filter.</param>
+            <returns>List of entities.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.GetFirstBySpecification(LiteFx.Bases.Specification.ILambdaSpecification{`0})">
+            <summary>
+            Get the first entity that satisfy the specification.
+            </summary>
+            <param name="specification">Specification filter.</param>
+            <returns>An entity instance.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.GetAll">
+            <summary>
+            Get all entities.
+            </summary>
+            <returns>List of entities.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.Save(`0)">
+            <summary>
+            Save entity in the context.
+            </summary>
+            <param name="entity">Entity to be saved.</param>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.Delete(`0)">
+            <summary>
+            Delete a entity in the context.
+            </summary>
+            <param name="entity">Entity to be deleted.</param>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.IRepository`2.Delete(`1)">
+            <summary>
+            Delete an entity by the identificator.
+            </summary>
+            <param name="id">Entity identificator.</param>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.GetAll">
+            <summary>
+            Get all entities instances.
+            </summary>
+            <returns>List with entities instances.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.GetById(`1)">
+            <summary>
+            Get an entity by entity id.
+            </summary>
+            <param name="id">Entity identificator.</param>
+            <returns>The entity instance.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.GetBySpecification(LiteFx.Bases.Specification.ILambdaSpecification{`0})">
+            <summary>
+            Get a list of entities that satisfy the specificaton.
+            </summary>
+            <param name="specification">Specification filter.</param>
+            <returns>List of entities.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.GetFirstBySpecification(LiteFx.Bases.Specification.ILambdaSpecification{`0})">
+            <summary>
+            Get the first entity that satisfy the specification.
+            </summary>
+            <param name="specification">Specification filter.</param>
+            <returns>An entity instance.</returns>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.Save(`0)">
+            <summary>
+            Save entity in the context.
+            </summary>
+            <param name="entity">Entity to be saved.</param>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.Delete(`0)">
+            <summary>
+            Delete a entity in the context.
+            </summary>
+            <param name="entity">Entity to be deleted.</param>
+        </member>
+        <member name="M:LiteFx.Bases.Repository.RepositoryBase`3.Delete(`1)">
+            <summary>
+            Delete an entity by the identificator.
+            </summary>
+            <param name="id">Entity identificator.</param>
+        </member>
+        <member name="T:LiteFx.Bases.BusinessException">
+            <summary>
+            Esta classe deve ser utilizada para repassar exceções de regras de negócio.
+            </summary>
+        </member>
+        <member name="M:LiteFx.Bases.BusinessException.#ctor(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationResult})">
+            <summary>
+            Constroi um BusinessException baseado nos resultados da validação.
+            </summary>
+            <param name="validationResults">Resultados da validação. O membro validationResults.IsValid precisa ser FALSO.</param>
+            <example>
+            <code lang="cs" title="Utilizando a BusinessException com o Validation Application Block">
+            <![CDATA[
+            public class ClienteBLL : LiteFx.Bases.BaseBLL<MyEntity>
+            {
+                public ClienteBLL(MyEntity dbContext) : base(dbContext) { }
+            
+                public int Update(Cliente cliente) 
+                {
+                    try
+                    {
+                        ValidationResults results = Validation.Validate<Cliente>(cliente);
+            
+                        if (!results.IsValid)
+                            throw new BusinessException(results);
+            
+                        //Código para salvar o registro
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:LiteFx.Bases.BusinessException.#ctor(System.String)">
+            <summary>
+            Constroi um BusinessException baseado em uma mensagem.
+            </summary>
+            <param name="message">Mensagem descrevendo a exceção.</param>
+            <example>
+            <code lang="cs" title="Utilizando a BusinessException">
+            <![CDATA[
+            public class ClienteBLL : LiteFx.Bases.BaseBLL<MyEntity>
+            {
+                public ClienteBLL(MyEntity dbContext) : base(dbContext) { }
+            
+                public int Update(Cliente cliente) 
+                {
+                    try
+                    {
+                        //Alguma validação que gere um exceção de regra de negócio
+                        throw new BusinessException(Porperties.Resources.MyMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:LiteFx.Bases.BusinessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constroi um BusinessException baseado em uma mensagem e em uma exceção anterior.
+            </summary>
+            <param name="message">Mensagem descrevendo a exceção.</param>
+            <param name="innerException">Exceção que causou a exceção atual.</param>
+            <example>
+            <code lang="cs" title="Utilizando a BusinessException com Inner Exception">
+            <![CDATA[
+            public class ClienteBLL : LiteFx.Bases.BaseBLL<MyEntity>
+            {
+                public ClienteBLL(MyEntity dbContext) : base(dbContext) { }
+            
+                public void Foo() 
+                {
+                    try
+                    {
+                        //Algum código
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BusinessException(Porperties.Resources.MyMessage, ex);
+                    }
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:LiteFx.Bases.BusinessException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:LiteFx.Bases.BusinessException.AdicionarResultadoDeErro(System.String,System.String)">
+            <summary>
+            Adiciona uma mensagem de erro nos resultados da validação.
+            </summary>
+            <param name="mensagem">Mensagem de erro.</param>
+            <param name="key">Chave.</param>
+        </member>
+        <member name="P:LiteFx.Bases.BusinessException.ValidationResults">
+            <summary>
+            Resultados dos erros encontrados na validação de um objeto.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.DomainEvents.IDomainEvent">
+            <summary>
+            Domain event interface.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.DomainEvents.IDomainEvent`1">
+            <summary>
+            Domain event with subject interface.
+            </summary>
+            <typeparam name="T">Subject Type.</typeparam>
+        </member>
+        <member name="P:LiteFx.Bases.DomainEvents.IDomainEvent`1.Subject">
+            <summary>
+            Domain event subject.
+            </summary>
+        </member>
+        <member name="T:LiteFx.Bases.DomainEvents.DomainEvents">
+            <summary>
+            This class is responsible for Register the event handlers and call these handlers when a event is raised.
+            </summary>
+        </member>
+        <member name="M:LiteFx.Bases.DomainEvents.DomainEvents.RegisterCallback``1(System.Action{``0})">
+            <summary>
+            Register a Action Callback that will handle a event.
+            </summary>
+            <typeparam name="T">Type that will be handled.</typeparam>
+            <param name="callback">Callback method that will handle the event.</param>
+        </member>
+        <member name="M:LiteFx.Bases.DomainEvents.DomainEvents.RegisterDomainEventHandler``1(LiteFx.Bases.DomainEvents.IDomainEventHandler{``0})">
+            <summary>
+            Register a domain event handler.
+            </summary>
+            <typeparam name="T">Type that will be handled.</typeparam>
+            <param name="domainEventHandler">The object that will handle the event.</param>
+        </member>
+        <member name="M:LiteFx.Bases.DomainEvents.DomainEvents.Raise``1(``0)">
+            <summary>
+            Raises a domain event.
+            It forces all registered callbacks and event handlers to be triggered.
+            </summary>
+            <typeparam name="T">Type that will be handled.</typeparam>
+            <param name="domainEvent">The event that will be raised.</param>
+        </member>
+    </members>
+</doc>

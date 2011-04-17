@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>LiteFx</id>
+    <version>0.9.0</version>
+    <authors>Douglas Aguiar</authors>
+    <owners>Douglas Aguiar</owners>
+    <licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
+    <projectUrl>http://litefx.codeplex.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A framework that helps the use of DDD patterns.</description>
+    <tags>LiteFx DDD Domain Driven Design Repository Specification</tags>
+  </metadata>
+</package>

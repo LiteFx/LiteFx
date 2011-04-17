@@ -57,6 +57,14 @@
       <DependentUpon>RaisingDomainEvents.feature</DependentUpon>
     </Compile>
     <Compile Include="DomainEventsSpecs\RaisingDomainEventsStepDefinition.cs" />
+    <Compile Include="EntitySpecs\Category.cs" />
+    <Compile Include="EntitySpecs\EntitiesEquality.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntitiesEquality.feature</DependentUpon>
+    </Compile>
+    <Compile Include="EntitySpecs\EntitiesEqualityStepDefinition.cs" />
+    <Compile Include="EntitySpecs\Product.cs" />
     <Compile Include="LambdaSpecificationSpecs\PriceSpec.cs" />
     <Compile Include="LambdaSpecificationSpecs\Product.cs" />
     <Compile Include="LambdaSpecificationSpecs\ProductDiscontinuedSpec.cs" />
@@ -81,6 +89,10 @@
     <None Include="DomainEventsSpecs\RaisingDomainEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RaisingDomainEvents.feature.cs</LastGenOutput>
+    </None>
+    <None Include="EntitySpecs\EntitiesEquality.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>EntitiesEquality.feature.cs</LastGenOutput>
     </None>
     <None Include="LambdaSpecificationSpecs\WorkingWithLambdaSpecifications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
