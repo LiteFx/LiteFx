@@ -78,6 +78,7 @@
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateMember.cs" />
     <Compile Include="IAggregateRoot.cs" />
     <Compile Include="Specification\CombinedLambdaSpecification.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="BusinessException.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Context\IContext.cs" />
     <Compile Include="Specification\ILambdaSpecification.cs" />
     <Compile Include="Repository\IRepository.cs" />
