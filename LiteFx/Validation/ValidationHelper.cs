@@ -66,6 +66,7 @@ namespace LiteFx.Validation
             return IsSatisfied(validator, p => !double.IsNaN(p), Resources.TheFieldXMustBeANumber);
         }
 
+        #region String
         public static Validator<T, string> IsNullOrEmpty<T>(this Validator<T, string> validator)
         {
             return IsSatisfied(validator, p => string.IsNullOrEmpty(p), Resources.TheFieldXMustBeNullOrEmpty);
@@ -88,10 +89,10 @@ namespace LiteFx.Validation
 
         public static Validator<T, string> MaxLength<T>(this Validator<T, string> validator, int maxLength)
         {
-            return IsSatisfied(validator, p => 
-            { 
-                if (p == null) return true; 
-                return p.Trim().Length <= maxLength; 
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.Trim().Length <= maxLength;
             }, string.Format(Resources.TheFieldXCanNotHaveMoreThanYCharacters, "{0}", maxLength));
         }
 
@@ -121,6 +122,7 @@ namespace LiteFx.Validation
                 return p.Trim().Length == length;
             }, string.Format(Resources.TheFieldXMustHaveYCharacters, "{0}", length));
         }
+        #endregion
 
         public static Validator<T, TResult> Max<T, TResult>(this Validator<T, TResult> validator, TResult max)
             where TResult : IComparable<TResult>

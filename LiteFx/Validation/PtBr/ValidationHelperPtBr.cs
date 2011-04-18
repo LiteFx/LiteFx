@@ -11,6 +11,16 @@ namespace LiteFx.Validation.PtBr
             return ValidationHelper.That(assert, accessor);
         }
 
+        public static Validator<T, TResult> E<T, TResult>(this Validator<T, TResult> validator, Expression<Func<T, TResult>> accessor)
+        {
+            return ValidationHelper.And(validator, accessor);
+        }
+
+        public static Validator<T, TResult2> Quando<T, TResult1, TResult2>(this Validator<T, TResult1> validator, Expression<Func<T, TResult2>> accessor)
+        {
+            return ValidationHelper.When(validator, accessor);
+        }
+
         public static Validator<T, TResult> Satisfaz<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message)
         {
             return ValidationHelper.IsSatisfied(validator, expression, message);
@@ -24,11 +34,6 @@ namespace LiteFx.Validation.PtBr
         public static Validator<T, TResult> NaoSejaNulo<T, TResult>(this Validator<T, TResult> validator)
         {
             return ValidationHelper.IsNotNull(validator);
-        }
-
-        public static Validator<T, string> NaoSejaNuloOuVazio<T>(this Validator<T, string> validator)
-        {
-            return ValidationHelper.IsNotNullOrEmpty(validator);
         }
 
         public static Validator<T, bool> SejaVerdadeiro<T>(this Validator<T, bool> validator)
@@ -49,6 +54,17 @@ namespace LiteFx.Validation.PtBr
         public static Validator<T, double> SejaUmNumero<T>(this Validator<T, double> validator)
         {
             return ValidationHelper.IsNotNaN(validator);
+        }
+
+        #region String
+        public static Validator<T, string> SejaNuloOuVazio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsNullOrEmpty(validator);
+        }
+
+        public static Validator<T, string> NaoSejaNuloOuVazio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsNotNullOrEmpty(validator);
         }
 
         public static Validator<T, string> SejaVazio<T>(this Validator<T, string> validator)
@@ -80,7 +96,8 @@ namespace LiteFx.Validation.PtBr
         {
             return ValidationHelper.Length(validator, length);
         }
-
+        #endregion
+        
         public static Validator<T, TResult> Maximo<T, TResult>(this Validator<T, TResult> validator, TResult max)
             where TResult : IComparable<TResult>
         {
