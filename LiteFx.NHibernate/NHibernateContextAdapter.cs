@@ -7,7 +7,7 @@ using NHibernate.Cfg;
 using NHibernate.Linq;
 using NHibernate.Context;
 
-namespace LiteFx.Bases.Context.NHibernate
+namespace LiteFx.Context.NHibernate
 {
     /// <summary>
     /// NHibernate base context.

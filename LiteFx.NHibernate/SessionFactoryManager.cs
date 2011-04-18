@@ -8,7 +8,7 @@ using System.Reflection;
 using FluentNHibernate.Cfg;
 using NHibernate.Context;
 
-namespace LiteFx.Bases.Context.NHibernate
+namespace LiteFx.Context.NHibernate
 {
     public static class SessionFactoryManager
     {

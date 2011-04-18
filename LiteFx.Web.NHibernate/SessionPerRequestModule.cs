@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using LiteFx.Bases.Context.NHibernate;
+using LiteFx.Context.NHibernate;
 using NHibernate.Context;
 
 namespace LiteFx.Web.NHibernate
@@ -11,9 +11,7 @@ namespace LiteFx.Web.NHibernate
     public class SessionPerRequestModule : IHttpModule
     {
         public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         public void Init(HttpApplication context)
         {
