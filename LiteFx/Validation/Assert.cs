@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LiteFx.Validation
 {
-    public class Assert<T>
+    public class Assert
     {
         private List<Assertion> assertions;
         public List<Assertion> Assertions
@@ -18,7 +18,7 @@ namespace LiteFx.Validation
 
         internal bool AssertionsExecuted { get; set; }
 
-        private IEnumerable<ValidationResult> Validate(T instanceReference, bool throwsExcepetion, IList<ValidationResult> validationResults) 
+        private IEnumerable<ValidationResult> Validate(object instanceReference, bool throwsExcepetion, IList<ValidationResult> validationResults) 
         {
             if (!AssertionsExecuted)
             {
@@ -37,9 +37,11 @@ namespace LiteFx.Validation
             return validationResults;
         }
 
-        public IEnumerable<ValidationResult> Validate(T instanceReference, IList<ValidationResult> validationContext)
+        public IEnumerable<ValidationResult> Validate(object instanceReference, IList<ValidationResult> validationContext)
         {
             return Validate(instanceReference, false, validationContext);
         }
     }
+
+    public class Assert<T> : Assert { }
 }

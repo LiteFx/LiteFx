@@ -8,23 +8,21 @@ namespace LiteFx
     /// <summary>
     /// EntityBase implementation that supports validation.
     /// </summary>
-    /// <typeparam name="T">Type of the entity. It will help the validation engine to discover wich object it will handle.</typeparam>
     /// <typeparam name="TId">Type of id.</typeparam>
-    public abstract class EntityBaseWithValidation<T, TId> : EntityBase<TId>, IValidatableEntity
-        where T : EntityBaseWithValidation<T, TId>
+    public abstract class EntityBaseWithValidation<TId> : EntityBase<TId>, IValidatableEntity
         where TId : IEquatable<TId>
     {
-        private static Assert<T> assert;
+        private static Assert assert;
 
         /// <summary>
         /// Instance of assertion class to perform validations.
         /// </summary>
-        protected static Assert<T> Assert
+        protected static Assert<T> Assert<T>()
         {
-            get
-            {
-                return (assert ?? (assert = new Assert<T>()));
-            }
+            if (assert == null)
+                assert = new Assert<T>();
+
+            return (Assert<T>)assert;
         }
 
         public EntityBaseWithValidation()
@@ -39,13 +37,13 @@ namespace LiteFx
             ValidationContext validationContext = new ValidationContext(this, null, null);
 
             List<ValidationResult> validationResults = new List<ValidationResult>();
-    
+
             if (assert == null)
                 this.ConfigureValidation();
 
-            if (!Validator.TryValidateObject(this, validationContext, validationResults, true)) 
+            if (!Validator.TryValidateObject(this, validationContext, validationResults, true))
             {
-                Assert.Validate((T)this, validationResults);
+                assert.Validate(this, validationResults);
             }
 
             return validationResults;
@@ -62,7 +60,7 @@ namespace LiteFx
 
             List<ValidationResult> validationResults = new List<ValidationResult>();
 
-            return Assert.Validate((T)this, validationResults);
+            return assert.Validate(this, validationResults);
         }
 
         public abstract void ConfigureValidation();
