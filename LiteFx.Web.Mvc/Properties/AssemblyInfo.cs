@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LiteFx.Web.Mvc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Siteware")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LiteFx.Web.Mvc")]
-[assembly: AssemblyCopyright("Copyright © Siteware 2009")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -39,5 +39,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.9.0")]
-[assembly: AssemblyFileVersion("0.0.9.0")]
+[assembly: AssemblyVersion("0.9.2.1")]
+[assembly: AssemblyFileVersion("0.9.2.1")]
