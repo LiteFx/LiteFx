@@ -6,7 +6,7 @@ namespace LiteFx.Validation.PtBr
 {
     public static class ValidationHelperPtBr
     {
-        public static Validator<T, TResult> Que<T, TResult>(this Assert<T> assert, Expression<Func<T, TResult>> accessor)
+        public static Validator<T, TResult> Que<T, TResult>(this IAssert<T> assert, Expression<Func<T, TResult>> accessor)
         {
             return ValidationHelper.That(assert, accessor);
         }

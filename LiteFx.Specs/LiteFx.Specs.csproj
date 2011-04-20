@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -74,6 +75,13 @@
       <DependentUpon>WorkingWithLambdaSpecifications.feature</DependentUpon>
     </Compile>
     <Compile Include="LambdaSpecificationSpecs\WorkWithLambdaSpecificationsStepDefinition.cs" />
+    <Compile Include="ValidationSpecs\Category.cs" />
+    <Compile Include="ValidationSpecs\ValidatingAType.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidatingAType.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ValidationSpecs\ValidatingATypeStepDefinition.cs" />
     <Compile Include="ValueObjectSpecs\ImmutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\MutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\ValueObjectsImmutability.feature.cs">
@@ -97,6 +105,10 @@
     <None Include="LambdaSpecificationSpecs\WorkingWithLambdaSpecifications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WorkingWithLambdaSpecifications.feature.cs</LastGenOutput>
+    </None>
+    <None Include="ValidationSpecs\ValidatingAType.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ValidatingAType.feature.cs</LastGenOutput>
     </None>
     <None Include="ValueObjectSpecs\ValueObjectsImmutability.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -99,6 +99,7 @@
     <Compile Include="Specification\LambdaSpecification.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Validation\Assertion.cs" />
+    <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
     <Compile Include="Validation\Predicate.cs" />
     <Compile Include="Validation\PtBr\ValidationHelperPtBr.cs" />

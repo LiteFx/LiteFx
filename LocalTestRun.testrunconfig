@@ -25,7 +25,7 @@
           <Configuration>
             <CodeCoverage xmlns="">
               <Regular>
-                <CodeCoverageItem binaryFile="Release\LiteFx.Bases.dll" pdbFile="Release\LiteFx.Bases.pdb" instrumentInPlace="true" />
+                <CodeCoverageItem binaryFile="Release\LiteFx.dll" pdbFile="Release\LiteFx.pdb" instrumentInPlace="true" />
               </Regular>
             </CodeCoverage>
           </Configuration>

@@ -8,7 +8,7 @@ namespace LiteFx.Validation
 
     public static class ValidationHelper
     {
-        public static Validator<T, TResult> That<T, TResult>(this Assert<T> assert, Expression<Func<T, TResult>> accessor)
+        public static Validator<T, TResult> That<T, TResult>(this IAssert<T> assert, Expression<Func<T, TResult>> accessor)
         {
             var assertion = new Assertion<T, TResult>();
             assertion.Accessors.Add(new Accessor<T, TResult>(accessor));

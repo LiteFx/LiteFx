@@ -12,23 +12,17 @@ namespace LiteFx
     public abstract class EntityBaseWithValidation<TId> : EntityBase<TId>, IValidatableEntity
         where TId : IEquatable<TId>
     {
-        private static Assert assert;
+        private IAssert assert;
 
         /// <summary>
         /// Instance of assertion class to perform validations.
         /// </summary>
-        protected static Assert<T> Assert<T>()
+        protected IAssert<T> Assert<T>()
         {
             if (assert == null)
                 assert = new Assert<T>();
 
-            return (Assert<T>)assert;
-        }
-
-        public EntityBaseWithValidation()
-        {
-            if (assert != null)
-                assert.AssertionsExecuted = false;
+            return (IAssert<T>)assert;
         }
 
         #region IValidation Members
@@ -38,21 +32,14 @@ namespace LiteFx
 
             List<ValidationResult> validationResults = new List<ValidationResult>();
 
-            if (assert == null)
-                this.ConfigureValidation();
-
-            if (!Validator.TryValidateObject(this, validationContext, validationResults, true))
-            {
-                assert.Validate(this, validationResults);
-            }
+            Validator.TryValidateObject(this, validationContext, validationResults, true);
 
             return validationResults;
         }
 
         /// <summary>
-        /// Verify if the entity is valid, if it is not valid throws an <see cref="LiteFx.Bases.BusinessException"/>.
+        /// Verify if the entity is valid."/>.
         /// </summary>
-        /// <exception cref="LiteFx.Bases.BusinessException">This exception was throw if the Entity is not valid.</exception>
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (assert == null)
@@ -62,6 +49,7 @@ namespace LiteFx
 
             return assert.Validate(this, validationResults);
         }
+
 
         public abstract void ConfigureValidation();
         #endregion
