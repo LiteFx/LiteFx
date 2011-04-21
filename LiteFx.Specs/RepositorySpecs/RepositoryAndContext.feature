@@ -15,3 +15,10 @@ Scenario: Selecting all entities
 	And a Repository
 	When I call the GetAll method
 	Then a entity collection should be returned
+
+Scenario: Saving an Entity
+	Given a mocked Context
+	And a Repository
+	And an Entity
+	When I call the Save method on the Repository
+	Then the Context Save method shold be called

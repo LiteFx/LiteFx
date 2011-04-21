@@ -91,6 +91,28 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Saving an Entity")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working on a Context trough a Repository")]
+        public virtual void SavingAnEntity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Saving an Entity", ((string[])(null)));
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.Given("a mocked Context");
+#line 21
+ testRunner.And("a Repository");
+#line 22
+ testRunner.And("an Entity");
+#line 23
+ testRunner.When("I call the Save method on the Repository");
+#line 24
+ testRunner.Then("the Context Save method shold be called");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion
