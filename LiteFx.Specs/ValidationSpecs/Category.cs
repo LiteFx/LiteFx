@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LiteFx.Validation;
+using LiteFx.Validation.PtBr;
 
 namespace LiteFx.Specs.ValidationSpecs
 {
@@ -12,7 +12,7 @@ namespace LiteFx.Specs.ValidationSpecs
 
         public override void ConfigureValidation()
         {
-            Assert<Category>().That(c => c.Name).IsNotNullOrEmpty();
+            Assert<Category>().Que(c => c.Name).NaoSejaNuloOuVazio();
         }
     }
 
@@ -22,7 +22,7 @@ namespace LiteFx.Specs.ValidationSpecs
 
         public override void ConfigureValidation()
         {
-            Assert<SuperCategory>().That(s => s.Rank).Min(1);
+            Assert<SuperCategory>().Que(s => s.Rank).Minimo(1);
             
             base.ConfigureValidation();
         }
