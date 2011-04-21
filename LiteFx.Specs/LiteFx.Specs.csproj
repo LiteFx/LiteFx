@@ -34,6 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -75,6 +78,15 @@
       <DependentUpon>WorkingWithLambdaSpecifications.feature</DependentUpon>
     </Compile>
     <Compile Include="LambdaSpecificationSpecs\WorkWithLambdaSpecificationsStepDefinition.cs" />
+    <Compile Include="RepositorySpecs\Entity.cs" />
+    <Compile Include="RepositorySpecs\OrdinaryContext.cs" />
+    <Compile Include="RepositorySpecs\OrdinaryRepository.cs" />
+    <Compile Include="RepositorySpecs\RepositoryAndContext.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryAndContext.feature</DependentUpon>
+    </Compile>
+    <Compile Include="RepositorySpecs\RepositoryAndContextStepDefinition.cs" />
     <Compile Include="ValidationSpecs\Category.cs" />
     <Compile Include="ValidationSpecs\ValidatingAType.feature.cs">
       <AutoGen>True</AutoGen>
@@ -106,6 +118,11 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WorkingWithLambdaSpecifications.feature.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
+    <None Include="RepositorySpecs\RepositoryAndContext.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>RepositoryAndContext.feature.cs</LastGenOutput>
+    </None>
     <None Include="ValidationSpecs\ValidatingAType.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ValidatingAType.feature.cs</LastGenOutput>
@@ -121,9 +138,7 @@
       <Name>LiteFx</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RepositorySpecs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
