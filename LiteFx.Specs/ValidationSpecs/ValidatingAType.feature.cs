@@ -89,15 +89,15 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Check a valid Super Type")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Check a valid Derived Type")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Validating a Type")]
-        public virtual void CheckAValidSuperType()
+        public virtual void CheckAValidDerivedType()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check a valid Super Type", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check a valid Derived Type", ((string[])(null)));
 #line 17
 this.ScenarioSetup(scenarioInfo);
 #line 18
- testRunner.Given("a valid Super Type");
+ testRunner.Given("a valid Derived Type");
 #line 19
  testRunner.When("I call the validate method");
 #line 20
@@ -107,15 +107,15 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Check a invalid Super Type")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Check a invalid Derived Type")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Validating a Type")]
-        public virtual void CheckAInvalidSuperType()
+        public virtual void CheckAInvalidDerivedType()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check a invalid Super Type", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check a invalid Derived Type", ((string[])(null)));
 #line 22
 this.ScenarioSetup(scenarioInfo);
 #line 23
- testRunner.Given("a invalid Super Type");
+ testRunner.Given("a invalid Derived Type");
 #line 24
  testRunner.When("I call the validate method");
 #line 25

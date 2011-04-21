@@ -16,13 +16,13 @@ namespace LiteFx.Specs.ValidationSpecs
         }
     }
 
-    class SuperCategory : Category
+    class DerivedCategory : Category
     {
         public int Rank { get; set; }
 
         public override void ConfigureValidation()
         {
-            Assert<SuperCategory>().Que(s => s.Rank).Minimo(1);
+            Assert<DerivedCategory>().Que(s => s.Rank).Minimo(1);
             
             base.ConfigureValidation();
         }

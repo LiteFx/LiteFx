@@ -26,16 +26,16 @@ namespace LiteFx.Specs.ValidationSpecs
             type = new Category();
         }
 
-        [Given(@"a valid Super Type")]
-        public void GivenAValidSuperType()
+        [Given(@"a valid Derived Type")]
+        public void GivenAValidDerivedType()
         {
-            type = new SuperCategory() { Name = "Valid Type", Rank = 1 };
+            type = new DerivedCategory() { Name = "Valid Type", Rank = 1 };
         }
 
-        [Given(@"a invalid Super Type")]
-        public void GivenAInvalidSuperType()
+        [Given(@"a invalid Derived Type")]
+        public void GivenAInvalidDerivedType()
         {
-            type = new SuperCategory();
+            type = new DerivedCategory();
         }
 
         [When(@"I call the validate method")]

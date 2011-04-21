@@ -14,12 +14,12 @@ Scenario: Check a invalid Type
 	When I call the validate method
 	Then the count of validationResult collection should be 1
 
-Scenario: Check a valid Super Type
-	Given a valid Super Type
+Scenario: Check a valid Derived Type
+	Given a valid Derived Type
 	When I call the validate method
 	Then the count of validationResult collection should be 0
 
-Scenario: Check a invalid Super Type
-	Given a invalid Super Type
+Scenario: Check a invalid Derived Type
+	Given a invalid Derived Type
 	When I call the validate method
 	Then the count of validationResult collection should be 2
