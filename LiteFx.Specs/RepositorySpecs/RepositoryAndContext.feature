@@ -22,3 +22,16 @@ Scenario: Saving an Entity
 	And an Entity
 	When I call the Save method on the Repository
 	Then the Context Save method shold be called
+
+Scenario: Deleting an Entity
+	Given a mocked Context
+	And a Repository
+	And an Entity
+	When I call the Delete method on the Repository
+	Then the Context Delete method shold be called
+
+Scenario: Deleting an Entity by it's Id
+	Given a mocked Context
+	And a Repository
+	When I call the Delete by id method on the Repository
+	Then the Context Delete by id method shold be called

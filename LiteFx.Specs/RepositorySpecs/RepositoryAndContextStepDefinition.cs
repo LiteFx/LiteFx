@@ -63,6 +63,18 @@ namespace LiteFx.Specs.RepositorySpecs
             repository.Save(entityInstance);
         }
 
+        [When(@"I call the Delete method on the Repository")]
+        public void WhenICallTheDeleteMethodOnTheRepository()
+        {
+            repository.Delete(entityInstance);
+        }
+
+        [When(@"I call the Delete by id method on the Repository")]
+        public void WhenICallTheDeleteByIdMethodOnTheRepository()
+        {
+            repository.Delete(1);
+        }
+
         [Then(@"a entity instance with the id (.*) should be returned")]
         public void ThenAEntityInstanceWithTheId_ShouldBeReturned(int id)
         {
@@ -79,6 +91,18 @@ namespace LiteFx.Specs.RepositorySpecs
         public void ThenTheContextSaveMethodSholdBeCalled()
         {
             mockContext.Verify(c => c.Save(It.IsAny<Entity>()), Times.Once());
+        }
+
+        [Then(@"the Context Delete method shold be called")]
+        public void ThenTheContextDeleteMethodSholdBeCalled()
+        {
+            mockContext.Verify(c => c.Delete(It.IsAny<Entity>()), Times.Once());
+        }
+
+        [Then(@"the Context Delete by id method shold be called")]
+        public void ThenTheContextDeleteByIdMethodSholdBeCalled()
+        {
+            mockContext.Verify(c => c.Delete<Entity>(It.IsAny<int>()), Times.Once());
         }
     }
 }

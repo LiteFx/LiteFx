@@ -113,6 +113,48 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Deleting an Entity")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working on a Context trough a Repository")]
+        public virtual void DeletingAnEntity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Deleting an Entity", ((string[])(null)));
+#line 26
+this.ScenarioSetup(scenarioInfo);
+#line 27
+ testRunner.Given("a mocked Context");
+#line 28
+ testRunner.And("a Repository");
+#line 29
+ testRunner.And("an Entity");
+#line 30
+ testRunner.When("I call the Delete method on the Repository");
+#line 31
+ testRunner.Then("the Context Delete method shold be called");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Deleting an Entity by it\'s Id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working on a Context trough a Repository")]
+        public virtual void DeletingAnEntityByItSId()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Deleting an Entity by it\'s Id", ((string[])(null)));
+#line 33
+this.ScenarioSetup(scenarioInfo);
+#line 34
+ testRunner.Given("a mocked Context");
+#line 35
+ testRunner.And("a Repository");
+#line 36
+ testRunner.When("I call the Delete by id method on the Repository");
+#line 37
+ testRunner.Then("the Context Delete by id method shold be called");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion
