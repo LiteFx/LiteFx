@@ -72,6 +72,7 @@
     <Compile Include="LambdaSpecificationSpecs\PriceSpec.cs" />
     <Compile Include="LambdaSpecificationSpecs\Product.cs" />
     <Compile Include="LambdaSpecificationSpecs\ProductDiscontinuedSpec.cs" />
+    <Compile Include="LambdaSpecificationSpecs\DerivedProduct.cs" />
     <Compile Include="LambdaSpecificationSpecs\WorkingWithLambdaSpecifications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

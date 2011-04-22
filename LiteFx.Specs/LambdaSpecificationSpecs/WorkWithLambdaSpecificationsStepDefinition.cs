@@ -27,6 +27,12 @@ namespace LiteFx.Specs.LambdaSpecificationSpecs
             givenProduct = new Product() { Nome = "Test Product", Quantity = 5, Discontinued = false, Price = 1.99m };
         }
 
+        [Given(@"I have a discontinued Derived Product")]
+        public void GivenIHaveADiscontinuedDerivedProduct()
+        {
+            givenProduct = new DerivedProduct() { Nome = "Test Product", Quantity = 0, Discontinued = true, Price = 1.99m };
+        }
+
         [Given(@"I have Product Discontinued Specification")]
         public void GivenIHaveProductDiscontinuedSpecification()
         {

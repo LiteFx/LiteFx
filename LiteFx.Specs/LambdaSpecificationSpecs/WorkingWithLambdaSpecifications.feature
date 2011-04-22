@@ -9,6 +9,12 @@ Scenario: Checking if a discontinued Product is discontinued
 	And I have Product Discontinued Specification
 	When I check if the product is discontinued
 	Then the result should be true
+	
+Scenario: Checking if a discontinued Derived Product is discontinued
+	Given I have a discontinued Derived Product
+	And I have Product Discontinued Specification
+	When I check if the product is discontinued
+	Then the result should be true
 
 Scenario: Checking if a not discontinued Product is discontinued
 	Given I have a not discontinued Product

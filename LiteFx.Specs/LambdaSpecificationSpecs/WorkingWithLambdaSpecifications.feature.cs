@@ -74,20 +74,40 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Checking if a not discontinued Product is discontinued")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Checking if a discontinued Derived Product is discontinued")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working with Lambda Specifications")]
-        public virtual void CheckingIfANotDiscontinuedProductIsDiscontinued()
+        public virtual void CheckingIfADiscontinuedDerivedProductIsDiscontinued()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if a not discontinued Product is discontinued", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if a discontinued Derived Product is discontinued", ((string[])(null)));
 #line 13
 this.ScenarioSetup(scenarioInfo);
 #line 14
- testRunner.Given("I have a not discontinued Product");
+ testRunner.Given("I have a discontinued Derived Product");
 #line 15
  testRunner.And("I have Product Discontinued Specification");
 #line 16
  testRunner.When("I check if the product is discontinued");
 #line 17
+ testRunner.Then("the result should be true");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Checking if a not discontinued Product is discontinued")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working with Lambda Specifications")]
+        public virtual void CheckingIfANotDiscontinuedProductIsDiscontinued()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if a not discontinued Product is discontinued", ((string[])(null)));
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+ testRunner.Given("I have a not discontinued Product");
+#line 21
+ testRunner.And("I have Product Discontinued Specification");
+#line 22
+ testRunner.When("I check if the product is discontinued");
+#line 23
  testRunner.Then("the result should be false");
 #line hidden
             testRunner.CollectScenarioErrors();
@@ -99,17 +119,17 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void CombiningLambdaSpecificationsWithAndOperator()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Combining LambdaSpecifications with and operator", ((string[])(null)));
-#line 19
+#line 25
 this.ScenarioSetup(scenarioInfo);
-#line 20
+#line 26
  testRunner.Given("I have a discontinued Product");
-#line 21
+#line 27
  testRunner.And("I have Product Discontinued Specification");
-#line 22
+#line 28
  testRunner.And("a Price Specification");
-#line 23
+#line 29
  testRunner.When("I check if the product satisfy the two specifications");
-#line 24
+#line 30
  testRunner.Then("the result should be true");
 #line hidden
             testRunner.CollectScenarioErrors();
@@ -121,17 +141,17 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void CombiningLambdaSpecificationsWithOrOperator()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Combining LambdaSpecifications with or operator", ((string[])(null)));
-#line 26
+#line 32
 this.ScenarioSetup(scenarioInfo);
-#line 27
+#line 33
  testRunner.Given("I have a not discontinued Product");
-#line 28
+#line 34
  testRunner.And("I have Product Discontinued Specification");
-#line 29
+#line 35
  testRunner.And("a Price Specification");
-#line 30
+#line 36
  testRunner.When("I check if the product satisfy one of the two specifications");
-#line 31
+#line 37
  testRunner.Then("the result should be true");
 #line hidden
             testRunner.CollectScenarioErrors();
