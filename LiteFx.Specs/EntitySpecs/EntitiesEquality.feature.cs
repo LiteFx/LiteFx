@@ -111,6 +111,132 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Comparing the Hash Code of two entities of the same type and id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void ComparingTheHashCodeOfTwoEntitiesOfTheSameTypeAndId()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Comparing the Hash Code of two entities of the same type and id", ((string[])(null)));
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("I have a product instance with the id 5");
+#line 26
+ testRunner.And("I have another product instance with the id 5");
+#line 27
+ testRunner.When("I compare the Hash Code of this two instances");
+#line 28
+ testRunner.Then("the equality should be true");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Comparing the Hash Code of two entities of the same type and diferent id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void ComparingTheHashCodeOfTwoEntitiesOfTheSameTypeAndDiferentId()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Comparing the Hash Code of two entities of the same type and diferent id", ((string[])(null)));
+#line 30
+this.ScenarioSetup(scenarioInfo);
+#line 31
+ testRunner.Given("I have a product instance with the id 5");
+#line 32
+ testRunner.And("I have another product instance with the id 10");
+#line 33
+ testRunner.When("I compare the Hash Code of this two instances");
+#line 34
+ testRunner.Then("the equality should be false");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Comparing the Hash Code of two two entities of diferent type and same id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void ComparingTheHashCodeOfTwoTwoEntitiesOfDiferentTypeAndSameId()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Comparing the Hash Code of two two entities of diferent type and same id", ((string[])(null)));
+#line 36
+this.ScenarioSetup(scenarioInfo);
+#line 37
+ testRunner.Given("I have a product instance with the id 5");
+#line 38
+ testRunner.And("I have a category instance with the id 5");
+#line 39
+ testRunner.When("I compare the Hash Code of this two instances");
+#line 40
+ testRunner.Then("the equality should be false");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding two entities of the same type and id into a HashSet")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void AddingTwoEntitiesOfTheSameTypeAndIdIntoAHashSet()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding two entities of the same type and id into a HashSet", ((string[])(null)));
+#line 42
+this.ScenarioSetup(scenarioInfo);
+#line 43
+ testRunner.Given("I have a product instance with the id 5");
+#line 44
+ testRunner.And("I have another product instance with the id 5");
+#line 45
+ testRunner.And("a HashSet instance");
+#line 46
+ testRunner.When("I add the two instances to a HashSet");
+#line 47
+ testRunner.Then("the HashSet count should be 1");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding two entities of the same type and diferent id into a HashSet")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void AddingTwoEntitiesOfTheSameTypeAndDiferentIdIntoAHashSet()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding two entities of the same type and diferent id into a HashSet", ((string[])(null)));
+#line 49
+this.ScenarioSetup(scenarioInfo);
+#line 50
+ testRunner.Given("I have a product instance with the id 5");
+#line 51
+ testRunner.And("I have another product instance with the id 10");
+#line 52
+ testRunner.And("a HashSet instance");
+#line 53
+ testRunner.When("I add the two instances to a HashSet");
+#line 54
+ testRunner.Then("the HashSet count should be 2");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding two entities of diferent types and same id into a HashSet")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Entities Equality")]
+        public virtual void AddingTwoEntitiesOfDiferentTypesAndSameIdIntoAHashSet()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding two entities of diferent types and same id into a HashSet", ((string[])(null)));
+#line 56
+this.ScenarioSetup(scenarioInfo);
+#line 57
+ testRunner.Given("I have a product instance with the id 5");
+#line 58
+ testRunner.And("I have a category instance with the id 5");
+#line 59
+ testRunner.And("a HashSet instance");
+#line 60
+ testRunner.When("I add the two instances to a HashSet");
+#line 61
+ testRunner.Then("the HashSet count should be 2");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion

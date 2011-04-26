@@ -15,6 +15,8 @@ namespace LiteFx.Specs.EntitySpecs
 
         bool equality;
 
+        HashSet<EntityBase<int>> hashSet;
+
         [Given(@"I have a product instance with the id (.*)")]
         public void GivenIHaveAProductInstanceWithTheId(int id)
         {
@@ -33,16 +35,41 @@ namespace LiteFx.Specs.EntitySpecs
             anotherEntity = new Category() { Id = id };
         }
 
+        [Given(@"a HashSet instance")]
+        public void GivenAHashSetInstance()
+        {
+            hashSet = new HashSet<EntityBase<int>>();
+        }
+
         [When(@"I compare the two instances")]
         public void WhenICompareTheTwoInstances()
         {
             equality = entity == anotherEntity;
         }
 
+        [When(@"I compare the Hash Code of this two instances")]
+        public void WhenICompareTheHashCodeOfThisTwoInstances()
+        {
+            equality = entity.GetHashCode() == anotherEntity.GetHashCode();
+        }
+
+        [When(@"I add the two instances to a HashSet")]
+        public void WhenIAddTheTwoInstancesToAHashSet()
+        {
+            hashSet.Add(entity);
+            hashSet.Add(anotherEntity);
+        }
+
         [Then(@"the equality should be (.*)")]
         public void ThenTheEqualityShouldBe(bool result)
         {
             Assert.AreEqual(result, this.equality);
+        }
+
+        [Then(@"the HashSet count should be (.*)")]
+        public void ThenTheHashSetCountShouldBe(int count)
+        {
+            Assert.AreEqual(count, hashSet.Count);
         }
     }
 }

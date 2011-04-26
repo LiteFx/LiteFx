@@ -17,7 +17,7 @@ namespace LiteFx
         /// <summary>
         /// Instance of assertion class to perform validations.
         /// </summary>
-        protected IAssert<T> Assert<T>()
+        protected virtual IAssert<T> Assert<T>()
         {
             if (assert == null)
                 assert = new Assert<T>();

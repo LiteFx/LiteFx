@@ -38,6 +38,11 @@ namespace LiteFx
                 return Equals(obj as EntityBase<TId>);
         }
 
+        public override int GetHashCode()
+        {
+            return GetType().GetHashCode() + Id.GetHashCode();
+        }
+
         public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)
         {
             return left.Equals(right);
