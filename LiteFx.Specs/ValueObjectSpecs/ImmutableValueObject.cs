@@ -8,5 +8,10 @@ namespace LiteFx.Specs
     public class ImmutableValueObject : ValueObjectBase
     {
         public string ImmutableProperty { get; private set; }
+
+        public ImmutableValueObject(string propertyValue)
+        {
+            ImmutableProperty = propertyValue;
+        }
     }
 }

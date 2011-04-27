@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace LiteFx.Specification
 {
@@ -35,9 +37,27 @@ namespace LiteFx.Specification
         /// <returns>The new combined specification.</returns>
         public static LambdaSpecification<T> operator &(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide)
         {
-            Expression<Func<T, bool>> newExpression = (T t) => leftSide.IsSatisfiedBy(t) && rightSide.IsSatisfiedBy(t);
+            return And(leftSide, rightSide);
+        }
+
+        public static LambdaSpecification<T> And(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide) 
+        {
+            Expression<Func<T, bool>> left = leftSide.Predicate;
+
+            IEnumerable<ParameterExpression> parameters = left.Parameters;
+
+            InvocationExpression right = Expression.Invoke(rightSide.Predicate, parameters);
+
+            BinaryExpression andAlso = Expression.AndAlso(left.Body, right);
+
+            Expression<Func<T, bool>> newExpression = Expression.Lambda<Func<T, bool>>(andAlso, parameters);
 
             return new CombinedLambdaSpecification<T>(newExpression);
+        }
+
+        public LambdaSpecification<T> And(LambdaSpecification<T> other) 
+        {
+            return And(this, other);
         }
 
         /// <summary>
@@ -48,9 +68,27 @@ namespace LiteFx.Specification
         /// <returns>The new combined specification.</returns>
         public static LambdaSpecification<T> operator |(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide)
         {
-            Expression<Func<T, bool>> newExpression = (T t) => leftSide.IsSatisfiedBy(t) || rightSide.IsSatisfiedBy(t);
+            return Or(leftSide, rightSide);
+        }
+
+        public static LambdaSpecification<T> Or(LambdaSpecification<T> leftSide, LambdaSpecification<T> rightSide) 
+        {
+            Expression<Func<T, bool>> left = leftSide.Predicate;
+
+            IEnumerable<ParameterExpression> parameters = left.Parameters;
+
+            InvocationExpression right = Expression.Invoke(rightSide.Predicate, parameters);
+
+            BinaryExpression orElse = Expression.OrElse(left.Body, right);
+
+            Expression<Func<T, bool>> newExpression = Expression.Lambda<Func<T, bool>>(orElse, parameters);
 
             return new CombinedLambdaSpecification<T>(newExpression);
+        }
+
+        public LambdaSpecification<T> Or(LambdaSpecification<T> other) 
+        {
+            return Or(this, other);
         }
 
         #region ISpecification<T> Members

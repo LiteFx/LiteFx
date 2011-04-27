@@ -156,6 +156,50 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Fluently Combining LambdaSpecifications with and operator")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working with Lambda Specifications")]
+        public virtual void FluentlyCombiningLambdaSpecificationsWithAndOperator()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Fluently Combining LambdaSpecifications with and operator", ((string[])(null)));
+#line 39
+this.ScenarioSetup(scenarioInfo);
+#line 40
+ testRunner.Given("I have a discontinued Product");
+#line 41
+ testRunner.And("I have Product Discontinued Specification");
+#line 42
+ testRunner.And("a Price Specification");
+#line 43
+ testRunner.When("I fluently check if the product satisfy the two specifications");
+#line 44
+ testRunner.Then("the result should be true");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Fluently Combining LambdaSpecifications with or operator")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working with Lambda Specifications")]
+        public virtual void FluentlyCombiningLambdaSpecificationsWithOrOperator()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Fluently Combining LambdaSpecifications with or operator", ((string[])(null)));
+#line 46
+this.ScenarioSetup(scenarioInfo);
+#line 47
+ testRunner.Given("I have a not discontinued Product");
+#line 48
+ testRunner.And("I have Product Discontinued Specification");
+#line 49
+ testRunner.And("a Price Specification");
+#line 50
+ testRunner.When("I fluently check if the product satisfy one of the two specifications");
+#line 51
+ testRunner.Then("the result should be true");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion

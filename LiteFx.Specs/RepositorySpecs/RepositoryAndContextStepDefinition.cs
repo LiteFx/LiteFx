@@ -17,6 +17,8 @@ namespace LiteFx.Specs.RepositorySpecs
 
         IOrdinaryEntityRepository repository;
 
+        EntitySpecification specification;
+
         Entity entityInstance;
         IEnumerable<Entity> entityCollection;
 
@@ -43,6 +45,12 @@ namespace LiteFx.Specs.RepositorySpecs
         public void GivenAnEntity()
         {
             entityInstance = new Entity();
+        }
+
+        [Given(@"a Specification")]
+        public void GivenASpecification()
+        {
+            specification = new EntitySpecification();
         }
 
         [When(@"I call the GetById method using the valid id (.*)")]
@@ -73,6 +81,18 @@ namespace LiteFx.Specs.RepositorySpecs
         public void WhenICallTheDeleteByIdMethodOnTheRepository()
         {
             repository.Delete(1);
+        }
+
+        [When(@"I call the GetFirstBySpecification method using the Specification")]
+        public void WhenICallTheGetFirstBySpecificationMethodUsingTheSpecification()
+        {
+            entityInstance = repository.GetFirstBySpecification(specification);
+        }
+
+        [When(@"I call the GetBySpecification method using the Specification")]
+        public void WhenICallTheGetBySpecificationMethodUsingTheSpecification()
+        {
+            entityCollection = repository.GetBySpecification(specification);
         }
 
         [Then(@"a entity instance with the id (.*) should be returned")]

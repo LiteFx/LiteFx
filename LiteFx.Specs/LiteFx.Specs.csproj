@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="LambdaSpecificationSpecs\WorkWithLambdaSpecificationsStepDefinition.cs" />
     <Compile Include="RepositorySpecs\Entity.cs" />
+    <Compile Include="RepositorySpecs\EntitySpecification.cs" />
     <Compile Include="RepositorySpecs\OrdinaryContext.cs" />
     <Compile Include="RepositorySpecs\OrdinaryRepository.cs" />
     <Compile Include="RepositorySpecs\RepositoryAndContext.feature.cs">
@@ -97,6 +98,12 @@
     <Compile Include="ValidationSpecs\ValidatingATypeStepDefinition.cs" />
     <Compile Include="ValueObjectSpecs\ImmutableValueObject.cs" />
     <Compile Include="ValueObjectSpecs\MutableValueObject.cs" />
+    <Compile Include="ValueObjectSpecs\ValueObjectsEquality.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValueObjectsEquality.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ValueObjectSpecs\ValueObjectsEqualityStepDefinition.cs" />
     <Compile Include="ValueObjectSpecs\ValueObjectsImmutability.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -127,6 +134,10 @@
     <None Include="ValidationSpecs\ValidatingAType.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ValidatingAType.feature.cs</LastGenOutput>
+    </None>
+    <None Include="ValueObjectSpecs\ValueObjectsEquality.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ValueObjectsEquality.feature.cs</LastGenOutput>
     </None>
     <None Include="ValueObjectSpecs\ValueObjectsImmutability.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

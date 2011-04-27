@@ -14,7 +14,10 @@ namespace LiteFx.Specification
 
         public override Expression<Func<T, bool>> Predicate
         {
-            get { return predicate; }
+            get 
+            { 
+                return predicate; 
+            }
         }
     }
 }

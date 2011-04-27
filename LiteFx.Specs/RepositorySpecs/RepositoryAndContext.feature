@@ -35,3 +35,17 @@ Scenario: Deleting an Entity by it's Id
 	And a Repository
 	When I call the Delete by id method on the Repository
 	Then the Context Delete by id method shold be called
+
+Scenario: Selecting an entity using a Specification
+	Given a Context
+	And a Repository
+	And a Specification
+	When I call the GetFirstBySpecification method using the Specification
+	Then a entity instance with the id 1 should be returned
+
+Scenario: Selecting many entities using a Specification
+	Given a Context
+	And a Repository
+	And a Specification
+	When I call the GetBySpecification method using the Specification
+	Then a entity collection should be returned

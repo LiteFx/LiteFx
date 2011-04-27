@@ -155,6 +155,50 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             testRunner.CollectScenarioErrors();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Selecting an entity using a Specification")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working on a Context trough a Repository")]
+        public virtual void SelectingAnEntityUsingASpecification()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Selecting an entity using a Specification", ((string[])(null)));
+#line 39
+this.ScenarioSetup(scenarioInfo);
+#line 40
+ testRunner.Given("a Context");
+#line 41
+ testRunner.And("a Repository");
+#line 42
+ testRunner.And("a Specification");
+#line 43
+ testRunner.When("I call the GetFirstBySpecification method using the Specification");
+#line 44
+ testRunner.Then("a entity instance with the id 1 should be returned");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Selecting many entities using a Specification")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Working on a Context trough a Repository")]
+        public virtual void SelectingManyEntitiesUsingASpecification()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Selecting many entities using a Specification", ((string[])(null)));
+#line 46
+this.ScenarioSetup(scenarioInfo);
+#line 47
+ testRunner.Given("a Context");
+#line 48
+ testRunner.And("a Repository");
+#line 49
+ testRunner.And("a Specification");
+#line 50
+ testRunner.When("I call the GetBySpecification method using the Specification");
+#line 51
+ testRunner.Then("a entity collection should be returned");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
     }
 }
 #endregion

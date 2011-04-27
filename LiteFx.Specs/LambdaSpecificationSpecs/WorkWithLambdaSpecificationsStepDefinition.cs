@@ -63,6 +63,18 @@ namespace LiteFx.Specs.LambdaSpecificationSpecs
             result = (givenProductDiscontinuedSpec | givenPriceSpec).IsSatisfiedBy(givenProduct);
         }
 
+        [When(@"I fluently check if the product satisfy the two specifications")]
+        public void WhenIFluentlyCheckIfTheProductSatisfyTheTwoSpecifications()
+        {
+            result = givenProductDiscontinuedSpec.And(givenPriceSpec).IsSatisfiedBy(givenProduct);
+        }
+
+        [When(@"I fluently check if the product satisfy one of the two specifications")]
+        public void WhenIFluentlyCheckIfTheProductSatisfyOneOfTheTwoSpecifications()
+        {
+            result = givenProductDiscontinuedSpec.Or(givenPriceSpec).IsSatisfiedBy(givenProduct);
+        }
+
         [Then(@"the result should be (.*)")]
         public void ThenTheResultShouldBe(bool expected)
         {

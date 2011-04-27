@@ -49,7 +49,7 @@ namespace LiteFx.Specs
         [When("I instantiate this immutable object")]
         public void WhenIInstantiateThisImmutableObject()
         {
-            immutableValueObject = new ImmutableValueObject();
+            immutableValueObject = new ImmutableValueObject("Value Object");
         }
 
         [Then("it can not be null")]
