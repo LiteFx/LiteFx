@@ -63,5 +63,10 @@ namespace LiteFx.DomainEvents
             foreach (var domainEventHandler in DomainEventHandlers.OfType<IDomainEventHandler<T>>())
                 domainEventHandler.HandleDomainEvent(domainEvent);
         }
+
+        public static void RaiseAsync<T>(T domainEvent) where T : IDomainEvent
+        {
+            throw new NotImplementedException();
+        }
     }
 }

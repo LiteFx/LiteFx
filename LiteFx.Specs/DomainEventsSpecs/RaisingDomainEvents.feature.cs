@@ -30,7 +30,7 @@ namespace LiteFx.Specs.DomainEventsSpecs
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Rasing Domaind Events", "In order to alert all my domain\nAs a developer\nI want to raise events against the" +
-                    " model\nSo that anyone could handle it", GenerationTargetLanguage.CSharp, ((string[])(null)));
+                    " model\nSo that the event could be handled", GenerationTargetLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -92,6 +92,30 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.And("the ordinary event happen");
 #line 19
  testRunner.Then("my action should be called");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Rasing a Domain Event Asynchronously")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Rasing Domaind Events")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.IgnoreAttribute()]
+        public virtual void RasingADomainEventAsynchronously()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Rasing a Domain Event Asynchronously", new string[] {
+                        "ignore"});
+#line 22
+this.ScenarioSetup(scenarioInfo);
+#line 23
+ testRunner.Given("I have registered a ordinary domain event handler into DomainEvent static class");
+#line 24
+ testRunner.And("a ordinary subject");
+#line 25
+ testRunner.When("I set a value in the ordinary subject");
+#line 26
+ testRunner.And("the ordinary event happen asynchronously");
+#line 27
+ testRunner.Then("my handler should be called");
 #line hidden
             testRunner.CollectScenarioErrors();
         }
