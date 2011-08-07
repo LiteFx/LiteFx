@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using LiteFx.Context.NHibernate;
-using NHibernate.Context;
 
 namespace LiteFx.Web.NHibernate
 {
@@ -23,10 +19,26 @@ namespace LiteFx.Web.NHibernate
             HttpApplication application = (HttpApplication)sender;
 
             if (application.Context.Error == null)
-                SessionFactoryManager.CommitTransaction();
-
-            SessionFactoryManager.DisposeSession();
-            CurrentSessionContext.Unbind(SessionFactoryManager.SessionFactory);
+            {
+                try
+                {
+                    SessionFactoryManager.Current.CommitTransaction();
+                }
+                catch(Exception ex)
+                {
+                    SessionFactoryManager.Current.RollbackTransaction();
+                    throw;
+                }
+                finally
+                {
+                    SessionFactoryManager.Current.DisposeSession();
+                }
+            }
+            else
+            {
+                SessionFactoryManager.Current.RollbackTransaction();
+                SessionFactoryManager.Current.DisposeSession();
+            }
         }
     }
 }

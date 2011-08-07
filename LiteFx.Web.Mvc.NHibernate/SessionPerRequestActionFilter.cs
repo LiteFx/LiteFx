@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using LiteFx.Context.NHibernate;
-using NHibernate.Context;
 
 namespace LiteFx.Web.Mvc.NHibernate
 {
@@ -13,10 +8,9 @@ namespace LiteFx.Web.Mvc.NHibernate
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
             if (filterContext.Exception == null)
-                SessionFactoryManager.CommitTransaction();
+                SessionFactoryManager.Current.CommitTransaction();
 
-            SessionFactoryManager.DisposeSession();
-            CurrentSessionContext.Unbind(SessionFactoryManager.SessionFactory);
+            SessionFactoryManager.Current.DisposeSession();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace LiteFx.Validation
 
         public static Validator<T, TResult> IsNotNull<T, TResult>(this Validator<T, TResult> validator)
         {
-            return IsSatisfied(validator, p => p != null, Resources.TheFieldXMustBeNull);
+            return IsSatisfied(validator, p => p != null, Resources.TheFieldXCanNotBeNull);
         }
 
         public static Validator<T, bool> IsTrue<T>(this Validator<T, bool> validator)

@@ -1,98 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Cfg;
-using NHibernate;
-using System.Reflection;
+﻿using System.Reflection;
 using FluentNHibernate.Cfg;
+using Microsoft.Practices.ServiceLocation;
+using NHibernate;
+using NHibernate.Cfg;
+using NHibernate.Cfg.Loquacious;
 using NHibernate.Context;
+using NHibernate.SqlCommand;
 
 namespace LiteFx.Context.NHibernate
 {
-    public static class SessionFactoryManager
+    public class SessionFactoryManager
     {
-        private static Configuration configuration;
+        private static SessionFactoryManager current;
+        public static SessionFactoryManager Current
+        {
+            get
+            {
+                return current ?? (current = ServiceLocator.Current.GetInstance<SessionFactoryManager>());
+            }
+        }
+
+        private Configuration configuration;
         /// <summary>
         /// Propriedade privada para fazer o cache da configuração do NHibernate.
         /// </summary>
-        public static Configuration Configuration
+        protected Configuration Configuration
         {
-            get { return configuration ?? (configuration = new Configuration()); }
+            get
+            {
+                if (configuration == null)
+                {
+                    configuration = new Configuration();
+                    configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
+
+                    CustomConfiguration(configuration);
+                    
+                    configuration = Fluently.Configure(configuration)
+                            .Mappings(m =>
+                            {
+                                m.FluentMappings.AddFromAssembly(
+                                    AssemblyToConfigure);
+                                m.HbmMappings.AddFromAssembly(
+                                    AssemblyToConfigure);
+                            }).BuildConfiguration();
+                }
+
+                return configuration;
+            }
         }
+
+        /// <summary>
+        /// Override to make custom configuration in NHibernate configuration class.
+        /// </summary>
+        /// <param name="configuration"></param>
+        protected virtual void CustomConfiguration(Configuration configuration) { }
 
         /// <summary>
         /// Has to be setted on constructor.
         /// </summary>
-        public static Assembly AssemblyToConfigure { get; set; }
+        public Assembly AssemblyToConfigure { get; set; }
 
         /// <summary>
         /// Private sessionFactory.
         /// </summary>
-        private static ISessionFactory sessionFactory;
+        private ISessionFactory sessionFactory;
 
         /// <summary>
         /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
         /// </summary>
-        public static ISessionFactory SessionFactory
+        protected ISessionFactory SessionFactory
         {
             get
             {
-                return sessionFactory ?? (sessionFactory = Fluently.Configure(Configuration)
-                                        .Mappings(m =>
-                                        {
-                                            m.FluentMappings.AddFromAssembly(
-                                                AssemblyToConfigure);
-                                            m.HbmMappings.AddFromAssembly(
-                                                AssemblyToConfigure);
-                                        })
-                                        .BuildSessionFactory());
+                if (sessionFactory == null) 
+                {
+                    sessionFactory = Configuration.BuildSessionFactory();
+                }
+                return sessionFactory;
             }
         }
 
         private static bool sessionOpened = false;
 
-        internal static ISession GetCurrentSession()
+        public virtual ISession GetCurrentSession()
         {
-            if (!CurrentSessionContext.HasBind(SessionFactoryManager.SessionFactory))
+            if (!CurrentSessionContext.HasBind(SessionFactoryManager.Current.SessionFactory))
             {
                 ISession session = SessionFactory.OpenSession();
                 session.BeginTransaction();
                 CurrentSessionContext.Bind(session);
                 sessionOpened = true;
             }
+
             return SessionFactory.GetCurrentSession();
         }
 
-        public static void DisposeSession()
+        public virtual void DisposeSession()
         {
             if (sessionOpened)
             {
-                var session = GetCurrentSession();
-                session.Close();
-                session.Dispose();
-                CurrentSessionContext.Unbind(SessionFactory);
+                var session = CurrentSessionContext.Unbind(SessionFactory);
+                if (session != null)
+                {
+                    session.Close();
+                    session.Dispose();
+                }
                 sessionOpened = false;
             }
         }
 
-        public static void CommitTransaction()
+        public virtual void CommitTransaction()
         {
             if (sessionOpened)
             {
                 var session = GetCurrentSession();
                 if (session.Transaction.IsActive)
-                    session.Transaction.Commit(); 
+                    session.Transaction.Commit();
             }
         }
 
-        public static void RollbackTransaction()
+        public virtual void RollbackTransaction()
         {
             if (sessionOpened)
             {
                 var session = GetCurrentSession();
                 if (session.Transaction.IsActive)
-                    session.Transaction.Rollback(); 
+                    session.Transaction.Rollback();
             }
         }
     }

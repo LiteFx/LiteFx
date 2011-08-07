@@ -49,5 +49,10 @@ namespace LiteFx.Specs.RepositorySpecs
                 return entities.AsQueryable();
             }
         }
+
+        public void Detach(object entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

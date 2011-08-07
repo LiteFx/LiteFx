@@ -26,7 +26,7 @@ namespace LiteFx.Repository
     public abstract class RepositoryBase<TEntity, TId, TContext> : RepositoryBase<TContext>, IRepository<TEntity, TId>
         where TEntity : EntityBase<TId>
         where TContext : class, IContext<TId>
-        where TId : IEquatable<TId>
+        where TId : struct, IEquatable<TId>, IComparable<TId>
     {
         /// <summary>
         /// Get all entities instances.
@@ -47,7 +47,7 @@ namespace LiteFx.Repository
         {
             return (from e in Context.GetQueryableObject<TEntity>()
                     where e.Id.Equals(id)
-                    select e).FirstOrDefault();
+                    select e).SingleOrDefault();
         }
 
         /// <summary>

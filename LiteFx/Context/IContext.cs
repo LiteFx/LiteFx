@@ -28,6 +28,12 @@ namespace LiteFx
         /// </summary>
         /// <param name="entity">Entity to be deleted.</param>
         void Delete(object entity);
+
+        /// <summary>
+        /// Detach entity from context.
+        /// </summary>
+        /// <param name="entity">Entity to be detached</param>
+        void Detach(object entity);
     }
 
     /// <summary>

@@ -35,6 +35,18 @@ namespace LiteFx.Specs.EntitySpecs
             anotherEntity = new Category() { Id = id };
         }
 
+        [Given(@"I have a null product")]
+        public void GivenIHaveANullProduct()
+        {
+            entity = null;
+        }
+
+        [Given(@"I have another null product")]
+        public void GivenIHaveAnotherNullProduct()
+        {
+            anotherEntity = null;
+        }
+
         [Given(@"a HashSet instance")]
         public void GivenAHashSetInstance()
         {

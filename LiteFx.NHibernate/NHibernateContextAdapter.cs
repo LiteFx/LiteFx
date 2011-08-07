@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
-using FluentNHibernate.Cfg;
 using NHibernate;
-using NHibernate.Cfg;
 using NHibernate.Linq;
-using NHibernate.Context;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -24,7 +20,7 @@ namespace LiteFx.Context.NHibernate
         {
             get
             {
-                return currentSession ?? (currentSession = SessionFactoryManager.GetCurrentSession());
+                return currentSession ?? (currentSession = SessionFactoryManager.Current.GetCurrentSession());
             }
         }
 
@@ -73,7 +69,7 @@ namespace LiteFx.Context.NHibernate
         /// Remove o objeto do cache do contexto.
         /// </summary>
         /// <param name="entity">Objeto a ser removido do cache.</param>
-        public virtual void RemoveFromCache(object entity)
+        public void Detach(object entity)
         {
             CurrentSession.Evict(entity);
         }
@@ -83,9 +79,8 @@ namespace LiteFx.Context.NHibernate
         /// </summary>
         public virtual void SaveContext()
         {
-            CurrentSession.Flush();
+            SessionFactoryManager.Current.CommitTransaction();
         }
-
         #endregion
 
         #region IDisposable Members [Dispose pattern implementation]
