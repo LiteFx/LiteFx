@@ -9,7 +9,7 @@ using NHibernate.SqlCommand;
 
 namespace LiteFx.Context.NHibernate
 {
-    public class SessionFactoryManager
+    public abstract class SessionFactoryManager
     {
         private static SessionFactoryManager current;
         public static SessionFactoryManager Current
@@ -58,7 +58,7 @@ namespace LiteFx.Context.NHibernate
         /// <summary>
         /// Has to be setted on constructor.
         /// </summary>
-        public Assembly AssemblyToConfigure { get; set; }
+        protected abstract Assembly AssemblyToConfigure { get; }
 
         /// <summary>
         /// Private sessionFactory.
