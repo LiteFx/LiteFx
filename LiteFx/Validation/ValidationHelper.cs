@@ -1,19 +1,38 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Resources;
+using System.Text.RegularExpressions;
 using LiteFx.Properties;
 using LiteFx.Specification;
+using LiteFx.Validation.ClientValidationRules;
 
 namespace LiteFx.Validation
 {
 
     public static class ValidationHelper
     {
+        private static ResourceManager resourceManager;
+        public static ResourceManager ResourceManager
+        {
+            get
+            {
+                if (resourceManager == null)
+                    resourceManager = Resources.ResourceManager;
+
+                return resourceManager;
+            }
+            set
+            {
+                resourceManager = value;
+            }
+        }
+
         public static Validator<T, TResult> That<T, TResult>(this IAssert<T> assert, Expression<Func<T, TResult>> accessor)
         {
             var assertion = new Assertion<T, TResult>();
             assertion.Accessors.Add(new Accessor<T, TResult>(accessor));
             assert.Assertions.Add(assertion);
-            return new Validator<T,TResult>(assertion);
+            return new Validator<T, TResult>(assertion);
         }
 
         public static Validator<T, TResult> And<T, TResult>(this Validator<T, TResult> validator, Expression<Func<T, TResult>> accessor)
@@ -33,6 +52,19 @@ namespace LiteFx.Validation
         public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message)
         {
             validator.Assertion.Predicates.Add(new Predicate<TResult>(expression, message));
+            return validator;
+        }
+
+        public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message, string validationType)
+        {
+            ClientValidationRule clientValidationRule = new ClientValidationRule() { ErrorMessage = message, ValidationType = validationType };
+            validator.Assertion.Predicates.Add(new Predicate<TResult>(expression, message, clientValidationRule));
+            return validator;
+        }
+
+        public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message, ClientValidationRule clientValidationRule)
+        {
+            validator.Assertion.Predicates.Add(new Predicate<TResult>(expression, message, clientValidationRule));
             return validator;
         }
 
@@ -74,7 +106,7 @@ namespace LiteFx.Validation
 
         public static Validator<T, string> IsNotNullOrEmpty<T>(this Validator<T, string> validator)
         {
-            return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXCanNotBeNullOrEmpty);
+            return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXCanNotBeNullOrEmpty, "required");
         }
 
         public static Validator<T, string> IsEmpty<T>(this Validator<T, string> validator)
@@ -89,11 +121,12 @@ namespace LiteFx.Validation
 
         public static Validator<T, string> MaxLength<T>(this Validator<T, string> validator, int maxLength)
         {
+            MaxLengthClientValidationRule maxLengthClientValidationRule = new MaxLengthClientValidationRule(maxLength);
             return IsSatisfied(validator, p =>
             {
                 if (p == null) return true;
                 return p.Trim().Length <= maxLength;
-            }, string.Format(Resources.TheFieldXCanNotHaveMoreThanYCharacters, "{0}", maxLength));
+            }, string.Format(Resources.TheFieldXCanNotHaveMoreThanYCharacters, "{0}", maxLength), maxLengthClientValidationRule);
         }
 
         public static Validator<T, string> MinLength<T>(this Validator<T, string> validator, int minLength)
@@ -124,14 +157,41 @@ namespace LiteFx.Validation
         }
         #endregion
 
+        #region IComparable
         public static Validator<T, TResult> Max<T, TResult>(this Validator<T, TResult> validator, TResult max)
             where TResult : IComparable<TResult>
         {
             return IsSatisfied(validator, p =>
                 {
-                    if(p == null) return true;
+                    if (p == null) return true;
                     return p.CompareTo(max) <= 0;
                 }, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", max));
+        }
+
+        public static Validator<T, TResult> Max<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.CompareTo(value()) <= 0;
+            }, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", value()));
+        }
+
+        public static Validator<T, TResult> LessThan<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.CompareTo(value()) < 0;
+            }, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", value()));
+        }
+
+        public static Validator<T, TResult> LessThanOrEqual<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return Max(validator, value);
         }
 
         public static Validator<T, TResult> Min<T, TResult>(this Validator<T, TResult> validator, TResult min)
@@ -139,9 +199,35 @@ namespace LiteFx.Validation
         {
             return IsSatisfied(validator, p =>
                 {
-                    if(p == null) return true;
+                    if (p == null) return true;
                     return p.CompareTo(min) >= 0;
                 }, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", min));
+        }
+
+        public static Validator<T, TResult> Min<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.CompareTo(value()) >= 0;
+            }, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", value()));
+        }
+
+        public static Validator<T, TResult> GreaterThan<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return true;
+                return p.CompareTo(value()) > 0;
+            }, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", value()));
+        }
+
+        public static Validator<T, TResult> GreaterThanOrEqual<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
+            where TResult : IComparable<TResult>
+        {
+            return Min(validator, value);
         }
 
         public static Validator<T, TResult> Range<T, TResult>(this Validator<T, TResult> validator, TResult min, TResult max)
@@ -153,7 +239,9 @@ namespace LiteFx.Validation
                 return p.CompareTo(min) >= 0 && p.CompareTo(max) <= 0;
             }, string.Format(Resources.TheFieldXMustBeBetweenYandZ, "{0}", min, max));
         }
+        #endregion
 
+        #region IEquatable
         public static Validator<T, TResult> AreEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
             where TResult : IEquatable<TResult>
         {
@@ -169,10 +257,47 @@ namespace LiteFx.Validation
                 return !p.Equals(other);
             }, string.Format(Resources.TheFieldXMustBeDifferentThanY, "{0}", other));
         }
+        #endregion
 
-        public static Validator<T, T> IsSatisfiedBy<T>(this Validator<T, T> validator, ISpecification<T> spec) 
+        #region ISpecification
+        public static Validator<T, T> IsSatisfiedBy<T>(this Validator<T, T> validator, ISpecification<T> spec, string message)
         {
-            return IsSatisfied(validator, spec.IsSatisfiedBy, "Spec Failure.");
+            return IsSatisfied(validator, spec.IsSatisfiedBy, message);
         }
+
+        public static Validator<T, T> IsNotSatisfiedBy<T>(this Validator<T, T> validator, ISpecification<T> spec, string message)
+        {
+            return IsSatisfied(validator, t => !spec.IsSatisfiedBy(t), message);
+        }
+        #endregion
+
+        #region EntityBase
+        public static Validator<T, TResult> CanNotBeEmpty<T, TResult>(this Validator<T, TResult> validator)
+            where TResult : EntityBase<long>
+        {
+            return IsSatisfied(validator, p =>
+            {
+                if (p == null) return false;
+                return !p.Id.Equals(0);
+            }, string.Format(Resources.TheFieldXCanNotBeEmpty, "{0}"));
+        }
+        #endregion
+
+        #region Regex
+        public static Validator<T, string> IsSatisfiedByRegex<T>(this Validator<T, string> validator, Regex regex, string message)
+        {
+            return IsSatisfied(validator, p => regex.IsMatch(p), message);
+        }
+
+        public static Validator<T, string> ShouldBeAnEmail<T>(this Validator<T, string> validator, string message)
+        {
+            return IsSatisfiedByRegex(validator, new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Resources.TheFieldXShouldBeAnEmail);
+        }
+
+        public static Validator<T, string> ShouldBeALink<T>(this Validator<T, string> validator, string message)
+        {
+            return IsSatisfiedByRegex(validator, new Regex(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"), Resources.TheFieldXShouldBeALink);
+        }
+        #endregion
     }
 }

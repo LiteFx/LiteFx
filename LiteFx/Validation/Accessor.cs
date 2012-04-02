@@ -35,6 +35,17 @@ namespace LiteFx.Validation
                 return string.Empty;
             }
         }
+
+        public Type MemberType 
+        {
+            get
+            {
+                if (ExpressionAccessor.Body is MemberExpression)
+                    return ((MemberExpression)ExpressionAccessor.Body).Member.DeclaringType;
+
+                return null;
+            }
+        }
     }
 
 }

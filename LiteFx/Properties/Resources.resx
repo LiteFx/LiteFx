@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido" xml:space="preserve">
     <value>Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido.</value>
@@ -179,5 +179,11 @@
   </data>
   <data name="TheFieldXMustHaveYCharacters" xml:space="preserve">
     <value>The field '{0}' must have '{1}' characters.</value>
+  </data>
+  <data name="TheFieldXShouldBeALink" xml:space="preserve">
+    <value>The field '{0}' should be a link.</value>
+  </data>
+  <data name="TheFieldXShouldBeAnEmail" xml:space="preserve">
+    <value>The field '{0}' should be an e-mail.</value>
   </data>
 </root>

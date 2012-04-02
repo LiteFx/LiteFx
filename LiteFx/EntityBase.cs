@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LiteFx
 {
+    public abstract class EntityBase { }
     /// <summary>
     /// Base class for entities.
     /// </summary>
     /// <typeparam name="TId">Type of id.</typeparam>
-    public abstract class EntityBase<TId> : IEquatable<EntityBase<TId>>
+    public abstract class EntityBase<TId> : EntityBase, IEquatable<EntityBase<TId>>
         where TId : IEquatable<TId>
     {
         /// <summary>

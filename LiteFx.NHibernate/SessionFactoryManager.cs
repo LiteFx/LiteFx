@@ -5,7 +5,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
 using NHibernate.Context;
-using NHibernate.SqlCommand;
+using System.Threading;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -20,6 +20,9 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
+        private static Mutex _configMutex = new Mutex();
+        private static Mutex _sessionMutex = new Mutex();
+
         private Configuration configuration;
         /// <summary>
         /// Propriedade privada para fazer o cache da configuração do NHibernate.
@@ -30,19 +33,26 @@ namespace LiteFx.Context.NHibernate
             {
                 if (configuration == null)
                 {
-                    configuration = new Configuration();
-                    configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
-
-                    CustomConfiguration(configuration);
+                    _configMutex.WaitOne();
                     
-                    configuration = Fluently.Configure(configuration)
-                            .Mappings(m =>
-                            {
-                                m.FluentMappings.AddFromAssembly(
-                                    AssemblyToConfigure);
-                                m.HbmMappings.AddFromAssembly(
-                                    AssemblyToConfigure);
-                            }).BuildConfiguration();
+                    if (configuration == null)
+                    {
+                        configuration = new Configuration();
+                        configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
+
+                        CustomConfiguration(configuration);
+
+                        configuration = Fluently.Configure(configuration)
+                                .Mappings(m =>
+                                {
+                                    m.FluentMappings.AddFromAssembly(
+                                        AssemblyToConfigure);
+                                    m.HbmMappings.AddFromAssembly(
+                                        AssemblyToConfigure);
+                                }).BuildConfiguration();
+                    }
+
+                    _configMutex.ReleaseMutex();
                 }
 
                 return configuration;
@@ -72,7 +82,7 @@ namespace LiteFx.Context.NHibernate
         {
             get
             {
-                if (sessionFactory == null) 
+                if (sessionFactory == null)
                 {
                     sessionFactory = Configuration.BuildSessionFactory();
                 }
@@ -84,6 +94,7 @@ namespace LiteFx.Context.NHibernate
 
         public virtual ISession GetCurrentSession()
         {
+            _sessionMutex.WaitOne();
             if (!CurrentSessionContext.HasBind(SessionFactoryManager.Current.SessionFactory))
             {
                 ISession session = SessionFactory.OpenSession();
@@ -91,7 +102,7 @@ namespace LiteFx.Context.NHibernate
                 CurrentSessionContext.Bind(session);
                 sessionOpened = true;
             }
-
+            _sessionMutex.ReleaseMutex();
             return SessionFactory.GetCurrentSession();
         }
 
@@ -126,6 +137,15 @@ namespace LiteFx.Context.NHibernate
                 var session = GetCurrentSession();
                 if (session.Transaction.IsActive)
                     session.Transaction.Rollback();
+            }
+        }
+
+        public virtual void Flush()
+        {
+            if (sessionOpened)
+            {
+                var session = GetCurrentSession();
+                session.Flush();
             }
         }
     }

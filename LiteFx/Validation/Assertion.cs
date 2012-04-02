@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace LiteFx.Validation
 {
     public abstract class Assertion
     {
+        public Assertion WhenAssertion { get; set; }
+
+        public abstract IEnumerable<string> AccessorMemberNames { get; }
+        public abstract IEnumerable<Predicate> BasePredicates { get; }
+
         public abstract bool Evaluate(object obj, IList<ValidationResult> results);
     }
 
@@ -17,8 +23,13 @@ namespace LiteFx.Validation
         }
 
         public List<Predicate<TProperty>> Predicates { get; private set; }
-
-        public Assertion WhenAssertion { get; set; }
+        public override IEnumerable<Predicate> BasePredicates
+        {
+            get
+            {
+                return Predicates.Select(p => p as Predicate);
+            }
+        }
 
         public Assertion()
         {
@@ -39,15 +50,26 @@ namespace LiteFx.Validation
                     if (!predicate.EvalPredicate(accessor.CompiledAccessor((T)obj)))
                     {
                         if (results != null)
-                            results.Add(
-                                new ValidationResult(string.Format(predicate.ValidationMessage, accessor.MemberName),
-                                                     new string[] { accessor.MemberName }));
+                        {
+                            List<string> memberNames = new List<string>() { accessor.MemberName };
+                            
+                            if(accessor.MemberType.IsSubclassOf(typeof(EntityBase)))
+                                memberNames.Add(string.Format("{0}.Id", accessor.MemberName));
+                            
+                            results.Add(new ValidationResult(string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(accessor.MemberName)), memberNames));
+                        }
+
                         allPredicatesAreValid = false;
                     }
                 }
             }
 
             return allPredicatesAreValid;
+        }
+
+        public override IEnumerable<string> AccessorMemberNames
+        {
+            get { return Accessors.Select(a => a.MemberName); }
         }
     }
 }

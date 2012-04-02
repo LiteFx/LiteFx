@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LiteFx.Validation.PtBr;
+﻿using LiteFx.Validation.PtBr;
 
 namespace LiteFx.Specs.ValidationSpecs
 {
@@ -20,9 +16,18 @@ namespace LiteFx.Specs.ValidationSpecs
     {
         public int Rank { get; set; }
 
+        public int MinRank { get; set; }
+
+        public DerivedCategory()
+        {
+            MinRank = 1;
+        }
+
         public override void ConfigureValidation()
         {
-            Assert<DerivedCategory>().Que(s => s.Rank).Minimo(1);
+            Assert<DerivedCategory>()
+                .Que(s => s.Rank)
+                .MaiorQueOuIgual(() => MinRank);
             
             base.ConfigureValidation();
         }

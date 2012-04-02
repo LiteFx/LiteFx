@@ -110,6 +110,42 @@ namespace LiteFx.Validation.PtBr
             return ValidationHelper.Min(validator, min);
         }
 
+        public static Validator<T, TResult> Maximo<T, TResult>(this Validator<T, TResult> validator, Func<TResult> max)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.Max(validator, max);
+        }
+
+        public static Validator<T, TResult> Minimo<T, TResult>(this Validator<T, TResult> validator, Func<TResult> min)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.Min(validator, min);
+        }
+
+        public static Validator<T, TResult> MenorQue<T, TResult>(this Validator<T, TResult> validator, Func<TResult> max)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.LessThan(validator, max);
+        }
+
+        public static Validator<T, TResult> MaiorQue<T, TResult>(this Validator<T, TResult> validator, Func<TResult> min)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.GreaterThan(validator, min);
+        }
+
+        public static Validator<T, TResult> MenorQueOuIgual<T, TResult>(this Validator<T, TResult> validator, Func<TResult> max)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.LessThanOrEqual(validator, max);
+        }
+
+        public static Validator<T, TResult> MaiorQueOuIgual<T, TResult>(this Validator<T, TResult> validator, Func<TResult> min)
+            where TResult : IComparable<TResult>
+        {
+            return ValidationHelper.GreaterThanOrEqual(validator, min);
+        }
+
         public static Validator<T, TResult> Entre<T, TResult>(this Validator<T, TResult> validator, TResult min, TResult max)
             where TResult : IComparable<TResult>
         {
@@ -128,9 +164,22 @@ namespace LiteFx.Validation.PtBr
             return ValidationHelper.NotEquals(validator, other);
         }
 
-        public static Validator<T, T> SejaSatisfeitoPor<T>(this Validator<T, T> validator, ISpecification<T> spec)
+        public static Validator<T, T> SejaSatisfeitoPor<T>(this Validator<T, T> validator, ISpecification<T> spec, string mensagem)
         {
-            return ValidationHelper.IsSatisfiedBy(validator, spec);
+            return ValidationHelper.IsSatisfiedBy(validator, spec, mensagem);
         }
+
+        public static Validator<T, T> NaoSejaSatisfeitoPor<T>(this Validator<T, T> validator, ISpecification<T> spec, string mensagem)
+        {
+            return ValidationHelper.IsNotSatisfiedBy(validator, spec, mensagem);
+        }
+
+        #region EntityBase
+        public static Validator<T, TResult> NaoPodeSerVazio<T, TResult>(this Validator<T, TResult> validator)
+            where TResult : EntityBase<long>
+        {
+            return ValidationHelper.CanNotBeEmpty(validator);
+        }
+        #endregion
     }
 }

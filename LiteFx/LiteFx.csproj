@@ -101,6 +101,8 @@
     <Compile Include="Specification\LambdaSpecification.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Validation\Assertion.cs" />
+    <Compile Include="Validation\ClientValidationRules\ClientValidationRule.cs" />
+    <Compile Include="Validation\ClientValidationRules\MaxLengthClientValidationRule.cs" />
     <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
     <Compile Include="Validation\Predicate.cs" />
@@ -110,6 +112,9 @@
     <Compile Include="ValueObjectBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.pt-br.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -141,6 +146,7 @@
     <None Include="..\LiteFxKeyPair.snk">
       <Link>LiteFxKeyPair.snk</Link>
     </None>
+    <None Include="Validation\ValidationClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
