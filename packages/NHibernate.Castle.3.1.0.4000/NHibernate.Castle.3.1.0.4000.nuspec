@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NHibernate.Castle</id>
+    <version>3.1.0.4000</version>
+    <title>NHibernate.Castle</title>
+    <authors>NHibernate community,  Hibernate community</authors>
+    <owners>NHibernate community,  Hibernate community</owners>
+    <projectUrl>http://nhforge.org/</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/NHibernate.Castle.3.1.0.4000.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NHibernate is a mature, open source object-relational mapper for the .NET framework.
+      This package enables the ability to use lazy-loading with Castle dynamic-proxy.</description>
+    <summary>NHibernate with lazy-loading enabled.</summary>
+    <tags>ORM DataBase DAL Object Relational Mapping</tags>
+    <dependencies>
+      <dependency id="NHibernate" version="[3.1.0.4000]" />
+      <dependency id="Castle.Core" version="2.5.2" />
+    </dependencies>
+  </metadata>
+</package>

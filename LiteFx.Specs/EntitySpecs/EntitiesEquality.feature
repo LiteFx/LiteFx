@@ -57,6 +57,12 @@ Scenario: Comparing two entities one not null and another null
 	When I compare the two instances
 	Then the equality should be false
 
+Scenario: Comparing the Hash Code of two entities of the same type and id equals 0
+	Given I have a product instance with the id 0
+	And I have another product instance with the id 0
+	When I compare the Hash Code of this two instances
+	Then the equality should be false
+
 Scenario: Adding two entities of the same type and id into a HashSet
 	Given I have a product instance with the id 5
 	And I have another product instance with the id 5

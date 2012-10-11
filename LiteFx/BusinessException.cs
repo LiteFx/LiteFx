@@ -85,7 +85,10 @@ namespace LiteFx
         /// ]]>
         /// </code>
         /// </example>
-        public BusinessException(string message) : base(message) { }
+        public BusinessException(string message) : base(message) 
+		{
+			ValidationResults = new List<ValidationResult>();
+		}
 
         /// <summary>
         /// Constroi um BusinessException baseado em uma mensagem e em uma exceção anterior.
@@ -114,7 +117,10 @@ namespace LiteFx
         /// ]]>
         /// </code>
         /// </example>
-        public BusinessException(string message, Exception innerException) : base(message, innerException) { }
+        public BusinessException(string message, Exception innerException) : base(message, innerException) 
+		{
+			ValidationResults = new List<ValidationResult>();
+		}
 
         /// <summary>
         /// 
@@ -151,7 +157,7 @@ namespace LiteFx
                     errorStringBuilder.AppendFormat("{0} : {1}{2}", businessRuleViolation.MemberNames, businessRuleViolation.ErrorMessage, Environment.NewLine);
                 }
 
-                return base.Message + Environment.NewLine + errorStringBuilder;
+                return base.Message + (errorStringBuilder.Length > 0 ? Environment.NewLine + errorStringBuilder : string.Empty);
             }
         }
     }

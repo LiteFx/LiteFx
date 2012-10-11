@@ -103,6 +103,7 @@
     <Compile Include="Validation\Assertion.cs" />
     <Compile Include="Validation\ClientValidationRules\ClientValidationRule.cs" />
     <Compile Include="Validation\ClientValidationRules\MaxLengthClientValidationRule.cs" />
+    <Compile Include="Validation\ClientValidationRules\RequiredClientValidationRule.cs" />
     <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
     <Compile Include="Validation\Predicate.cs" />

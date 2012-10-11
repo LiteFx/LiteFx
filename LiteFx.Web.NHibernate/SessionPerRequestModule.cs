@@ -4,11 +4,22 @@ using LiteFx.Context.NHibernate;
 
 namespace LiteFx.Web.NHibernate
 {
+    /// <summary>
+    /// Session per request Module.
+    /// Handles the NHibernate session when the request ends.
+    /// </summary>
     public class SessionPerRequestModule : IHttpModule
     {
-        public void Dispose()
-        { }
+        /// <summary>
+        /// Dispose the module.
+        /// In this module nothing needs to be diposed.
+        /// </summary>
+        public void Dispose() { }
 
+        /// <summary>
+        /// Sing the HttpAplication request events.
+        /// </summary>
+        /// <param name="context">HttpApplication context</param>
         public void Init(HttpApplication context)
         {
             context.EndRequest += new EventHandler(context_EndRequest);
@@ -24,7 +35,7 @@ namespace LiteFx.Web.NHibernate
                 {
                     SessionFactoryManager.Current.CommitTransaction();
                 }
-                catch(Exception ex)
+                catch
                 {
                     SessionFactoryManager.Current.RollbackTransaction();
                     throw;

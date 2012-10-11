@@ -8,9 +8,26 @@ namespace LiteFx.Web.Mvc.NHibernate
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
             if (filterContext.Exception == null)
-                SessionFactoryManager.Current.CommitTransaction();
-
-            SessionFactoryManager.Current.DisposeSession();
+            {
+                try
+                {
+                    SessionFactoryManager.Current.CommitTransaction();
+                }
+                catch
+                {
+                    SessionFactoryManager.Current.RollbackTransaction();
+                    throw;
+                }
+                finally
+                {
+                    SessionFactoryManager.Current.DisposeSession();
+                }
+            }
+            else
+            {
+                SessionFactoryManager.Current.RollbackTransaction();
+                SessionFactoryManager.Current.DisposeSession();
+            }
         }
     }
 }

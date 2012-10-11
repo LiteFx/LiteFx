@@ -186,4 +186,7 @@
   <data name="TheFieldXShouldBeAnEmail" xml:space="preserve">
     <value>The field '{0}' should be an e-mail.</value>
   </data>
+  <data name="TheFieldXShouldBeGreaterThanY" xml:space="preserve">
+    <value>The field '{0}' should be greater than '{1}'.</value>
+  </data>
 </root>

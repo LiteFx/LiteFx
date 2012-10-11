@@ -41,7 +41,7 @@ namespace LiteFx.Validation
             get
             {
                 if (ExpressionAccessor.Body is MemberExpression)
-                    return ((MemberExpression)ExpressionAccessor.Body).Member.DeclaringType;
+                    return ExpressionAccessor.ReturnType;
 
                 return null;
             }

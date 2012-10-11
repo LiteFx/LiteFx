@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NHibernate</id>
+    <version>3.1.0.4000</version>
+    <title>NHibernate</title>
+    <authors>NHibernate community,  Hibernate community</authors>
+    <owners>NHibernate community,  Hibernate community</owners>
+    <projectUrl>http://nhforge.org/</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/NHibernate.3.1.0.4000.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>DONT INSTALL IT DIRECTLY
+Only as reference for others frameworks.
+NHibernate.Castle, NHibernate.LinFu, NHibernate.Spring.</description>
+    <summary>DONT INSTALL IT DIRECTLY. Available only as reference for others frameworks.</summary>
+    <tags>ORM DataBase DAL Object Relational Mapping</tags>
+    <dependencies>
+      <dependency id="Iesi.Collections" version="3.1.0.4000" />
+    </dependencies>
+  </metadata>
+</package>

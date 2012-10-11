@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FluentNHibernate</id>
+    <version>1.2.0.712</version>
+    <title>Fluent NHibernate</title>
+    <authors>James Gregory and contributors</authors>
+    <owners>James Gregory and contributors</owners>
+    <licenseUrl>http://github.com/jagregory/fluent-nhibernate/raw/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://fluentnhibernate.org/</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/FluentNHibernate.1.2.0.712.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Fluent, XML-less, compile safe, automated, convention-based mappings for NHibernate.</description>
+    <summary>Fluent, XML-less, compile safe, automated, convention-based mappings for NHibernate.</summary>
+    <copyright>James Gregory and contributors 2008-2011</copyright>
+    <tags>orm dal nhibernate conventions</tags>
+    <dependencies>
+      <dependency id="NHibernate.Castle" version="3.1.0.4000" />
+    </dependencies>
+  </metadata>
+</package>
