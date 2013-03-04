@@ -106,7 +106,9 @@
     <Compile Include="Validation\ClientValidationRules\RequiredClientValidationRule.cs" />
     <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
+    <Compile Include="Validation\NullableValidationHelper.cs" />
     <Compile Include="Validation\Predicate.cs" />
+    <Compile Include="Validation\PtBr\NullableValidationHelperPtBr.cs" />
     <Compile Include="Validation\PtBr\ValidationHelperPtBr.cs" />
     <Compile Include="Validation\ValidationHelper.cs" />
     <Compile Include="Validation\Validator.cs" />

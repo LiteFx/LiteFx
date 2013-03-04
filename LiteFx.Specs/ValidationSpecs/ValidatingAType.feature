@@ -14,6 +14,7 @@ Scenario: Check a invalid Type
 	When I call the validate method
 	Then the count of validationResult collection should be 1
 
+
 Scenario: Check a valid Derived Type
 	Given a valid Derived Type
 	When I call the validate method
@@ -23,3 +24,18 @@ Scenario: Check a invalid Derived Type
 	Given a invalid Derived Type
 	When I call the validate method
 	Then the count of validationResult collection should be 2
+
+Scenario: Check a valid Type with a Nullable member
+	Given a valid Type with a Nullable member
+	When I call the validate method
+	Then the count of validationResult collection should be 0
+
+Scenario: Check a invalid Type with a Nullable member
+	Given a invalid Type with a Nullable member
+	When I call the validate method
+	Then the count of validationResult collection should be 2
+
+Scenario: Check a valid Type with a Nullable member set to null
+	Given a valid Type with a Nullable member set to null
+	When I call the validate method
+	Then the count of validationResult collection should be 0

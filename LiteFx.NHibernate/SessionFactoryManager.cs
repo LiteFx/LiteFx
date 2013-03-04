@@ -5,7 +5,6 @@ using FluentNHibernate.Conventions.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Cfg;
-using NHibernate.Cfg.Loquacious;
 using NHibernate.Context;
 
 namespace LiteFx.Context.NHibernate
@@ -82,14 +81,7 @@ namespace LiteFx.Context.NHibernate
 		/// </summary>
 		protected ISessionFactory SessionFactory
 		{
-			get
-			{
-				if (sessionFactory == null)
-				{
-					sessionFactory = Configuration.BuildSessionFactory();
-				}
-				return sessionFactory;
-			}
+			get { return sessionFactory ?? (sessionFactory = Configuration.BuildSessionFactory()); }
 		}
 
 		private static bool sessionOpened = false;
@@ -97,7 +89,7 @@ namespace LiteFx.Context.NHibernate
 		public virtual ISession GetCurrentSession()
 		{
 			_sessionMutex.WaitOne();
-			if (!CurrentSessionContext.HasBind(SessionFactoryManager.Current.SessionFactory))
+			if (!CurrentSessionContext.HasBind(Current.SessionFactory))
 			{
 				ISession session = SessionFactory.OpenSession();
 				session.BeginTransaction();

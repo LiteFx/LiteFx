@@ -7,98 +7,98 @@ using LiteFx.Validation.ClientValidationRules;
 
 namespace LiteFx
 {
-    /// <summary>
-    /// EntityBase implementation that supports validation.
-    /// </summary>
-    /// <typeparam name="TId">Type of id.</typeparam>
-    public abstract class EntityBaseWithValidation<TId> : EntityBase<TId>, IValidatableEntity
-        where TId : IEquatable<TId>
-    {
-        private IAssert assert;
+	/// <summary>
+	/// EntityBase implementation that supports validation.
+	/// </summary>
+	/// <typeparam name="TId">Type of id.</typeparam>
+	public abstract class EntityBaseWithValidation<TId> : EntityBase<TId>, IValidatableEntity
+		where TId : IEquatable<TId>
+	{
+		private IAssert assert;
 
-        /// <summary>
-        /// Instance of assertion class to perform validations.
-        /// </summary>
-        protected virtual IAssert<T> Assert<T>()
-        {
-            if (assert == null)
-                assert = new Assert<T>();
+		/// <summary>
+		/// Instance of assertion class to perform validations.
+		/// </summary>
+		protected virtual IAssert<T> Assert<T>()
+		{
+			if (assert == null)
+				assert = new Assert<T>();
 
-            return (IAssert<T>)assert;
-        }
+			return (IAssert<T>)assert;
+		}
 
-        #region IValidation Members
-        public virtual IEnumerable<ValidationResult> Validate()
-        {
-            ValidationContext validationContext = new ValidationContext(this, null, null);
+		#region IValidation Members
+		public virtual IEnumerable<ValidationResult> Validate()
+		{
+			ValidationContext validationContext = new ValidationContext(this, null, null);
 
-            List<ValidationResult> validationResults = new List<ValidationResult>();
+			List<ValidationResult> validationResults = new List<ValidationResult>();
 
-            Validator.TryValidateObject(this, validationContext, validationResults, true);
+			Validator.TryValidateObject(this, validationContext, validationResults, true);
 
-            return validationResults;
-        }
+			return validationResults;
+		}
 
-        /// <summary>
-        /// Verify if the entity is valid."/>.
-        /// </summary>
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (skipValidation) return Enumerable.Empty<ValidationResult>();
+		/// <summary>
+		/// Verify if the entity is valid."/>.
+		/// </summary>
+		public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			if (skipValidation) return Enumerable.Empty<ValidationResult>();
 
-            if (assert == null)
-                this.ConfigureValidation();
+			if (assert == null)
+				ConfigureValidation();
 
-            List<ValidationResult> validationResults = new List<ValidationResult>();
+			List<ValidationResult> validationResults = new List<ValidationResult>();
 
-            return assert.Validate(this, validationResults);
-        }
+			return assert.Validate(this, validationResults);
+		}
 
-        private bool skipValidation = false;
+		private bool skipValidation = false;
 
-        public virtual void SkipValidation()
-        {
-            skipValidation = true;
-        }
+		public virtual void SkipValidation()
+		{
+			skipValidation = true;
+		}
 
-        /// <summary>
-        /// Implement this method to configure the fluent validation for the entity.
-        /// </summary>
-        /// <example>
-        /// <code lang="cs">
-        /// <![CDATA[
-        /// public class MyEntity : EntityBaseWithValidation<long>
-        /// {
-        ///     public override void ConfigureValidation()
-        ///     {
-        ///         Assert<MyEntity>()
-        ///             .That(e => e.Name)
-        ///             .IsNotNullOrEmpty();
-        ///     }
-        /// }
-        /// ]]>
-        /// </code>
-        /// </example>
-        public abstract void ConfigureValidation();
+		/// <summary>
+		/// Implement this method to configure the fluent validation for the entity.
+		/// </summary>
+		/// <example>
+		/// <code lang="cs">
+		/// <![CDATA[
+		/// public class MyEntity : EntityBaseWithValidation<long>
+		/// {
+		///     public override void ConfigureValidation()
+		///     {
+		///         Assert<MyEntity>()
+		///             .That(e => e.Name)
+		///             .IsNotNullOrEmpty();
+		///     }
+		/// }
+		/// ]]>
+		/// </code>
+		/// </example>
+		public abstract void ConfigureValidation();
 
-        public virtual IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName)
-        {
-            if (assert == null)
-                ConfigureValidation();
+		public virtual IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName)
+		{
+			if (assert == null)
+				ConfigureValidation();
 
-            var assertions = assert.Assertions.Where(a => a.AccessorMemberNames.Contains(propertyName)).Select(a => a);
-            foreach (var assertion in assertions)
-            {
-                foreach (var predicate in assertion.BasePredicates)
-                {
-                    if (predicate.ClienteValidationRule != null && assertion.WhenAssertion == null)
-                    {
-                        predicate.ClienteValidationRule.ErrorMessage = string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(propertyName));
-                        yield return predicate.ClienteValidationRule;
-                    }
-                }
-            }
-        }
-        #endregion
-    }
+			var assertions = assert.Assertions.Where(a => a.AccessorMemberNames.Contains(propertyName)).Select(a => a);
+			foreach (var assertion in assertions)
+			{
+				foreach (var predicate in assertion.BasePredicates)
+				{
+					if (predicate.ClienteValidationRule != null && assertion.WhenAssertion == null)
+					{
+						predicate.ClienteValidationRule.ErrorMessage = string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(propertyName));
+						yield return predicate.ClienteValidationRule;
+					}
+				}
+			}
+		}
+		#endregion
+	}
 }

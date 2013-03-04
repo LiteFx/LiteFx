@@ -23,7 +23,7 @@ namespace LiteFx
 
 			if (!isSameTypeOf(other)) return false;
 
-			return this.Id.Equals(other.Id);
+			return Id.Equals(other.Id);
 		}
 
 		private bool isSameTypeOf(EntityBase<TId> other)

@@ -29,8 +29,9 @@ namespace LiteFx.Validation
             // TODO: Incluir referencias para o displayname do data annotations
             get
             {
-                if (ExpressionAccessor.Body is MemberExpression)
-                    return ((MemberExpression)ExpressionAccessor.Body).Member.Name;
+	            MemberExpression memberExpression = ExpressionAccessor.Body as MemberExpression;
+	            if (memberExpression != null)
+                    return memberExpression.Member.Name;
 
                 return string.Empty;
             }
