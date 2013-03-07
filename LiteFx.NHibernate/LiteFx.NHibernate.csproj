@@ -63,6 +63,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ExtendedEqualsGenerator.cs" />
     <Compile Include="NHibernateContextAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
