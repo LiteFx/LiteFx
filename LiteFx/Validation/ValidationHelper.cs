@@ -14,13 +14,7 @@ namespace LiteFx.Validation
 		private static ResourceManager resourceManager;
 		public static ResourceManager ResourceManager
 		{
-			get
-			{
-				if (resourceManager == null)
-					resourceManager = Resources.ResourceManager;
-
-				return resourceManager;
-			}
+			get { return resourceManager ?? (resourceManager = Resources.ResourceManager); }
 			set
 			{
 				resourceManager = value;
@@ -57,7 +51,7 @@ namespace LiteFx.Validation
 
 		public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message, string validationType)
 		{
-			ClientValidationRule clientValidationRule = new ClientValidationRule() { ErrorMessage = message, ValidationType = validationType };
+			ClientValidationRule clientValidationRule = new ClientValidationRule { ErrorMessage = message, ValidationType = validationType };
 			validator.Assertion.Predicates.Add(new Predicate<TResult>(expression, message, clientValidationRule));
 			return validator;
 		}

@@ -51,7 +51,7 @@ namespace LiteFx.Validation
 					{
 						if (results != null)
 						{
-							List<string> memberNames = new List<string>() { accessor.MemberName };
+							List<string> memberNames = new List<string> { accessor.MemberName };
 
 							if (accessor.MemberType != null && accessor.MemberType.IsSubclassOf(typeof(EntityBase)))
 								memberNames.Add(string.Format("{0}.Id", accessor.MemberName));

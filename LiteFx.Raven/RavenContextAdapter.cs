@@ -15,9 +15,18 @@ namespace LiteFx.Raven
 
         public T Delete<T>(TId id)
         {
-            var doc = Session.Load<T>(id as ValueType);
+            T doc = default(T);
+            
+            if(id is string)
+                doc = Session.Load<T>(id as string);
+            else if(id is ValueType)
+                doc = Session.Load<T>(id as ValueType);
+
+            if (doc == null)
+                throw new InvalidOperationException(string.Format("The document id '{0}' does not exist in document store", id));
+
             Session.Delete(doc);
-            throw new NotImplementedException();
+            return doc;
         }
 
         public IQueryable<T> GetQueryableObject<T>() where T : class
