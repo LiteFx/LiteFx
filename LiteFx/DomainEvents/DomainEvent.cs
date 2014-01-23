@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LiteFx.DomainEvents
 {
@@ -47,6 +48,17 @@ namespace LiteFx.DomainEvents
         public static void RegisterDomainEventHandler<T>(IDomainEventHandler<T> domainEventHandler) where T : IDomainEvent
         {
             DomainEventHandlers.Add(domainEventHandler);
+        }
+
+        public static void RegisterAllDomainEventHandlers(Assembly assembly) 
+        {
+            var eventHandlerType = typeof(IDomainEventHandler);
+            var eventHandlerTypes = assembly.GetTypes().Where(t => eventHandlerType.IsAssignableFrom(t));
+
+            foreach (var eventHandler in eventHandlerTypes)
+            {
+                DomainEventHandlers.Add((IDomainEventHandler)Activator.CreateInstance(eventHandler));
+            }
         }
 
         /// <summary>
