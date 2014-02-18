@@ -31,8 +31,8 @@ namespace LiteFx.Context.NHibernate
 							configuration = new Configuration();
 							configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
 
-							if (CustomConfiguration != null)
-								CustomConfiguration(configuration);
+							if (PreCustomConfiguration != null)
+								PreCustomConfiguration(configuration);
 
 							configuration = Fluently.Configure(configuration)
 									.Mappings(m =>
@@ -43,6 +43,9 @@ namespace LiteFx.Context.NHibernate
 										m.HbmMappings
 											.AddFromAssembly(AssemblyToConfigure);
 									}).BuildConfiguration();
+
+							if (PosCustomConfiguration != null)
+								PosCustomConfiguration(configuration);
 						}
 
 					}
@@ -60,7 +63,9 @@ namespace LiteFx.Context.NHibernate
 
 		public delegate void CustomConfigurationDelegate(Configuration configuration);
 
-		public static CustomConfigurationDelegate CustomConfiguration { get; set; }
+		public static CustomConfigurationDelegate PreCustomConfiguration { get; set; }
+
+		public static CustomConfigurationDelegate PosCustomConfiguration { get; set; }
 
 	}
 }
