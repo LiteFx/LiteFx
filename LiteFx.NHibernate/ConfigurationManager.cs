@@ -4,6 +4,8 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Conventions.Helpers;
 using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
+using System;
+using LiteFx.Context.NHibernate.Properties;
 
 
 namespace LiteFx.Context.NHibernate
@@ -13,51 +15,50 @@ namespace LiteFx.Context.NHibernate
 		private static Mutex _configMutex = new Mutex();
 
 		private static Configuration configuration;
-		/// <summary>
-		/// Propriedade privada para fazer o cache da configuração do NHibernate.
-		/// </summary>
 		public static Configuration Configuration
 		{
 			get
 			{
-				if (configuration == null)
-				{
-					try
-					{
-						_configMutex.WaitOne();
-
-						if (configuration == null)
-						{
-							configuration = new Configuration();
-							configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
-
-							if (PreCustomConfiguration != null)
-								PreCustomConfiguration(configuration);
-
-							configuration = Fluently.Configure(configuration)
-									.Mappings(m =>
-									{
-										m.FluentMappings
-											.Conventions.Setup(s => s.Add(AutoImport.Never()))
-											.AddFromAssembly(AssemblyToConfigure);
-										m.HbmMappings
-											.AddFromAssembly(AssemblyToConfigure);
-									}).BuildConfiguration();
-
-							if (PosCustomConfiguration != null)
-								PosCustomConfiguration(configuration);
-						}
-
-					}
-					finally
-					{
-						_configMutex.ReleaseMutex();
-					}
-				}
+                if (configuration == null)
+                    throw new InvalidOperationException(Resources.YouHaveToCallConfigurationManagerInitializeAtLiteFxWebNHibernateStart);
 
 				return configuration;
 			}
 		}
+
+        public static void Initialize() 
+        {
+            if (configuration != null)
+                throw new InvalidOperationException(Resources.YouCanCallConfigurationManagerInitializeOnlyOnce);
+
+            try
+            {
+                _configMutex.WaitOne();
+                                
+                configuration = new Configuration();
+                configuration.LinqToHqlGeneratorsRegistry<ExtendedLinqtoHqlGeneratorsRegistry>();
+
+                if (PreCustomConfiguration != null)
+                    PreCustomConfiguration(configuration);
+
+                configuration = Fluently.Configure(configuration)
+                        .Mappings(m =>
+                        {
+                            m.FluentMappings
+                                .Conventions.Setup(s => s.Add(AutoImport.Never()))
+                                .AddFromAssembly(AssemblyToConfigure);
+                            m.HbmMappings
+                                .AddFromAssembly(AssemblyToConfigure);
+                        }).BuildConfiguration();
+
+                if (PosCustomConfiguration != null)
+                    PosCustomConfiguration(configuration);
+            }
+            finally
+            {
+                _configMutex.ReleaseMutex();
+            }
+        }
 
 		public static Assembly AssemblyToConfigure { get; set; }
 

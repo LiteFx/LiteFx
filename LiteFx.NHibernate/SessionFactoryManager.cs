@@ -2,6 +2,7 @@
 using System.Threading;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
+using LiteFx.Context.NHibernate.Properties;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -39,17 +40,28 @@ namespace LiteFx.Context.NHibernate
 			get
 			{
 				if (sessionFactory == null)
-				{
-					_factoryMutex.WaitOne();
-					if (sessionFactory == null)
-					{
-						sessionFactory = ConfigurationManager.Configuration.BuildSessionFactory();
-					}
-					_factoryMutex.ReleaseMutex();
-				}
+                    throw new InvalidOperationException(Resources.YouHaveToCallSessionFactoryManagerInitializeAtLiteFxWebNHibernateStart);
+
 				return sessionFactory;
 			}
 		}
+
+        public static void Initialize() 
+        {
+            if (sessionFactory != null)
+                throw new InvalidOperationException(Resources.YouCanCallSessionFactoryManagerInitializeOnlyOnce);
+                
+            try
+            {
+                _factoryMutex.WaitOne();
+
+                sessionFactory = ConfigurationManager.Configuration.BuildSessionFactory();
+            }
+            finally
+            {
+                _factoryMutex.ReleaseMutex();
+            }
+        }
 
 		private ISession session;
 
