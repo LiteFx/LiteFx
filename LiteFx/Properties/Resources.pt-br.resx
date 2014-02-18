@@ -126,26 +126,20 @@
   <data name="TheFieldXCanNotBeANumber" xml:space="preserve">
     <value>O campo '{0}' não pode ser um número.</value>
   </data>
-  <data name="TheFieldXCanNotBeEmpty" xml:space="preserve">
-    <value>O campo '{0}' não pode estar vazio.</value>
-  </data>
   <data name="TheFieldXCanNotBeGreaterThanY" xml:space="preserve">
     <value>O campo '{0}' não pode ser maior que '{1}'.</value>
   </data>
   <data name="TheFieldXCanNotBeLessThanY" xml:space="preserve">
     <value>O campo '{0}' não pode ser menor que '{1}'.</value>
   </data>
-  <data name="TheFieldXCanNotBeNull" xml:space="preserve">
-    <value>O campo '{0}' não pode ser nulo.</value>
-  </data>
-  <data name="TheFieldXCanNotBeNullOrEmpty" xml:space="preserve">
-    <value>O campo '{0}' não pode ser nulo ou vazio.</value>
-  </data>
   <data name="TheFieldXCanNotHaveLessThanYCharacters" xml:space="preserve">
     <value>O campo '{0}' não pode ter menos de '{1}' caracteres.</value>
   </data>
   <data name="TheFieldXCanNotHaveMoreThanYCharacters" xml:space="preserve">
     <value>O campo '{0}' não pode ter mais de '{1}' caracteres.</value>
+  </data>
+  <data name="TheFieldXIsRequired" xml:space="preserve">
+    <value>O campo '{0}' é obrigatório.</value>
   </data>
   <data name="TheFieldXMustBeANumber" xml:space="preserve">
     <value>O campo '{0}' deve ser um número.</value>

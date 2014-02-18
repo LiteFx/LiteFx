@@ -7,7 +7,7 @@ namespace LiteFx.Validation.ClientValidationRules
 		public RequiredClientValidationRule()
 		{
 			ValidationType = "required";
-			ErrorMessage = Resources.TheFieldXCanNotBeNull;
+			ErrorMessage = Resources.TheFieldXIsRequired;
 		}
 	}
 }

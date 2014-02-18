@@ -70,7 +70,7 @@ namespace LiteFx.Validation
 		public static Validator<T, TResult> IsNotNull<T, TResult>(this Validator<T, TResult> validator)
 		{
 			RequiredClientValidationRule requiredClientValidationRule = new RequiredClientValidationRule();
-			return IsSatisfied(validator, p => p != null, Resources.TheFieldXCanNotBeNull, requiredClientValidationRule);
+			return IsSatisfied(validator, p => p != null, Resources.TheFieldXIsRequired, requiredClientValidationRule);
 		}
 
 		public static Validator<T, bool> IsTrue<T>(this Validator<T, bool> validator)
@@ -101,7 +101,7 @@ namespace LiteFx.Validation
 
 		public static Validator<T, string> IsNotNullOrEmpty<T>(this Validator<T, string> validator)
 		{
-			return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXCanNotBeNullOrEmpty, "required");
+			return IsSatisfied(validator, p => !string.IsNullOrEmpty(p), Resources.TheFieldXIsRequired, "required");
 		}
 
 		public static Validator<T, string> IsEmpty<T>(this Validator<T, string> validator)
@@ -111,7 +111,7 @@ namespace LiteFx.Validation
 
 		public static Validator<T, string> IsNotEmpty<T>(this Validator<T, string> validator)
 		{
-			return IsSatisfied(validator, p => string.Empty != p, Resources.TheFieldXCanNotBeEmpty);
+            return IsSatisfied(validator, p => string.Empty != p, Resources.TheFieldXIsRequired, "required");
 		}
 
 		public static Validator<T, string> MaxLength<T>(this Validator<T, string> validator, int maxLength)
@@ -280,7 +280,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return false;
 				return !p.Id.Equals(0);
-			}, string.Format(Resources.TheFieldXCanNotBeEmpty, "{0}"));
+			}, string.Format(Resources.TheFieldXIsRequired, "{0}"), "required");
 		}
 		#endregion
 
