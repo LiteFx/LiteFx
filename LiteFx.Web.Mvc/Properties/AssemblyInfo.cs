@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LiteFx.Web.Mvc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LiteFx")]
 [assembly: AssemblyProduct("LiteFx.Web.Mvc")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

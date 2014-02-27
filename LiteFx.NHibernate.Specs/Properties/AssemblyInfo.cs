@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LiteFx.NHibernate.Specs")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LiteFx")]
 [assembly: AssemblyProduct("LiteFx.NHibernate.Specs")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

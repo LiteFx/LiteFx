@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LiteFx")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LiteFx")]
 [assembly: AssemblyProduct("LiteFx")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

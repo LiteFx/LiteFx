@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LiteFx.NHibernate")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LiteFx")]
 [assembly: AssemblyProduct("LiteFx.NHibernate")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

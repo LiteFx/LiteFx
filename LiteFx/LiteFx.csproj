@@ -20,8 +20,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\LiteFxKeyPair.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\litefx.pfx</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -148,8 +148,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LiteFxKeyPair.snk">
-      <Link>LiteFxKeyPair.snk</Link>
+    <None Include="..\litefx.pfx">
+      <Link>litefx.pfx</Link>
     </None>
     <None Include="Validation\ValidationClassDiagram.cd" />
   </ItemGroup>

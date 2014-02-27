@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyTitle("NHibernateDatabaseGenerator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LiteFx")]
 [assembly: AssemblyProduct("NHibernateDatabaseGenerator")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

@@ -36,10 +36,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\LiteFxKeyPair.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\litefx.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
@@ -80,8 +80,8 @@
     <Compile Include="SessionFactoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LiteFxKeyPair.snk">
-      <Link>LiteFxKeyPair.snk</Link>
+    <None Include="..\litefx.pfx">
+      <Link>litefx.pfx</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
