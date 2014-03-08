@@ -14,6 +14,11 @@ Scenario: Check a invalid Type
 	When I call the validate method
 	Then the count of validationResult collection should be 1
 
+Scenario: Check a invalid Type skiping the validation
+	Given a invalid Type
+	And I call skip validation method
+	When I call the validate method
+	Then the count of validationResult collection should be 0
 
 Scenario: Check a valid Derived Type
 	Given a valid Derived Type
@@ -39,3 +44,8 @@ Scenario: Check a valid Type with a Nullable member set to null
 	Given a valid Type with a Nullable member set to null
 	When I call the validate method
 	Then the count of validationResult collection should be 0
+
+Scenario: Get client validation from a Type
+	Given a valid Type
+	When I call the GetClientValidationData method passing the property Name
+	Then the client validation rule collection should be have the required rule

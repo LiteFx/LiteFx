@@ -33,6 +33,7 @@ namespace LiteFx.Web.NHibernate
 			{
 				try
 				{
+                    SessionFactoryManager.Current.Flush();
 					SessionFactoryManager.Current.CommitTransaction();
 				}
 				catch

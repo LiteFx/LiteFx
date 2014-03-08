@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
+using LiteFx.Validation.ClientValidationRules;
 
 namespace LiteFx.Specs.ValidationSpecs
 {
@@ -12,6 +13,7 @@ namespace LiteFx.Specs.ValidationSpecs
 	{
 		Category type;
 		IEnumerable<ValidationResult> results;
+        IEnumerable<ClientValidationRule> clientValidationRules;
 
 		[Given(@"a valid Type")]
 		public void GivenAValidType()
@@ -55,11 +57,29 @@ namespace LiteFx.Specs.ValidationSpecs
 			type = new CategoryWithNullableMember() { Name = "Valid Type", Creation = null };
 		}
 
+        [Given]
+        public void Given_I_call_skip_validation_method()
+        {
+            type.SkipValidation();
+        }
+
 		[When(@"I call the validate method")]
 		public void WhenICallTheValidateMethod()
 		{
 			results = type.Validate();
 		}
+
+        [When(@"I call the GetClientValidationData method passing the property (.*)")]
+        public void WhenICallTheGetClientValidationDataMethodPassingThePropertyName(string propertyName)
+        {
+            clientValidationRules = type.GetClientValidationData(propertyName);
+        }
+
+        [Then(@"the client validation rule collection should be have the (.*) rule")]
+        public void ThenTheClientValidationRuleCollectionShouldBeHaveThe_Rule(string rule)
+        {
+            Assert.IsTrue(clientValidationRules.Any(c => c.ValidationType == rule));
+        }
 
 		[Then(@"the count of validationResult collection should be (.*)")]
 		public void ThenTheCountOfValidationResultCollectionShouldBe(int count)

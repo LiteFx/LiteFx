@@ -12,8 +12,10 @@ namespace LiteFx.Specs.EntitySpecs
     {
         EntityBase<int> entity;
         EntityBase<int> anotherEntity;
+        object ordinaryObject;
 
         bool equality;
+        bool diference;
 
         HashSet<EntityBase<int>> hashSet;
 
@@ -27,6 +29,18 @@ namespace LiteFx.Specs.EntitySpecs
         public void GivenIHaveAnotherProductInstanceWithTheId(int id)
         {
             anotherEntity = new Product() { Id = id };
+        }
+
+        [Given(@"I have a boxed product instance with the id (.*) in ordinary object")]
+        public void GivenIHaveAnotherProductInstanceWithTheIdBoxedInOrdinaryObject(int id)
+        {
+            ordinaryObject = new Product() { Id = id };
+        }
+
+        [Given(@"I have the same product instance")]
+        public void GivenIHaveTheSameProductInstance()
+        {
+            anotherEntity = entity;
         }
 
         [Given(@"I have a category instance with the id (.*)")]
@@ -47,6 +61,18 @@ namespace LiteFx.Specs.EntitySpecs
             anotherEntity = null;
         }
 
+        [Given(@"I have an ordinary object")]
+        public void GivenIHaveAnOrdinaryObject()
+        {
+            ordinaryObject = new object();
+        }
+
+        [Given(@"I have a null ordinary object")]
+        public void GivenIHaveANullOrdinaryObject()
+        {
+            ordinaryObject = null;
+        }
+
         [Given(@"a HashSet instance")]
         public void GivenAHashSetInstance()
         {
@@ -57,6 +83,18 @@ namespace LiteFx.Specs.EntitySpecs
         public void WhenICompareTheTwoInstances()
         {
             equality = entity == anotherEntity;
+        }
+
+        [When(@"I check the diference of the two instances")]
+        public void WhenICheckTheDiferenceOfTheTwoInstances()
+        {
+            diference = entity != anotherEntity;
+        }
+
+        [When(@"I compare the entity with the ordinary object")]
+        public void WhenICompareTheEntityWithTheOrdinaryObject()
+        {
+            equality = entity.Equals(ordinaryObject);
         }
 
         [When(@"I compare the Hash Code of this two instances")]
@@ -78,6 +116,12 @@ namespace LiteFx.Specs.EntitySpecs
             Assert.AreEqual(result, this.equality);
         }
 
+        [Then(@"the diference should be (.*)")]
+        public void ThenTheDiferenceShouldBeFalse(bool result)
+        {
+            Assert.AreEqual(result, this.diference);
+        }
+        
         [Then(@"the HashSet count should be (.*)")]
         public void ThenTheHashSetCountShouldBe(int count)
         {

@@ -62,6 +62,16 @@ namespace LiteFx.Validation.PtBr
 			return ValidationHelper.IsNullOrEmpty(validator);
 		}
 
+        public static Validator<T, string> EhObrigatorio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsNotNullOrEmpty(validator);
+        }
+
+        public static Validator<T, string> Obrigatorio<T>(this Validator<T, string> validator)
+        {
+            return ValidationHelper.IsNotNullOrEmpty(validator);
+        }
+
 		public static Validator<T, string> NaoSejaNuloOuVazio<T>(this Validator<T, string> validator)
 		{
 			return ValidationHelper.IsNotNullOrEmpty(validator);
