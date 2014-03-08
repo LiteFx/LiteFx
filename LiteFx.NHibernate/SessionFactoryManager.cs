@@ -17,14 +17,12 @@ namespace LiteFx.Context.NHibernate
 			}
 		}
 
-		public SessionFactoryManager()
-		{
-			id = Guid.NewGuid();
-		}
-
 		private Guid id;
 		public Guid Id { get { return id; } }
 
+        public bool ReadOnly { get; set; }
+
+        private ISession session;
 
 		private static Mutex _factoryMutex = new Mutex();
 
@@ -47,6 +45,11 @@ namespace LiteFx.Context.NHibernate
 			}
 		}
 
+        public SessionFactoryManager()
+        {
+            id = Guid.NewGuid();
+        }
+        
         public static void Initialize() 
         {
             if (sessionFactory != null)
@@ -64,10 +67,6 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
-        public bool ReadOnly { get; set; }
-
-		private ISession session;
-
 		public virtual ISession GetCurrentSession()
 		{
 			if (session == null)
@@ -75,19 +74,33 @@ namespace LiteFx.Context.NHibernate
 
                 Trace.WriteLine("Opening NHibernate Session.", "LiteFx");
 				session = SessionFactory.OpenSession();
-
-                session.DefaultReadOnly = ReadOnly;
-
-                if (!ReadOnly)
-                {
-                    Trace.WriteLine("Beggining NHibernate Transaction.", "LiteFx");
-                    session.BeginTransaction();
-                }
 				//CurrentSessionContext.Bind(session);
+
+                if (ReadOnly)
+                {
+                    session.DefaultReadOnly = true;
+                    session.FlushMode = FlushMode.Never;
+                }
+                else
+                {
+                    BeginTransaction();
+                }
 			}
 
 			return session;
 		}
+
+        private void BeginTransaction()
+        {
+            if (session != null)
+            {
+                if (!session.Transaction.IsActive)
+                {
+                    Trace.WriteLine("Beggining NHibernate Transaction.", "LiteFx");
+                    session.BeginTransaction();
+                }
+            }
+        }
 
 		public virtual void DisposeSession()
 		{
