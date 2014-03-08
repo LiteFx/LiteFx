@@ -59,7 +59,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainEventsSpecs\OrdinaryEventHandler.cs" />
+    <Compile Include="DomainEventsSpecs\EventHandlers.cs" />
     <Compile Include="DomainEventsSpecs\OrdinaryEvent.cs" />
     <Compile Include="DomainEventsSpecs\OrdinarySubject.cs" />
     <Compile Include="DomainEventsSpecs\RaisingDomainEvents.feature.cs">

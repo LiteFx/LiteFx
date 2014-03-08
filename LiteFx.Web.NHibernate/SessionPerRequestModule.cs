@@ -40,11 +40,10 @@ namespace LiteFx.Web.NHibernate
 		{
 			HttpApplication application = (HttpApplication)sender;
 
-			if (application.Context.Error == null && application.Context.Request.HttpMethod != "GET")
+			if (application.Context.Error == null)
 			{
 				try
 				{
-                    SessionFactoryManager.Current.Flush();
 					SessionFactoryManager.Current.CommitTransaction();
 				}
 				catch

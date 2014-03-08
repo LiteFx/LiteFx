@@ -7,54 +7,56 @@ using System.Diagnostics;
 
 namespace LiteFx.Context.NHibernate
 {
-	public abstract class SessionFactoryManager
-	{
-		public static SessionFactoryManager Current
-		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<SessionFactoryManager>();
-			}
-		}
+    public abstract class SessionFactoryManager
+    {
+        public static SessionFactoryManager Current
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SessionFactoryManager>();
+            }
+        }
 
-		private Guid id;
-		public Guid Id { get { return id; } }
+        private Guid id;
+        public Guid Id { get { return id; } }
 
         public bool ReadOnly { get; set; }
 
         private ISession session;
 
-		private static Mutex _factoryMutex = new Mutex();
+        public bool IsSessionActive { get { return session != null; } }
 
-		/// <summary>
-		/// Private sessionFactory.
-		/// </summary>
-		private static ISessionFactory sessionFactory;
+        private static Mutex _factoryMutex = new Mutex();
 
-		/// <summary>
-		/// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
-		/// </summary>
-		protected static ISessionFactory SessionFactory
-		{
-			get
-			{
-				if (sessionFactory == null)
+        /// <summary>
+        /// Private sessionFactory.
+        /// </summary>
+        private static ISessionFactory sessionFactory;
+
+        /// <summary>
+        /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
+        /// </summary>
+        protected static ISessionFactory SessionFactory
+        {
+            get
+            {
+                if (sessionFactory == null)
                     throw new InvalidOperationException(Resources.YouHaveToCallSessionFactoryManagerInitializeAtLiteFxWebNHibernateStart);
 
-				return sessionFactory;
-			}
-		}
+                return sessionFactory;
+            }
+        }
 
         public SessionFactoryManager()
         {
             id = Guid.NewGuid();
         }
-        
-        public static void Initialize() 
+
+        public static void Initialize()
         {
             if (sessionFactory != null)
                 throw new InvalidOperationException(Resources.YouCanCallSessionFactoryManagerInitializeOnlyOnce);
-                
+
             try
             {
                 _factoryMutex.WaitOne();
@@ -67,14 +69,14 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
-		public virtual ISession GetCurrentSession()
-		{
-			if (session == null)
-			{
+        public virtual ISession GetCurrentSession()
+        {
+            if (!IsSessionActive)
+            {
 
-                Trace.WriteLine("Opening NHibernate Session.", "LiteFx");
-				session = SessionFactory.OpenSession();
-				//CurrentSessionContext.Bind(session);
+                Trace.WriteLine("Opening NHibernate Session.", getTraceCategory());
+                session = SessionFactory.OpenSession();
+                //CurrentSessionContext.Bind(session);
 
                 if (ReadOnly)
                 {
@@ -85,67 +87,88 @@ namespace LiteFx.Context.NHibernate
                 {
                     BeginTransaction();
                 }
-			}
+            }
 
-			return session;
-		}
+            return session;
+        }
 
-        private void BeginTransaction()
+        public ITransaction BeginTransaction()
         {
-            if (session != null)
+            if (IsSessionActive)
             {
                 if (!session.Transaction.IsActive)
                 {
-                    Trace.WriteLine("Beggining NHibernate Transaction.", "LiteFx");
-                    session.BeginTransaction();
+                    Trace.WriteLine("Beggining NHibernate Transaction.", getTraceCategory());
+
+                    if (ReadOnly)
+                    {
+                        session.DefaultReadOnly = false;
+                        session.FlushMode = FlushMode.Auto;
+                        ReadOnly = false;
+                    }
+
+                    return session.BeginTransaction();
+                }
+            }
+
+            throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
+        }
+
+        public virtual void DisposeSession()
+        {
+            if (IsSessionActive)
+            {
+
+                Trace.WriteLine("Closing and Disposing NHibernate Session.", getTraceCategory());
+                //CurrentSessionContext.Unbind(SessionFactory);
+                session.Close();
+                session.Dispose();
+                session = null;
+            }
+        }
+
+        public virtual void CommitTransaction()
+        {
+            if (IsSessionActive)
+            {
+                if (session.Transaction.IsActive)
+                {
+                    Flush();
+                    Trace.WriteLine("Commiting NHibernate Transaction.", getTraceCategory());
+                    session.Transaction.Commit();
                 }
             }
         }
 
-		public virtual void DisposeSession()
-		{
-			if (session != null)
-			{
-
-                Trace.WriteLine("Closing and Disposing NHibernate Session.", "LiteFx");
-				//CurrentSessionContext.Unbind(SessionFactory);
-				session.Close();
-				session.Dispose();
-				session = null;
-			}
-		}
-
-		public virtual void CommitTransaction()
-		{
-			if (session != null)
-			{
+        public virtual void RollbackTransaction()
+        {
+            if (IsSessionActive)
+            {
                 if (session.Transaction.IsActive)
                 {
-                    Trace.WriteLine("Commiting NHibernate Transaction.", "LiteFx");
-                    session.Transaction.Commit();
-                }
-			}
-		}
-
-		public virtual void RollbackTransaction()
-		{
-			if (session != null)
-			{
-                if (session.Transaction.IsActive)
-                {
-                    Trace.WriteLine("Rollingback NHibernate Transaction.", "LiteFx");
+                    Trace.WriteLine("Rollingback NHibernate Transaction.", getTraceCategory());
                     session.Transaction.Rollback();
                 }
-			}
-		}
+            }
+        }
 
-		public virtual void Flush()
-		{
-			if (session != null)
-			{
-                Trace.WriteLine("Flushing NHibernate Session.", "LiteFx");
-				session.Flush();
-			}
-		}
-	}
+        public virtual void Flush()
+        {
+            if (IsSessionActive)
+            {
+                Trace.WriteLine("Flushing NHibernate Session.", getTraceCategory());
+                session.Flush();
+            }
+        }
+
+        string _traceCategory = string.Empty;
+
+        private string getTraceCategory()
+        {
+            if(string.IsNullOrEmpty(_traceCategory))
+                _traceCategory = string.Format("LiteFx - Session Id:{0}", Id.ToString().Substring(0, 8));
+
+            return _traceCategory;
+        }
+    }
 }

@@ -18,9 +18,8 @@ Scenario: Handling a Domain Event with an Action
 	And the ordinary event happen
 	Then my action should be called
 
-@ignore
 Scenario: Rasing a Domain Event Asynchronously
-	Given I have registered a ordinary domain event handler into DomainEvent static class
+	Given I have registered a async domain event handler into DomainEvent static class
 	And a ordinary subject
 	When I set a value in the ordinary subject 
 	And the ordinary event happen asynchronously

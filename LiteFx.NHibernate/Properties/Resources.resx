@@ -123,6 +123,9 @@
   <data name="YouCanCallSessionFactoryManagerInitializeOnlyOnce" xml:space="preserve">
     <value>You can call SessionFactoryManager.Initialize only once.</value>
   </data>
+  <data name="YouCantBeginATransactionWithoutAnActiveNHibernateSession" xml:space="preserve">
+    <value>You can't begin a transaction without an active NHibernate Session.</value>
+  </data>
   <data name="YouHaveToCallConfigurationManagerInitializeAtLiteFxWebNHibernateStart" xml:space="preserve">
     <value>You have to call ConfigurationManager.Initialize at LiteFxWebNHibernate.Start.</value>
   </data>

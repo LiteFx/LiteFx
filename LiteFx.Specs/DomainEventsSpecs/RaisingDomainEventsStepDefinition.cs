@@ -19,6 +19,12 @@ namespace LiteFx.Specs.DomainEventsSpecs
             DomainEvents.DomainEvents.RegisterDomainEventHandler(new OrdinaryEventHandler());
         }
 
+        [Given(@"I have registered a async domain event handler into DomainEvent static class")]
+        public void GivenIHaveRegisteredAAsyncDomainEventHandlerIntoDomainEventStaticClass()
+        {
+            DomainEvents.DomainEvents.RegisterAsyncDomainEventHandler(new AsyncEventHandler());
+        }
+
         [Given(@"a ordinary subject")]
         public void GivenAOrdinarySubject()
         {

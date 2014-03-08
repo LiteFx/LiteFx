@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace LiteFx.DomainEvents
 {
@@ -11,9 +12,6 @@ namespace LiteFx.DomainEvents
     public static class DomainEvents
     {
         private static IList<Delegate> callbacks;
-
-        private static IList<IDomainEventHandler> domainEventHandlers;
-
         private static IList<Delegate> Callbacks
         {
             get
@@ -22,11 +20,21 @@ namespace LiteFx.DomainEvents
             }
         }
 
+        private static IList<IDomainEventHandler> domainEventHandlers;
         private static IList<IDomainEventHandler> DomainEventHandlers
         {
             get
             {
                 return domainEventHandlers ?? (domainEventHandlers = new List<IDomainEventHandler>());
+            }
+        }
+
+        private static IList<IAsyncDomainEventHandler> asyncDomainEventHandlers;
+        private static IList<IAsyncDomainEventHandler> AsyncDomainEventHandlers
+        {
+            get
+            {
+                return asyncDomainEventHandlers ?? (asyncDomainEventHandlers = new List<IAsyncDomainEventHandler>());
             }
         }
 
@@ -50,10 +58,24 @@ namespace LiteFx.DomainEvents
             DomainEventHandlers.Add(domainEventHandler);
         }
 
-        public static void RegisterAllDomainEventHandlers(Assembly assembly) 
+        /// <summary>
+        /// Register an async domain event handler.
+        /// </summary>
+        /// <typeparam name="T">Type that will be handled.</typeparam>
+        /// <param name="domainEventHandler">The object that will handle the event.</param>
+        public static void RegisterAsyncDomainEventHandler<T>(IAsyncDomainEventHandler<T> domainEventHandler) where T : IDomainEvent
+        {
+            AsyncDomainEventHandlers.Add(domainEventHandler);
+        }
+
+        /// <summary>
+        /// Register all classes that implements <see cref="IDomainEventHandler"/> in the assembly passed by parameter.
+        /// </summary>
+        /// <param name="assembly">Assembly to find classes that implements <see cref="IDomainEventHandler"/>.</param>
+        public static void RegisterAllDomainEventHandlers(Assembly assembly)
         {
             var eventHandlerType = typeof(IDomainEventHandler);
-            var eventHandlerTypes = assembly.GetTypes().Where(t => eventHandlerType.IsAssignableFrom(t));
+            var eventHandlerTypes = assembly.GetTypes().Where(t => eventHandlerType.IsAssignableFrom(t) && !t.IsAbstract);
 
             foreach (var eventHandler in eventHandlerTypes)
             {
@@ -76,9 +98,27 @@ namespace LiteFx.DomainEvents
                 domainEventHandler.HandleDomainEvent(domainEvent);
         }
 
+
+        /// <summary>
+        /// Raises a domain event.
+        /// It forces all registered async event handlers to be triggered in the <see cref="ThreadPool"/>.
+        /// </summary>
+        /// <typeparam name="T">Type that will be handled.</typeparam>
+        /// <param name="domainEvent">The event that will be raised.</param>
         public static void RaiseAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            throw new NotImplementedException();
+            foreach (var asyncDomainEventHandler in AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>())
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(handleDelegate), new DomainEventAndAsyncHandler<T>(domainEvent, asyncDomainEventHandler));
+            }
+
+            //TODO: IAsyncDomainEventHandlerInTransactionScope
+        }
+
+        private static void handleDelegate(Object stateInfo)
+        {
+            DomainEventAndAsyncHandler domainEventAndAsyncHandler = (DomainEventAndAsyncHandler)stateInfo;
+            domainEventAndAsyncHandler.Execute();
         }
     }
 }

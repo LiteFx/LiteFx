@@ -12,4 +12,12 @@ namespace LiteFx.Specs.DomainEventsSpecs
             RaisingDomainEventsStepDefinition.DomainEventHandlerWasCalled = true;
         }
     }
+
+    public class AsyncEventHandler : DomainEvents.IAsyncDomainEventHandler<OrdinaryEvent>
+    {
+        public void HandleDomainEvent(OrdinaryEvent domainEvent)
+        {
+            RaisingDomainEventsStepDefinition.DomainEventHandlerWasCalled = true;
+        }
+    }
 }

@@ -78,7 +78,9 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="DomainEvents\DomainEvent.cs" />
+    <Compile Include="DomainEvents\DomainEventAndAsyncHandler.cs" />
+    <Compile Include="DomainEvents\DomainEvents.cs" />
+    <Compile Include="DomainEvents\IAsyncDomainEventHandler.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
