@@ -3,6 +3,7 @@ using System.Threading;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using LiteFx.Context.NHibernate.Properties;
+using System.Diagnostics;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -63,14 +64,25 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
+        public bool ReadOnly { get; set; }
+
 		private ISession session;
 
 		public virtual ISession GetCurrentSession()
 		{
 			if (session == null)
 			{
+
+                Trace.WriteLine("Opening NHibernate Session.", "LiteFx");
 				session = SessionFactory.OpenSession();
-				session.BeginTransaction();
+
+                session.DefaultReadOnly = ReadOnly;
+
+                if (!ReadOnly)
+                {
+                    Trace.WriteLine("Beggining NHibernate Transaction.", "LiteFx");
+                    session.BeginTransaction();
+                }
 				//CurrentSessionContext.Bind(session);
 			}
 
@@ -81,6 +93,8 @@ namespace LiteFx.Context.NHibernate
 		{
 			if (session != null)
 			{
+
+                Trace.WriteLine("Closing and Disposing NHibernate Session.", "LiteFx");
 				//CurrentSessionContext.Unbind(SessionFactory);
 				session.Close();
 				session.Dispose();
@@ -92,8 +106,11 @@ namespace LiteFx.Context.NHibernate
 		{
 			if (session != null)
 			{
-				if (session.Transaction.IsActive)
-					session.Transaction.Commit();
+                if (session.Transaction.IsActive)
+                {
+                    Trace.WriteLine("Commiting NHibernate Transaction.", "LiteFx");
+                    session.Transaction.Commit();
+                }
 			}
 		}
 
@@ -101,8 +118,11 @@ namespace LiteFx.Context.NHibernate
 		{
 			if (session != null)
 			{
-				if (session.Transaction.IsActive)
-					session.Transaction.Rollback();
+                if (session.Transaction.IsActive)
+                {
+                    Trace.WriteLine("Rollingback NHibernate Transaction.", "LiteFx");
+                    session.Transaction.Rollback();
+                }
 			}
 		}
 
@@ -110,6 +130,7 @@ namespace LiteFx.Context.NHibernate
 		{
 			if (session != null)
 			{
+                Trace.WriteLine("Flushing NHibernate Session.", "LiteFx");
 				session.Flush();
 			}
 		}

@@ -188,6 +188,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LiteFx.NHibernate\LiteFx.NHibernate.csproj">

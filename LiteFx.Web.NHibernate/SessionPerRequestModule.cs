@@ -22,14 +22,25 @@ namespace LiteFx.Web.NHibernate
 		/// <param name="context">HttpApplication context</param>
 		public void Init(HttpApplication context)
 		{
+            context.BeginRequest += context_BeginRequest;
 			context.EndRequest += context_EndRequest;
 		}
+
+        void context_BeginRequest(object sender, EventArgs e)
+        {
+            HttpApplication application = (HttpApplication)sender;
+
+            if (application.Context.Request.HttpMethod == "GET")
+            {
+                SessionFactoryManager.Current.ReadOnly = true;
+            }
+        }
 
 		void context_EndRequest(object sender, EventArgs e)
 		{
 			HttpApplication application = (HttpApplication)sender;
 
-			if (application.Context.Error == null)
+			if (application.Context.Error == null && application.Context.Request.HttpMethod != "GET")
 			{
 				try
 				{

@@ -37,27 +37,23 @@ namespace Sample.Web.Mvc.Controllers
         }
 
         //
-        // GET: /Products/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
         // GET: /Products/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Product());
         }
 
         //
         // POST: /Products/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Product product)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                    return View();
+
+                ProductRepository.Save(product);
 
                 return RedirectToAction("Index");
             }
@@ -98,7 +94,7 @@ namespace Sample.Web.Mvc.Controllers
         // GET: /Products/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(ProductRepository.GetById(id));
         }
 
         //
@@ -108,7 +104,7 @@ namespace Sample.Web.Mvc.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                ProductRepository.Delete(id);
 
                 return RedirectToAction("Index");
             }
