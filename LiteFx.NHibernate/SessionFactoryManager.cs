@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace LiteFx.Context.NHibernate
 {
-    public abstract class SessionFactoryManager
+    public abstract class SessionFactoryManager : IDisposable
     {
         public static SessionFactoryManager Current
         {
@@ -160,6 +160,55 @@ namespace LiteFx.Context.NHibernate
                 session.Flush();
             }
         }
+
+        #region IDisposable Members [Dispose pattern implementation]
+
+		/// <summary>
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		private bool disposed;
+
+		/// <summary>
+		/// Libera todos os recursos utilizados pela classe.
+		/// Implementação do Dispose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		/// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposed) return;
+
+			if (disposing)
+			{
+				if (session != null)
+					session.Dispose();
+			}
+
+			disposed = true;
+		}
+
+		/// <summary>
+		/// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        ~SessionFactoryManager()
+		{
+			Dispose(false);
+		}
+
+		/// <summary>
+		/// Libera todos os recursos utilizados pela classe.
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+		#endregion
 
         string _traceCategory = string.Empty;
 

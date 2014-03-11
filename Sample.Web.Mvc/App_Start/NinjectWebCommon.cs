@@ -53,8 +53,6 @@ namespace Sample.Web.Mvc.App_Start
             var ninjectServiceLocator = new NinjectAdapter.NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => ninjectServiceLocator);
 
-            //ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(kernel));
-
             RegisterServices(kernel);
             return kernel;
         }
@@ -65,30 +63,11 @@ namespace Sample.Web.Mvc.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>().InRequestScope();//.InThreadScope();//.InRequestScope<SampleSessionFactoryManager>();
+            kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>().InRequestScope();
 
             kernel.Bind<ISampleContext>().To<SampleContext>().InSingletonScope();
 
-            kernel.Bind<IProductRepository>().To<ProductRepository>();
+            kernel.Bind<IProductRepository>().To<ProductRepository>().InSingletonScope();
         }        
-    }
-
-    public class NinjectControllerFactory : DefaultControllerFactory
-    {
-        private IKernel kernel;
-
-        public NinjectControllerFactory(IKernel kernel)
-        {
-            this.kernel = kernel;
-        }
-
-
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {
-            if (controllerType == null)
-                throw new HttpException(404, String.Format("The controller for path '{0}' could not be found or it does not implement IController.", requestContext.HttpContext.Request.Path));
-
-            return (IController)kernel.Get(controllerType);
-        }
     }
 }
