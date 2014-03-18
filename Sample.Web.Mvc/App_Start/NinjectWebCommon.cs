@@ -65,9 +65,9 @@ namespace Sample.Web.Mvc.App_Start
         {
             kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>().InRequestScope();
 
-            kernel.Bind<ISampleContext>().To<SampleContext>().InSingletonScope();
+            kernel.Bind<ISampleContext>().To<SampleContext>().InRequestScope();
 
-            kernel.Bind<IProductRepository>().To<ProductRepository>().InSingletonScope();
+            kernel.Bind<IProductRepository>().To<ProductRepository>();                        
         }        
     }
 }

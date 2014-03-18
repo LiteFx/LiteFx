@@ -19,9 +19,16 @@ namespace LiteFx.Context.NHibernate
 		{
 			get
 			{
-				return SessionFactoryManager.Current.GetCurrentSession();
+				return SessionFactoryManager.GetCurrentSession();
 			}
 		}
+
+        protected SessionFactoryManager SessionFactoryManager { get; set; }
+
+        public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager)
+        {
+            SessionFactoryManager = sessionFactoryManager;
+        }
 
 		/// <summary>
 		/// Get a queryable object of an especifique entity.

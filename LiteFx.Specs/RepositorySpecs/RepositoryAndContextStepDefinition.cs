@@ -31,7 +31,7 @@ namespace LiteFx.Specs.RepositorySpecs
         [Given(@"a Repository")]
         public void GivenARepository()
         {
-            repository = new OrdinaryEntityRepository();
+            repository = new OrdinaryEntityRepository(context);
         }
 
         [Given(@"a mocked Context")]
