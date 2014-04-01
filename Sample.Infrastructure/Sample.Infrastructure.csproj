@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISampleContext.cs" />
+    <Compile Include="Mappings\CategoryMap.cs" />
     <Compile Include="Mappings\EntityBaseMap.cs" />
     <Compile Include="Mappings\ProductMap.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />

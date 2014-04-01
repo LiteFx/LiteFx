@@ -8,6 +8,8 @@ namespace Sample.Domain
         public virtual decimal Price { get; set; }
         public virtual bool Discontinued { get; set; }
         public virtual string Details { get; set; }
+        public virtual double Quantity { get; set; }
+        public virtual Category Category { get; set; }
 
         public Product() { }
 

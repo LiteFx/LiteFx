@@ -98,7 +98,7 @@ namespace LiteFx.Context.NHibernate
             {
                 if (!session.Transaction.IsActive)
                 {
-                    Trace.WriteLine("Beggining NHibernate Transaction.", getTraceCategory());
+                    Trace.WriteLine("Begining NHibernate Transaction.", getTraceCategory());
 
                     if (ReadOnly)
                     {
