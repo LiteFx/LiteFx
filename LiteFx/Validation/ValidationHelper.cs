@@ -180,7 +180,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.CompareTo(value()) < 0;
-			}, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", value()));
+			}, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", value()));
 		}
 
 		public static Validator<T, TResult> LessThanOrEqual<T, TResult>(this Validator<T, TResult> validator, Func<TResult> value)
