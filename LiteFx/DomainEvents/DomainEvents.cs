@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -96,8 +97,28 @@ namespace LiteFx.DomainEvents
 
             foreach (var domainEventHandler in DomainEventHandlers.OfType<IDomainEventHandler<T>>())
                 domainEventHandler.HandleDomainEvent(domainEvent);
+
+            if(AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>().Any())
+            {
+                IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
+                domainEventStore.Save(domainEvent);
+            }
         }
 
+        /// <summary>
+        /// Execute all async domain event handlers.
+        /// </summary>
+        public static void CommitAsyncEvents() 
+        {
+            IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
+
+            IEnumerable<IDomainEvent> domainEvents = domainEventStore.GetAll();
+
+            foreach (var domainEvent in domainEvents)
+            {
+                raiseAsync(domainEvent);
+            }
+        }
 
         /// <summary>
         /// Raises a domain event.
@@ -105,14 +126,12 @@ namespace LiteFx.DomainEvents
         /// </summary>
         /// <typeparam name="T">Type that will be handled.</typeparam>
         /// <param name="domainEvent">The event that will be raised.</param>
-        public static void RaiseAsync<T>(T domainEvent) where T : IDomainEvent
+        private static void raiseAsync<T>(T domainEvent) where T : IDomainEvent
         {
             foreach (var asyncDomainEventHandler in AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>())
             {
                 ThreadPool.QueueUserWorkItem(new WaitCallback(handleDelegate), new DomainEventAndAsyncHandler<T>(domainEvent, asyncDomainEventHandler));
             }
-
-            //TODO: IAsyncDomainEventHandlerInTransactionScope
         }
 
         private static void handleDelegate(Object stateInfo)

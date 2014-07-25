@@ -68,6 +68,10 @@
       <Project>{5612935B-96C7-4494-B3A0-02B56756BE28}</Project>
       <Name>LiteFx.NHibernate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LiteFx\LiteFx.csproj">
+      <Project>{c3434a18-591a-4622-9021-6dbc60561c24}</Project>
+      <Name>LiteFx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
