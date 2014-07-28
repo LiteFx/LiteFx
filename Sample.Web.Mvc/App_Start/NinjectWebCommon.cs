@@ -17,6 +17,8 @@ namespace Sample.Web.Mvc.App_Start
     using Microsoft.Practices.ServiceLocation;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Sample.Web.Mvc.ServiceLocation;
+    using LiteFx.DomainEvents;
 
     public static class NinjectWebCommon 
     {
@@ -50,7 +52,7 @@ namespace Sample.Web.Mvc.App_Start
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-            var ninjectServiceLocator = new NinjectAdapter.NinjectServiceLocator(kernel);
+            var ninjectServiceLocator = new NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => ninjectServiceLocator);
 
             RegisterServices(kernel);
@@ -67,7 +69,10 @@ namespace Sample.Web.Mvc.App_Start
 
             kernel.Bind<ISampleContext>().To<SampleContext>().InRequestScope();
 
-            kernel.Bind<IProductRepository>().To<ProductRepository>();                        
+            kernel.Bind<IDomainEventStore>().To<DomainEventStore>().InRequestScope();
+
+            kernel.Bind<IProductRepository>().To<ProductRepository>();
+            kernel.Bind<ICategoryRepository>().To<CategoryRepository>();          
         }        
     }
 }

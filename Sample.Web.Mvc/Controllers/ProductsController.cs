@@ -11,10 +11,12 @@ namespace Sample.Web.Mvc.Controllers
     public class ProductsController : Controller
     {
         protected IProductRepository ProductRepository { get; set; }
+        protected ICategoryRepository CategoryRepository { get; set; }
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             ProductRepository = productRepository;
+            CategoryRepository = categoryRepository;
         }
 
         //
@@ -27,7 +29,7 @@ namespace Sample.Web.Mvc.Controllers
         public ActionResult CreateMany()
         {
             Random rnd = new Random();
-            
+
             for (int i = 0; i < 10; i++)
             {
                 ProductRepository.Save(new Product("Teste " + i.ToString(), i * rnd.Next()));
@@ -40,6 +42,7 @@ namespace Sample.Web.Mvc.Controllers
         // GET: /Products/Create
         public ActionResult Create()
         {
+            ViewBag.Categories = CategoryRepository.GetAll().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.Name });
             return View(new Product());
         }
 
@@ -67,6 +70,7 @@ namespace Sample.Web.Mvc.Controllers
         // GET: /Products/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.Categories = CategoryRepository.GetAll().Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.Name });
             return View(ProductRepository.GetById(id));
         }
 

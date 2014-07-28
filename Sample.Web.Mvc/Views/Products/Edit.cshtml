@@ -40,6 +40,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Category.Id, (IEnumerable<SelectListItem>)ViewBag.Categories)
+                @Html.ValidationMessageFor(model => model.Discontinued)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Details, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Details)
