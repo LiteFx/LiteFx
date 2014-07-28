@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LiteFx.DomainEvents
 {
     public class DomainEventStore : IDomainEventStore
     {
-        List<IDomainEvent> domainEvents;
+        List<Action> domainEventsDispatchers;
 
         public DomainEventStore()
         {
-            domainEvents = new List<IDomainEvent>();
+            domainEventsDispatchers = new List<Action>();
         }
 
-        public void Save(IDomainEvent domainEvent)
+        public void Save(IEnumerable<Action> domainEventDispatcher)
         {
-            domainEvents.Add(domainEvent);
+            domainEventsDispatchers.AddRange(domainEventDispatcher);
         }
 
-        public IEnumerable<IDomainEvent> GetAll()
+        public IEnumerable<Action> GetAll()
         {
-            return domainEvents.AsEnumerable();
+            return domainEventsDispatchers.AsEnumerable();
         }
     }
 }

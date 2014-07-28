@@ -7,7 +7,8 @@ namespace LiteFx.DomainEvents
 {
     public interface IDomainEventStore
     {
-        void Save(IDomainEvent domainEvent);
-        IEnumerable<IDomainEvent> GetAll();
+        IEnumerable<Action> GetAll();
+        void Save(IEnumerable<Action> domainEventDispatcher);
     }
+
 }
