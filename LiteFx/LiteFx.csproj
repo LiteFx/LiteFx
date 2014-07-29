@@ -20,7 +20,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\litefx.pfx</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -67,6 +67,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -80,9 +84,11 @@
     </Compile>
     <Compile Include="DomainEvents\DomainEventAndAsyncHandler.cs" />
     <Compile Include="DomainEvents\DomainEvents.cs" />
+    <Compile Include="DomainEvents\DomainEventStore.cs" />
     <Compile Include="DomainEvents\IAsyncDomainEventHandler.cs" />
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
+    <Compile Include="DomainEvents\IDomainEventStore.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateMember.cs" />
@@ -123,7 +129,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -153,6 +159,7 @@
     <None Include="..\litefx.pfx">
       <Link>litefx.pfx</Link>
     </None>
+    <None Include="packages.config" />
     <None Include="Validation\ValidationClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

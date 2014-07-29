@@ -45,6 +45,7 @@ namespace LiteFx.Web.NHibernate
 				try
 				{
 					SessionFactoryManager.Current.CommitTransaction();
+                    LiteFx.DomainEvents.DomainEvents.CommitAsyncEvents();
 				}
 				catch
 				{

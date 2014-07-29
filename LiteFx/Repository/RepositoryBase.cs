@@ -14,7 +14,12 @@ namespace LiteFx.Repository
         /// <summary>
         /// Method factory to be implemented.
         /// </summary>
-        protected abstract TContext Context { get; }
+        protected TContext Context { get; set; }
+
+        public RepositoryBase(TContext context)
+        {
+            Context = context;
+        }
     }
 
     /// <summary>
@@ -28,6 +33,8 @@ namespace LiteFx.Repository
         where TContext : class, IContext<TId>
         where TId : struct, IEquatable<TId>, IComparable<TId>
     {
+        public RepositoryBase(TContext context) : base(context) { }
+
         /// <summary>
         /// Get all entities instances.
         /// </summary>

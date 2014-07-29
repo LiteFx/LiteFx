@@ -10,6 +10,8 @@ namespace Sample.Infrastructure.Mappings
             Map(p => p.Price);
             Map(p => p.Discontinued);
             Map(p => p.Details).Length(1000);
+            Map(p => p.Quantity);
+            References(p => p.Category).Not.Nullable();
         }
     }
 }

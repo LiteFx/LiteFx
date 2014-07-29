@@ -6,6 +6,8 @@ namespace Sample.Infrastructure
 {
     public class SampleContext : NHibernateContextAdapter<int>, ISampleContext
     {
+        public SampleContext(SessionFactoryManager sessionFactoryManager) : base(sessionFactoryManager) { }
+
         public IQueryable<Product> Products
         {
             get { return GetQueryableObject<Product>(); }
