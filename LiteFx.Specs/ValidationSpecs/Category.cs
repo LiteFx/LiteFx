@@ -9,7 +9,9 @@ namespace LiteFx.Specs.ValidationSpecs
 
 		public override void ConfigureValidation()
 		{
-			Assert<Category>().Que(c => c.Name).NaoSejaNuloOuVazio();
+			Assert<Category>()
+                .Que(c => c.Name)
+                    .NaoSejaNuloOuVazio();
 		}
 	}
 
@@ -28,7 +30,7 @@ namespace LiteFx.Specs.ValidationSpecs
 		{
 			Assert<DerivedCategory>()
 				.Que(s => s.Rank)
-				.MaiorQueOuIgual(() => MinRank);
+				    .MaiorQueOuIgual(() => MinRank);
 
 			base.ConfigureValidation();
 		}
@@ -42,7 +44,7 @@ namespace LiteFx.Specs.ValidationSpecs
 		{
 			Assert<CategoryWithNullableMember>()
 				.Que(c => c.Creation)
-				.Maximo(new DateTime(2050, 1, 1));
+				    .Maximo(new DateTime(2050, 1, 1));
 
 			base.ConfigureValidation();
 		}

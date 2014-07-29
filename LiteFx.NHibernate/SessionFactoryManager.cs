@@ -3,54 +3,54 @@ using System.Threading;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using LiteFx.Context.NHibernate.Properties;
+using System.Diagnostics;
 
 namespace LiteFx.Context.NHibernate
 {
-	public abstract class SessionFactoryManager
-	{
-		public static SessionFactoryManager Current
-		{
-			get
-			{
-				return ServiceLocator.Current.GetInstance<SessionFactoryManager>();
-			}
-		}
+    public abstract class SessionFactoryManager : IDisposable
+    {
+        public static SessionFactoryManager Current
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SessionFactoryManager>();
+            }
+        }
 
-		public SessionFactoryManager()
-		{
-			id = Guid.NewGuid();
-		}
+        private Guid id;
+        public Guid Id { get { return id; } }
 
-		private Guid id;
-		public Guid Id { get { return id; } }
+        public bool ReadOnly { get; set; }
 
+        private ISession session;
 
-		private static Mutex _factoryMutex = new Mutex();
+        public bool IsSessionActive { get { return session != null; } }
 
-		/// <summary>
-		/// Private sessionFactory.
-		/// </summary>
-		private static ISessionFactory sessionFactory;
+        private static Mutex _factoryMutex = new Mutex();
 
-		/// <summary>
-		/// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
-		/// </summary>
-		protected static ISessionFactory SessionFactory
-		{
-			get
-			{
-				if (sessionFactory == null)
+        private static ISessionFactory sessionFactory;
+
+        protected static ISessionFactory SessionFactory
+        {
+            get
+            {
+                if (sessionFactory == null)
                     throw new InvalidOperationException(Resources.YouHaveToCallSessionFactoryManagerInitializeAtLiteFxWebNHibernateStart);
 
-				return sessionFactory;
-			}
-		}
+                return sessionFactory;
+            }
+        }
 
-        public static void Initialize() 
+        public SessionFactoryManager()
+        {
+            id = Guid.NewGuid();
+        }
+
+        public static void Initialize()
         {
             if (sessionFactory != null)
                 throw new InvalidOperationException(Resources.YouCanCallSessionFactoryManagerInitializeOnlyOnce);
-                
+
             try
             {
                 _factoryMutex.WaitOne();
@@ -63,55 +63,155 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
-		private ISession session;
+        public virtual ISession GetCurrentSession()
+        {
+            if (!IsSessionActive)
+            {
 
-		public virtual ISession GetCurrentSession()
+                Trace.WriteLine("Opening NHibernate Session.", getTraceCategory());
+                session = SessionFactory.OpenSession();
+                //CurrentSessionContext.Bind(session);
+
+                if (ReadOnly)
+                {
+                    session.DefaultReadOnly = true;
+                    session.FlushMode = FlushMode.Never;
+                }
+                else
+                {
+                    BeginTransaction();
+                }
+            }
+
+            return session;
+        }
+
+        public ITransaction BeginTransaction()
+        {
+            if (IsSessionActive)
+            {
+                if (!session.Transaction.IsActive)
+                {
+                    Trace.WriteLine("Begining NHibernate Transaction.", getTraceCategory());
+
+                    if (ReadOnly)
+                    {
+                        session.DefaultReadOnly = false;
+                        session.FlushMode = FlushMode.Auto;
+                        ReadOnly = false;
+                    }
+
+                    return session.BeginTransaction();
+                }
+            }
+
+            throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
+        }
+
+        public virtual void DisposeSession()
+        {
+            if (IsSessionActive)
+            {
+
+                Trace.WriteLine("Closing and Disposing NHibernate Session.", getTraceCategory());
+                //CurrentSessionContext.Unbind(SessionFactory);
+                session.Close();
+                session.Dispose();
+                session = null;
+            }
+        }
+
+        public virtual void CommitTransaction()
+        {
+            if (IsSessionActive)
+            {
+                if (session.Transaction.IsActive)
+                {
+                    Flush();
+                    Trace.WriteLine("Commiting NHibernate Transaction.", getTraceCategory());
+                    session.Transaction.Commit();
+                }
+            }
+        }
+
+        public virtual void RollbackTransaction()
+        {
+            if (IsSessionActive)
+            {
+                if (session.Transaction.IsActive)
+                {
+                    Trace.WriteLine("Rollingback NHibernate Transaction.", getTraceCategory());
+                    session.Transaction.Rollback();
+                }
+            }
+        }
+
+        public virtual void Flush()
+        {
+            if (IsSessionActive)
+            {
+                Trace.WriteLine("Flushing NHibernate Session.", getTraceCategory());
+                session.Flush();
+            }
+        }
+
+        #region IDisposable Members [Dispose pattern implementation]
+
+		/// <summary>
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		private bool disposed;
+
+		/// <summary>
+		/// Libera todos os recursos utilizados pela classe.
+		/// Implementação do Dispose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		/// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
+		protected virtual void Dispose(bool disposing)
 		{
-			if (session == null)
+			if (disposed) return;
+
+			if (disposing)
 			{
-				session = SessionFactory.OpenSession();
-				session.BeginTransaction();
-				//CurrentSessionContext.Bind(session);
+				if (session != null)
+					session.Dispose();
 			}
 
-			return session;
+			disposed = true;
 		}
 
-		public virtual void DisposeSession()
+		/// <summary>
+		/// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        ~SessionFactoryManager()
 		{
-			if (session != null)
-			{
-				//CurrentSessionContext.Unbind(SessionFactory);
-				session.Close();
-				session.Dispose();
-				session = null;
-			}
+			Dispose(false);
 		}
 
-		public virtual void CommitTransaction()
+		/// <summary>
+		/// Libera todos os recursos utilizados pela classe.
+		/// Implementação do Dipose Pattern.
+		/// </summary>
+		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+		public void Dispose()
 		{
-			if (session != null)
-			{
-				if (session.Transaction.IsActive)
-					session.Transaction.Commit();
-			}
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
+		#endregion
 
-		public virtual void RollbackTransaction()
-		{
-			if (session != null)
-			{
-				if (session.Transaction.IsActive)
-					session.Transaction.Rollback();
-			}
-		}
+        string _traceCategory = string.Empty;
 
-		public virtual void Flush()
-		{
-			if (session != null)
-			{
-				session.Flush();
-			}
-		}
-	}
+        private string getTraceCategory()
+        {
+            if(string.IsNullOrEmpty(_traceCategory))
+                _traceCategory = string.Format("LiteFx - Session Id:{0}", Id.ToString().Substring(0, 8));
+
+            return _traceCategory;
+        }
+    }
 }

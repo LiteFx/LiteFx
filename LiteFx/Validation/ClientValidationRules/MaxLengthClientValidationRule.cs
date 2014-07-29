@@ -2,6 +2,9 @@
 
 namespace LiteFx.Validation.ClientValidationRules
 {
+    /// <summary>
+    /// Rule to express the maximum field length.
+    /// </summary>
     public class MaxLengthClientValidationRule : ClientValidationRule
     {
         public MaxLengthClientValidationRule(int maxLength)

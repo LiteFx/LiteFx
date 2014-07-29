@@ -9,7 +9,7 @@ namespace LiteFx.Context.NHibernate
 	/// NHibernate base context.
 	/// </summary>
 	/// <typeparam name="TId"></typeparam>
-	public abstract class NHibernateContextAdapter<TId> : IContext<TId>, IDisposable
+	public abstract class NHibernateContextAdapter<TId> : IContext<TId>
 		where TId : IEquatable<TId>
 	{
 		/// <summary>
@@ -19,11 +19,17 @@ namespace LiteFx.Context.NHibernate
 		{
 			get
 			{
-				return SessionFactoryManager.Current.GetCurrentSession();
+				return SessionFactoryManager.GetCurrentSession();
 			}
 		}
 
-		#region IContext Members
+        protected SessionFactoryManager SessionFactoryManager { get; set; }
+
+        public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager)
+        {
+            SessionFactoryManager = sessionFactoryManager;
+        }
+
 		/// <summary>
 		/// Get a queryable object of an especifique entity.
 		/// </summary>
@@ -80,55 +86,5 @@ namespace LiteFx.Context.NHibernate
 		{
 			SessionFactoryManager.Current.CommitTransaction();
 		}
-		#endregion
-
-		#region IDisposable Members [Dispose pattern implementation]
-
-		/// <summary>
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		private bool disposed;
-
-		/// <summary>
-		/// Libera todos os recursos utilizados pela classe.
-		/// Implementação do Dispose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		/// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposed) return;
-
-			if (disposing)
-			{
-				if (CurrentSession != null)
-					CurrentSession.Dispose();
-			}
-
-			disposed = true;
-		}
-
-		/// <summary>
-		/// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		~NHibernateContextAdapter()
-		{
-			Dispose(false);
-		}
-
-		/// <summary>
-		/// Libera todos os recursos utilizados pela classe.
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-		#endregion
 	}
 }

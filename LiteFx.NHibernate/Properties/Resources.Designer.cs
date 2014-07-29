@@ -79,6 +79,15 @@ namespace LiteFx.Context.NHibernate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t begin a transaction without an active NHibernate Session..
+        /// </summary>
+        internal static string YouCantBeginATransactionWithoutAnActiveNHibernateSession {
+            get {
+                return ResourceManager.GetString("YouCantBeginATransactionWithoutAnActiveNHibernateSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have to call ConfigurationManager.Initialize at LiteFxWebNHibernate.Start..
         /// </summary>
         internal static string YouHaveToCallConfigurationManagerInitializeAtLiteFxWebNHibernateStart {

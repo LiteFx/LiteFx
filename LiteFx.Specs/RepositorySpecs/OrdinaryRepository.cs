@@ -10,9 +10,10 @@ namespace LiteFx.Specs.RepositorySpecs
 
     public class OrdinaryEntityRepository : RepositoryBase<Entity, int, IOrdinaryContext>, IOrdinaryEntityRepository
     {
-        protected override IOrdinaryContext Context
+        public OrdinaryEntityRepository(IOrdinaryContext context)
+            : base(context)
         {
-            get { return RepositoryAndContextStepDefinition.context; }
+
         }
     }
 }

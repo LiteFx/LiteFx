@@ -5,9 +5,15 @@ namespace LiteFx.Web.Mvc.NHibernate
 {
     public class SessionPerRequestActionFilter : ActionFilterAttribute
     {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Request.HttpMethod == "GET")
+                SessionFactoryManager.Current.ReadOnly = true;
+        }
+
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            if (filterContext.Exception == null)
+            if (filterContext.Exception == null && filterContext.Controller.ViewData.ModelState.IsValid)
             {
                 try
                 {

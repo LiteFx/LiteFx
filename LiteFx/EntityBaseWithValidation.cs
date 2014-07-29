@@ -28,6 +28,10 @@ namespace LiteFx
 		}
 
 		#region IValidation Members
+        /// <summary>
+        /// Verify the entity against the domain rules described in ConfigureValidation method.
+        /// </summary>
+        /// <returns>Collection of <see cref="ValidationResults"/>.</returns>
 		public virtual IEnumerable<ValidationResult> Validate()
 		{
 			ValidationContext validationContext = new ValidationContext(this, null, null);
@@ -40,7 +44,7 @@ namespace LiteFx
 		}
 
 		/// <summary>
-		/// Verify if the entity is valid."/>.
+		/// Verify if the entity is valid.
 		/// </summary>
 		public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
@@ -56,6 +60,9 @@ namespace LiteFx
 
 		private bool skipValidation = false;
 
+        /// <summary>
+        /// When called every call of Validate method will always return an empty collection of <see cref="ValidationResults"/>, even if the entity is in an invalid state.
+        /// </summary>
 		public virtual void SkipValidation()
 		{
 			skipValidation = true;
@@ -73,7 +80,7 @@ namespace LiteFx
 		///     {
 		///         Assert<MyEntity>()
 		///             .That(e => e.Name)
-		///             .IsNotNullOrEmpty();
+		///             .IsRequired();
 		///     }
 		/// }
 		/// ]]>
@@ -81,23 +88,17 @@ namespace LiteFx
 		/// </example>
 		public abstract void ConfigureValidation();
 
+        /// <summary>
+        /// Returns client validation rule to help client validation libraries.
+        /// </summary>
+        /// <param name="propertyName">Property name reference to get the client validation rules.</param>
+        /// <returns><see cref="ClientValidationRule"/></returns>
 		public virtual IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName)
 		{
 			if (assert == null)
 				ConfigureValidation();
 
-			var assertions = assert.Assertions.Where(a => a.AccessorMemberNames.Contains(propertyName)).Select(a => a);
-			foreach (var assertion in assertions)
-			{
-				foreach (var predicate in assertion.BasePredicates)
-				{
-					if (predicate.ClienteValidationRule != null && assertion.WhenAssertion == null)
-					{
-						predicate.ClienteValidationRule.ErrorMessage = string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(propertyName));
-						yield return predicate.ClienteValidationRule;
-					}
-				}
-			}
+            return assert.GetClientValidationData(propertyName);
 		}
 		#endregion
 	}
