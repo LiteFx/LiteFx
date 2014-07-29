@@ -28,14 +28,8 @@ namespace LiteFx.Context.NHibernate
 
         private static Mutex _factoryMutex = new Mutex();
 
-        /// <summary>
-        /// Private sessionFactory.
-        /// </summary>
         private static ISessionFactory sessionFactory;
 
-        /// <summary>
-        /// Propriedade privada para fazer o cache do sessionFactory do NHibernate.
-        /// </summary>
         protected static ISessionFactory SessionFactory
         {
             get

@@ -101,14 +101,14 @@ namespace LiteFx.DomainEvents
             if(AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>().Any())
             {
                 IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
-                domainEventStore.Save(mountAsyncDispatcher(domainEvent));
+                domainEventStore.Save(mountAsyncDispatchers(domainEvent));
             }
         }
 
         /// <summary>
         /// Execute all async domain event handlers.
         /// </summary>
-        public static void CommitAsyncEvents() 
+        public static void DispatchAsyncEvents() 
         {
             IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
 
@@ -124,15 +124,15 @@ namespace LiteFx.DomainEvents
         /// </summary>
         /// <typeparam name="T">Type that will be handled.</typeparam>
         /// <param name="domainEvent">The event that will be raised.</param>
-        private static IEnumerable<Action> mountAsyncDispatcher<T>(T domainEvent) where T : IDomainEvent
+        private static IEnumerable<Action> mountAsyncDispatchers<T>(T domainEvent) where T : IDomainEvent
         {
             foreach (var asyncDomainEventHandler in AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>())
             {
-                yield return () => ThreadPool.QueueUserWorkItem(new WaitCallback(handleDelegate), new DomainEventAndAsyncHandler<T>(domainEvent, asyncDomainEventHandler));
+                yield return () => ThreadPool.QueueUserWorkItem(new WaitCallback(handleTarget), new DomainEventAndAsyncHandler<T>(domainEvent, asyncDomainEventHandler));
             }
         }
 
-        private static void handleDelegate(Object stateInfo)
+        private static void handleTarget(Object stateInfo)
         {
             DomainEventAndAsyncHandler domainEventAndAsyncHandler = (DomainEventAndAsyncHandler)stateInfo;
             domainEventAndAsyncHandler.Execute();

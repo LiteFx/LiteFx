@@ -50,7 +50,7 @@ namespace LiteFx.Specs.DomainEventsSpecs
         public void WhenTheOrdinaryEventHappenAsynchronously()
         {
             DomainEvents.DomainEvents.Raise(new OrdinaryEvent(subject));
-            DomainEvents.DomainEvents.CommitAsyncEvents();
+            DomainEvents.DomainEvents.DispatchAsyncEvents();
         }
 
         [Then(@"my handler should be called")]
