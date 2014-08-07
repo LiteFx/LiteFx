@@ -117,5 +117,11 @@ namespace Sample.Web.Mvc.Controllers
                 return View();
             }
         }
+
+        public ActionResult Sell(int id, double quantity)
+        {
+            SellService.Sell(id, quantity);
+            return Content("OK");
+        }
     }
 }

@@ -1,4 +1,4 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Sample.Web.Mvc.App_Start.NinjectWebCommon), "Start", Order=1)]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(Sample.Web.Mvc.App_Start.NinjectWebCommon), "Start", Order = 1)]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(Sample.Web.Mvc.App_Start.NinjectWebCommon), "Stop")]
 
 namespace Sample.Web.Mvc.App_Start
@@ -20,20 +20,20 @@ namespace Sample.Web.Mvc.App_Start
     using Sample.Web.Mvc.ServiceLocation;
     using LiteFx.DomainEvents;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -41,7 +41,7 @@ namespace Sample.Web.Mvc.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -65,14 +65,26 @@ namespace Sample.Web.Mvc.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>().InRequestScope();
+            kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>()
+                .When(x => HttpContext.Current != null)
+                .InRequestScope();
+
+            kernel.Bind<SessionFactoryManager>().To<SampleSessionFactoryManager>()
+                .When(x => HttpContext.Current == null)
+                .InThreadScope();
 
             kernel.Bind<ISampleContext>().To<SampleContext>().InRequestScope();
 
-            kernel.Bind<IDomainEventStore>().To<DomainEventStore>().InRequestScope();
+            kernel.Bind<IDomainEventStore>().To<DomainEventStore>()
+                .When(x => HttpContext.Current != null)
+                .InRequestScope();
+
+            kernel.Bind<IDomainEventStore>().To<DomainEventStore>()
+                .When(x => HttpContext.Current == null)
+                .InThreadScope();
 
             kernel.Bind<IProductRepository>().To<ProductRepository>();
-            kernel.Bind<ICategoryRepository>().To<CategoryRepository>();          
-        }        
+            kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
+        }
     }
 }

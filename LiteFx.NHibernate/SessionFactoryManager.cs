@@ -17,6 +17,8 @@ namespace LiteFx.Context.NHibernate
             }
         }
 
+        public static bool UseReadOnlySession { get; set; }
+
         private Guid id;
         public Guid Id { get { return id; } }
 
@@ -51,6 +53,9 @@ namespace LiteFx.Context.NHibernate
             if (sessionFactory != null)
                 throw new InvalidOperationException(Resources.YouCanCallSessionFactoryManagerInitializeOnlyOnce);
 
+            DomainEvents.DomainEvents.AsyncDomainEventHandlerError += DomainEvents_AsyncDomainEventHandlerError;
+            DomainEvents.DomainEvents.AsyncDomainEventHandlerExecuted += DomainEvents_AsyncDomainEventHandlerExecuted;
+
             try
             {
                 _factoryMutex.WaitOne();
@@ -60,6 +65,30 @@ namespace LiteFx.Context.NHibernate
             finally
             {
                 _factoryMutex.ReleaseMutex();
+            }
+        }
+
+        private static void DomainEvents_AsyncDomainEventHandlerError(Exception exception, DomainEvents.IDomainEvent domainEvent, DomainEvents.IAsyncDomainEventHandler asyncDomainEventHandler)
+        {
+            SessionFactoryManager.Current.RollbackTransaction();
+            SessionFactoryManager.Current.DisposeSession();
+        }
+
+        private static void DomainEvents_AsyncDomainEventHandlerExecuted(DomainEvents.IDomainEvent domainEvent, DomainEvents.IAsyncDomainEventHandler asyncDomainEventHandler)
+        {
+            try
+            {
+                SessionFactoryManager.Current.CommitTransaction();
+                LiteFx.DomainEvents.DomainEvents.DispatchAsyncEvents();
+            }
+            catch
+            {
+                SessionFactoryManager.Current.RollbackTransaction();
+                throw;
+            }
+            finally
+            {
+                SessionFactoryManager.Current.DisposeSession();
             }
         }
 
@@ -101,7 +130,9 @@ namespace LiteFx.Context.NHibernate
                         ReadOnly = false;
                     }
 
-                    return session.BeginTransaction();
+                    ITransaction transaction = session.BeginTransaction();
+
+                    return transaction;
                 }
             }
 
@@ -157,58 +188,58 @@ namespace LiteFx.Context.NHibernate
 
         #region IDisposable Members [Dispose pattern implementation]
 
-		/// <summary>
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		private bool disposed;
+        /// <summary>
+        /// Implementação do Dipose Pattern.
+        /// </summary>
+        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        private bool disposed;
 
-		/// <summary>
-		/// Libera todos os recursos utilizados pela classe.
-		/// Implementação do Dispose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		/// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposed) return;
+        /// <summary>
+        /// Libera todos os recursos utilizados pela classe.
+        /// Implementação do Dispose Pattern.
+        /// </summary>
+        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        /// <param name="disposing">Usado para verificar se a chamada esta sendo feita pelo <see cref="GC"/> ou pela aplicação.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) return;
 
-			if (disposing)
-			{
-				if (session != null)
-					session.Dispose();
-			}
+            if (disposing)
+            {
+                if (session != null)
+                    session.Dispose();
+            }
 
-			disposed = true;
-		}
+            disposed = true;
+        }
 
-		/// <summary>
-		/// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        /// <summary>
+        /// Chamado pelo <see ref="GC" /> para liberar recursos que não estão sendo utilizados.
+        /// Implementação do Dipose Pattern.
+        /// </summary>
+        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
         ~SessionFactoryManager()
-		{
-			Dispose(false);
-		}
+        {
+            Dispose(false);
+        }
 
-		/// <summary>
-		/// Libera todos os recursos utilizados pela classe.
-		/// Implementação do Dipose Pattern.
-		/// </summary>
-		/// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-		#endregion
+        /// <summary>
+        /// Libera todos os recursos utilizados pela classe.
+        /// Implementação do Dipose Pattern.
+        /// </summary>
+        /// <remarks><a target="blank" href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Dispose Pattern</a>.</remarks>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
 
         string _traceCategory = string.Empty;
 
         private string getTraceCategory()
         {
-            if(string.IsNullOrEmpty(_traceCategory))
+            if (string.IsNullOrEmpty(_traceCategory))
                 _traceCategory = string.Format("LiteFx - Session Id:{0}", Id.ToString().Substring(0, 8));
 
             return _traceCategory;
