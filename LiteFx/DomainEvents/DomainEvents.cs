@@ -8,10 +8,34 @@ using System.Threading;
 namespace LiteFx.DomainEvents
 {
     /// <summary>
+    /// IAsyncDomainEventHandler executed event handler.
+    /// </summary>
+    /// <param name="domainEvent">Domain event.</param>
+    /// <param name="asyncDomainEventHandler">The IAsyncDomainEventHandler executed.</param>
+    public delegate void AsyncDomainEventHandlerExecutedEventHandler(IDomainEvent domainEvent, IAsyncDomainEventHandler asyncDomainEventHandler);
+
+    /// <summary>
+    /// IAsyncDomainEventHandler executed event handler.
+    /// </summary>
+    /// <param name="domainEvent">Domain event.</param>
+    /// <param name="asyncDomainEventHandler">The IAsyncDomainEventHandler executed.</param>
+    public delegate void AsyncDomainEventHandlerErrorEventHandler(Exception exception, IDomainEvent domainEvent, IAsyncDomainEventHandler asyncDomainEventHandler);
+
+    /// <summary>
     /// This class is responsible for Register the event handlers and call these handlers when a event is raised.
     /// </summary>
     public static class DomainEvents
     {
+        /// <summary>
+        /// Raised when a async domain event handler is executed.
+        /// </summary>
+        public static event AsyncDomainEventHandlerExecutedEventHandler AsyncDomainEventHandlerExecuted;
+
+        /// <summary>
+        /// Raised when a async domain event handler get an error.
+        /// </summary>
+        public static event AsyncDomainEventHandlerErrorEventHandler AsyncDomainEventHandlerError;
+
         private static IList<Delegate> callbacks;
         private static IList<Delegate> Callbacks
         {
@@ -82,6 +106,14 @@ namespace LiteFx.DomainEvents
             {
                 DomainEventHandlers.Add((IDomainEventHandler)Activator.CreateInstance(eventHandler));
             }
+
+            eventHandlerType = typeof(IAsyncDomainEventHandler);
+            eventHandlerTypes = assembly.GetTypes().Where(t => eventHandlerType.IsAssignableFrom(t) && !t.IsAbstract);
+
+            foreach (var eventHandler in eventHandlerTypes)
+            {
+                AsyncDomainEventHandlers.Add((IAsyncDomainEventHandler)Activator.CreateInstance(eventHandler));
+            }
         }
 
         /// <summary>
@@ -98,7 +130,7 @@ namespace LiteFx.DomainEvents
             foreach (var domainEventHandler in DomainEventHandlers.OfType<IDomainEventHandler<T>>())
                 domainEventHandler.HandleDomainEvent(domainEvent);
 
-            if(AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>().Any())
+            if (AsyncDomainEventHandlers.OfType<IAsyncDomainEventHandler<T>>().Any())
             {
                 IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
                 domainEventStore.Save(mountAsyncDispatchers(domainEvent));
@@ -108,7 +140,7 @@ namespace LiteFx.DomainEvents
         /// <summary>
         /// Execute all async domain event handlers.
         /// </summary>
-        public static void DispatchAsyncEvents() 
+        public static void DispatchAsyncEvents()
         {
             IDomainEventStore domainEventStore = ServiceLocator.Current.GetInstance<IDomainEventStore>();
 
@@ -136,6 +168,16 @@ namespace LiteFx.DomainEvents
         {
             DomainEventAndAsyncHandler domainEventAndAsyncHandler = (DomainEventAndAsyncHandler)stateInfo;
             domainEventAndAsyncHandler.Execute();
+        }
+
+        internal static void OnAsyncDomainEventHandlerExecuted(IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
+        {
+            AsyncDomainEventHandlerExecuted(domainEvent, asyncHandler);
+        }
+
+        internal static void OnAsyncDomainEventHandlerError(Exception exception,IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
+        {
+            AsyncDomainEventHandlerError(exception, domainEvent, asyncHandler);
         }
     }
 }

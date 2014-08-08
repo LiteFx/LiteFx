@@ -24,7 +24,13 @@ namespace Sample.Web.Mvc.App_Start
 
             LiteFx.Context.NHibernate.ConfigurationManager.Initialize();
             LiteFx.Context.NHibernate.SessionFactoryManager.Initialize();
+            LiteFx.Context.NHibernate.SessionFactoryManager.UseReadOnlySession = true;
 
+            LiteFx.DomainEvents.DomainEvents.RegisterAllDomainEventHandlers(typeof(Sample.Domain.EntityBase).Assembly);
+
+            //LiteFx.DomainEvents.DomainEvents.RegisterAsyncDomainEventHandler(new Sample.Domain.ProductSoldEventHandler());
+            //LiteFx.DomainEvents.DomainEvents.RegisterAsyncDomainEventHandler(new Sample.Domain.BuyMoreProductsEventHandler());
+            
             //LiteFx.Validation.ValidationHelper.ResourceManager = Siteware.Resources.Resource.ResourceManager;
         }
     }

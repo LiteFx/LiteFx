@@ -1,4 +1,5 @@
-﻿namespace LiteFx.DomainEvents
+﻿using System;
+namespace LiteFx.DomainEvents
 {
     public abstract class DomainEventAndAsyncHandler
     {
@@ -17,9 +18,20 @@
             _asyncHandler = asyncHandler;
         }
 
+        /// <summary>
+        /// Execute the domain event handler.
+        /// </summary>
         public override void Execute()
         {
-            _asyncHandler.HandleDomainEvent(_domainEvent);
+            try
+            {
+                _asyncHandler.HandleDomainEvent(_domainEvent);
+                DomainEvents.OnAsyncDomainEventHandlerExecuted(_domainEvent, _asyncHandler);
+            }
+            catch (Exception ex) 
+            {
+                DomainEvents.OnAsyncDomainEventHandlerError(ex, _domainEvent, _asyncHandler);
+            }
         }
     }
 }

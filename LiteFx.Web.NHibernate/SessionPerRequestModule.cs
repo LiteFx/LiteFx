@@ -30,7 +30,7 @@ namespace LiteFx.Web.NHibernate
         {
             HttpApplication application = (HttpApplication)sender;
 
-            if (application.Context.Request.HttpMethod == "GET")
+            if (SessionFactoryManager.UseReadOnlySession && application.Context.Request.HttpMethod == "GET")
             {
                 SessionFactoryManager.Current.ReadOnly = true;
             }
