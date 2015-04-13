@@ -116,11 +116,22 @@
     <Compile Include="Validation\ClientValidationRules\RequiredClientValidationRule.cs" />
     <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
-    <Compile Include="Validation\NullableValidationHelper.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Comparable.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.EntityBase.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Equatable.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Specification.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.String.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.Comparable.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.EntityBase.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.Equatable.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.Nullable.cs" />
     <Compile Include="Validation\Predicate.cs" />
-    <Compile Include="Validation\PtBr\NullableValidationHelperPtBr.cs" />
-    <Compile Include="Validation\PtBr\ValidationHelperPtBr.cs" />
-    <Compile Include="Validation\ValidationHelper.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Nullable.cs" />
+    <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.Regex.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.Specification.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.String.cs" />
+    <Compile Include="Validation\ValidationHelper\ValidationHelper.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="ValueObjectBase.cs" />
   </ItemGroup>

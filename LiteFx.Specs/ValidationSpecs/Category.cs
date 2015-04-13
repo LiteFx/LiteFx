@@ -49,4 +49,22 @@ namespace LiteFx.Specs.ValidationSpecs
 			base.ConfigureValidation();
 		}
 	}
+
+    class CategoryWithSubCategory : Category 
+    {
+        public CategoryWithSubCategory SubCategory { get; set; }
+        public int Position { get; set; }
+
+        public override void ConfigureValidation()
+        {
+            Assert<CategoryWithSubCategory>()
+                .Que(c => c.Position)
+                    .Minimo(0)
+                    .NaoSejaNulo()
+                .Quando(c => c.SubCategory.Position)
+                    .MaiorQueOuIgual(() => 0);
+
+            base.ConfigureValidation();
+        }
+    }
 }

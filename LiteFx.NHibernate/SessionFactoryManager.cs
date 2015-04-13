@@ -81,8 +81,9 @@ namespace LiteFx.Context.NHibernate
                 SessionFactoryManager.Current.CommitTransaction();
                 LiteFx.DomainEvents.DomainEvents.DispatchAsyncEvents();
             }
-            catch
+            catch (Exception ex)
             {
+                DomainEvents.DomainEvents.OnAsyncDomainEventHandlerError(ex, domainEvent, asyncDomainEventHandler);
                 SessionFactoryManager.Current.RollbackTransaction();
                 throw;
             }
