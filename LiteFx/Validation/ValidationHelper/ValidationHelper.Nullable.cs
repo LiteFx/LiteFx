@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LiteFx.Properties;
+﻿using LiteFx.Properties;
+using System;
 
 namespace LiteFx.Validation
 {
-	public static class NullableValidationHelper
+	public static partial class ValidationHelper
 	{
-		public static Validator<T, TResult> IsSatisfied<T, TResult>(this Validator<T, TResult> validator, Func<TResult, bool> expression, string message)
-		{
-			return ValidationHelper.IsSatisfied(validator, expression, message);
-		}
-
-		#region IComparable
 		public static Validator<T, TResult?> Max<T, TResult>(this Validator<T, TResult?> validator, TResult max)
 			where TResult : struct, IComparable<TResult>
 		{
@@ -101,7 +92,5 @@ namespace LiteFx.Validation
 				return p.Value.CompareTo(min) >= 0 && p.Value.CompareTo(max) <= 0;
 			}, string.Format(Resources.TheFieldXMustBeBetweenYandZ, "{0}", min, max));
 		}
-		#endregion
-
 	}
 }

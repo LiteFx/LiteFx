@@ -57,6 +57,12 @@ namespace LiteFx.Specs.ValidationSpecs
 			type = new CategoryWithNullableMember() { Name = "Valid Type", Creation = null };
 		}
 
+        [Given(@"a new derived Type")]
+        public void GivenANewDerivedType()
+        {
+            type = new CategoryWithSubCategory();
+        }
+
         [Given]
         public void Given_I_call_skip_validation_method()
         {

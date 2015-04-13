@@ -170,12 +170,12 @@ namespace LiteFx.DomainEvents
             domainEventAndAsyncHandler.Execute();
         }
 
-        internal static void OnAsyncDomainEventHandlerExecuted(IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
+        public static void OnAsyncDomainEventHandlerExecuted(IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
         {
             AsyncDomainEventHandlerExecuted(domainEvent, asyncHandler);
         }
 
-        internal static void OnAsyncDomainEventHandlerError(Exception exception,IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
+        public static void OnAsyncDomainEventHandlerError(Exception exception,IDomainEvent domainEvent, IAsyncDomainEventHandler asyncHandler)
         {
             AsyncDomainEventHandlerError(exception, domainEvent, asyncHandler);
         }

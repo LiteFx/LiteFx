@@ -49,3 +49,8 @@ Scenario: Get client validation from a Type
 	Given a valid Type
 	When I call the GetClientValidationData method passing the property Name
 	Then the client validation rule collection should be have the required rule
+
+Scenario: When get client validation from a Type it cannot execute the validations
+	Given a new derived Type
+	When I call the GetClientValidationData method passing the property Name
+	Then the client validation rule collection should be have the required rule
