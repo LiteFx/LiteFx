@@ -4,12 +4,47 @@ using LiteFx.Specification;
 
 namespace LiteFx.Repository
 {
+	public interface IRepository<TEntity>
+	{
+		/// <summary>
+		/// Get a list of entities that satisfy the specificaton.
+		/// </summary>
+		/// <param name="specification">Specification filter.</param>
+		/// <returns>List of entities.</returns>
+		IEnumerable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
+
+		/// <summary>
+		/// Get the first entity that satisfy the specification.
+		/// </summary>
+		/// <param name="specification">Specification filter.</param>
+		/// <returns>An entity instance.</returns>
+		TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification);
+
+		/// <summary>
+		/// Get all entities.
+		/// </summary>
+		/// <returns>List of entities.</returns>
+		IEnumerable<TEntity> GetAll();
+
+		/// <summary>
+		/// Save entity in the context.
+		/// </summary>
+		/// <param name="entity">Entity to be saved.</param>
+		void Save(TEntity entity);
+
+		/// <summary>
+		/// Delete a entity in the context.
+		/// </summary>
+		/// <param name="entity">Entity to be deleted.</param>
+		void Delete(TEntity entity);
+	}
+
     /// <summary>
     /// Repository interface.
     /// </summary>
     /// <typeparam name="TEntity">Type that the repository will handle.</typeparam>
     /// <typeparam name="TId">Type of identificator.</typeparam>
-    public interface IRepository<TEntity, in TId> 
+	public interface IRepository<TEntity, in TId> : IRepository<TEntity>
         where TId : IEquatable<TId>
     {
         /// <summary>
@@ -18,38 +53,6 @@ namespace LiteFx.Repository
         /// <param name="id">Entity identificator.</param>
         /// <returns>An entity instance.</returns>
         TEntity GetById(TId id);
-
-        /// <summary>
-        /// Get a list of entities that satisfy the specificaton.
-        /// </summary>
-        /// <param name="specification">Specification filter.</param>
-        /// <returns>List of entities.</returns>
-        IEnumerable<TEntity> GetBySpecification(ILambdaSpecification<TEntity> specification);
-
-        /// <summary>
-        /// Get the first entity that satisfy the specification.
-        /// </summary>
-        /// <param name="specification">Specification filter.</param>
-        /// <returns>An entity instance.</returns>
-        TEntity GetFirstBySpecification(ILambdaSpecification<TEntity> specification);
-
-        /// <summary>
-        /// Get all entities.
-        /// </summary>
-        /// <returns>List of entities.</returns>
-        IEnumerable<TEntity> GetAll();
-
-        /// <summary>
-        /// Save entity in the context.
-        /// </summary>
-        /// <param name="entity">Entity to be saved.</param>
-        void Save(TEntity entity);
-
-        /// <summary>
-        /// Delete a entity in the context.
-        /// </summary>
-        /// <param name="entity">Entity to be deleted.</param>
-        void Delete(TEntity entity);
 
         /// <summary>
         /// Delete an entity by the identificator.

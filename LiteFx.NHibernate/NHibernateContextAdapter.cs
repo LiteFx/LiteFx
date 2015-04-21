@@ -6,11 +6,9 @@ using NHibernate.Linq;
 namespace LiteFx.Context.NHibernate
 {
 	/// <summary>
-	/// NHibernate base context.
+	/// 
 	/// </summary>
-	/// <typeparam name="TId"></typeparam>
-	public abstract class NHibernateContextAdapter<TId> : IContext<TId>
-		where TId : IEquatable<TId>
+	public abstract class NHibernateContextAdapter : IContext
 	{
 		/// <summary>
 		/// Current NHibernate Session.
@@ -23,12 +21,12 @@ namespace LiteFx.Context.NHibernate
 			}
 		}
 
-        protected SessionFactoryManager SessionFactoryManager { get; set; }
+		protected SessionFactoryManager SessionFactoryManager { get; set; }
 
-        public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager)
-        {
-            SessionFactoryManager = sessionFactoryManager;
-        }
+		public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager)
+		{
+			SessionFactoryManager = sessionFactoryManager;
+		}
 
 		/// <summary>
 		/// Get a queryable object of an especifique entity.
@@ -40,17 +38,6 @@ namespace LiteFx.Context.NHibernate
 			return CurrentSession.Query<T>();
 		}
 
-		/// <summary>
-		/// Exclui uma entidade do contexto pelo seu Identificador.
-		/// </summary>
-		/// <typeparam name="T">Tipo do entidade.</typeparam>
-		/// <param name="id">Identificador do entidade.</param>
-		public virtual T Delete<T>(TId id)
-		{
-			var obj = CurrentSession.Get<T>(id);
-			Delete(obj);
-			return obj;
-		}
 
 		/// <summary>
 		/// Exclui uma entidade do contexto.
@@ -85,6 +72,28 @@ namespace LiteFx.Context.NHibernate
 		public virtual void SaveContext()
 		{
 			SessionFactoryManager.Current.CommitTransaction();
+		}
+	}
+
+	/// <summary>
+	/// Generic ID NHibernate base context adapter.
+	/// </summary>
+	/// <typeparam name="TId"></typeparam>
+	public abstract class NHibernateContextAdapter<TId> : NHibernateContextAdapter, IContext<TId>
+		where TId : IEquatable<TId>
+	{
+		public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager) : base(sessionFactoryManager) { }
+
+		/// <summary>
+		/// Exclui uma entidade do contexto pelo seu Identificador.
+		/// </summary>
+		/// <typeparam name="T">Tipo do entidade.</typeparam>
+		/// <param name="id">Identificador do entidade.</param>
+		public virtual T Delete<T>(TId id)
+		{
+			var obj = CurrentSession.Get<T>(id);
+			Delete(obj);
+			return obj;
 		}
 	}
 }

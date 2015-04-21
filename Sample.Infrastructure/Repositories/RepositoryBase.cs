@@ -5,7 +5,7 @@ using Sample.Domain.Repositories;
 
 namespace Sample.Infrastructure.Repositories
 {
-    public abstract class RepositoryBase<TEntity> : RepositoryBase<TEntity, int, ISampleContext>, IRepository<TEntity>
+    public abstract class RepositoryBase<TEntity> : RepositoryBase<TEntity, int, ISampleContext>, Sample.Domain.Repositories.IRepository<TEntity>
             where TEntity : EntityBase
     {
         public RepositoryBase(ISampleContext context) : base(context) { }
