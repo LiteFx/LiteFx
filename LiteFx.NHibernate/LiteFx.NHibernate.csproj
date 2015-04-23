@@ -82,9 +82,6 @@
     <Compile Include="SessionFactoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\litefx.pfx">
-      <Link>litefx.pfx</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -59,11 +59,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\litefx.pfx">
-      <Link>litefx.pfx</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\LiteFx.NHibernate\LiteFx.NHibernate.csproj">
       <Project>{5612935B-96C7-4494-B3A0-02B56756BE28}</Project>
       <Name>LiteFx.NHibernate</Name>

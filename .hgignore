@@ -29,6 +29,7 @@ syntax: glob
 *.vs10x
 *.gp[Ss]tate
 *.docstates
+*.nupkg
 [Tt]humbs.db
 [Bb]in
 [Db]ebug*/
