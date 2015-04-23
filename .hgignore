@@ -29,11 +29,13 @@ syntax: glob
 *.vs10x
 *.gp[Ss]tate
 *.docstates
+*.nupkg
 [Tt]humbs.db
 [Bb]in
 [Db]ebug*/
 [Oo]bj/
 [Rr]elease*/
+packages/
 _ReSharper*/
 [Tt]est[Rr]esult*
 [Bb]uild[Ll]og.*

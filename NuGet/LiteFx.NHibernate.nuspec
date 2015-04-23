@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>LiteFx.NHibernate</id>
+        <version>2.2.0.1</version>
+        <title>LiteFx for NHibernate</title>
+        <authors>Douglas Aguiar</authors>
+        <licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
+        <projectUrl>http://litefx.codeplex.com/</projectUrl>
+        <iconUrl>http://www.nuget.org/Media/Default/Packages/LiteFx/0.9.0/litefx-logo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</description>
+        <summary>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</summary>
+        <tags>LiteFx DDD Repository Specification NHibernate FluentNHibernate</tags>
+        <dependencies>
+            <dependency id="FluentNHibernate" version="1.4.0.0" />
+            <dependency id="LiteFx" version="2.2.0.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\Release\LiteFx.NHibernate.dll" target="lib\net40\LiteFx.NHibernate.dll" />
+        <file src="..\Release\LiteFx.NHibernate.xml" target="lib\net40\LiteFx.NHibernate.xml" />
+    </files>
+</package>

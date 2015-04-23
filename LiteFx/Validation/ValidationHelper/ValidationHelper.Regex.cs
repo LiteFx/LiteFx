@@ -10,14 +10,37 @@ namespace LiteFx.Validation
             return IsSatisfied(validator, p => regex.IsMatch(p), message);
         }
 
-        public static Validator<T, string> ShouldBeAnEmail<T>(this Validator<T, string> validator, string message)
+        /// <summary>
+        /// Validates string against this regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="validator"></param>
+        /// <returns></returns>
+        public static Validator<T, string> ShouldBeAnEmail<T>(this Validator<T, string> validator)
         {
             return IsSatisfiedByRegex(validator, new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Resources.TheFieldXShouldBeAnEmail);
         }
 
-        public static Validator<T, string> ShouldBeALink<T>(this Validator<T, string> validator, string message)
+        /// <summary>
+        /// Validates string against this regex: /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="validator"></param>
+        /// <returns></returns>
+        public static Validator<T, string> ShouldBeALink<T>(this Validator<T, string> validator)
         {
             return IsSatisfiedByRegex(validator, new Regex(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"), Resources.TheFieldXShouldBeALink);
+        }
+
+        /// <summary>
+        /// Validates string against this regex: /^[a-z0-9-]+$/.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="validator"></param>
+        /// <returns></returns>
+        public static Validator<T, string> ShouldBeASlug<T>(this Validator<T, string> validator)
+        {
+            return IsSatisfiedByRegex(validator, new Regex(@"^[a-z0-9-]+$"), Resources.TheFieldXShouldBeASlug);
         }
     }
 }
