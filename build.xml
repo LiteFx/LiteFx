@@ -23,9 +23,9 @@
   </Target>
   
   <Target Name="NuPack" DependsOnTargets="Rebuild">
-    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx\LiteFx.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
-    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.NHibernate\LiteFx.NHibernate.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
-    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.Web.NHibernate\LiteFx.Web.NHibernate.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx\LiteFx.csproj -OutputDirectory .\NuGet\pack\ -Prop Configuration=Release -Verbosity detailed"/>
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.NHibernate\LiteFx.NHibernate.csproj -OutputDirectory .\NuGet\pack\ -Prop Configuration=Release -Verbosity detailed"/>
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.Web.NHibernate\LiteFx.Web.NHibernate.csproj -OutputDirectory .\NuGet\pack\ -Prop Configuration=Release -Verbosity detailed"/>
   </Target>
 
 </Project>

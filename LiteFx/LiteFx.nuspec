@@ -13,5 +13,8 @@
 	<summary>A framework that helps the use of DDD patterns.</summary>
 	<tags>LiteFx DDD Repository Specification</tags>
     <copyright>Copyright 2015</copyright>
-  </metadata>
+  </metadata>  
+<files>
+	<file src="..\Release\pt-br\LiteFx.resources.dll" target="lib\net40\pt-br\LiteFx.resources.dll" />
+</files>
 </package>
