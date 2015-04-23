@@ -1,0 +1,31 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Rebuild"> 
+  <PropertyGroup>
+
+    <SourceDir>.\</SourceDir>
+    <Configuration>Release</Configuration>
+    <Platform>Any CPU</Platform>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SolutionFile Include="$(SourceDir)\LiteFx.sln" />
+  </ItemGroup>
+
+  <Target Name="Clean">
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean" Properties="Configuration=$(Configuration);Platform=$(Platform)"/>
+  </Target>
+
+  <Target Name="Build">
+    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform)"/>
+  </Target>
+
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean; Build"></CallTarget>
+  </Target>
+  
+  <Target Name="NuPack" DependsOnTargets="Rebuild">
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx\LiteFx.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.NHibernate\LiteFx.NHibernate.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
+    <Exec Command=".\NuGet\NuGet.exe pack .\LiteFx.Web.NHibernate\LiteFx.Web.NHibernate.csproj -OutputDirectory .\NuGet\ -Prop Configuration=Release -Verbosity detailed"/>
+  </Target>
+
+</Project>
