@@ -5,13 +5,16 @@
     <version>$version$</version>
     <title>$title$</title>
     <authors>Douglas Aguiar</authors>
-	<licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
-	<projectUrl>http://litefx.codeplex.com/</projectUrl>
-	<iconUrl>http://www.nuget.org/Media/Default/Packages/LiteFx/0.9.0/litefx-logo.png</iconUrl>
-	<requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<description>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</description>
-	<summary>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</summary>
-	<tags>LiteFx DDD Repository Specification NHibernate FluentNHibernate</tags>
+	  <licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
+	  <projectUrl>http://litefx.codeplex.com/</projectUrl>
+	  <iconUrl>http://www.nuget.org/Media/Default/Packages/LiteFx/0.9.0/litefx-logo.png</iconUrl>
+	  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	  <description>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</description>
+	  <summary>A framework that helps the use of DDD patterns and implementing the infrastructure with NHibernate and FluentNHibernate.</summary>
+	  <tags>LiteFx DDD Repository Specification NHibernate FluentNHibernate</tags>
     <copyright>Copyright 2015</copyright>
+    <dependencies>
+      <dependency id="LiteFx" version="$version$" />
+    </dependencies>
   </metadata>
 </package>

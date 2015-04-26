@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Sample.Infrastructure
 {
-    public interface ISampleContext : IContext<int>
+    public interface ISampleContext : IContext
     {
         IQueryable<Product> Products { get; }
     }

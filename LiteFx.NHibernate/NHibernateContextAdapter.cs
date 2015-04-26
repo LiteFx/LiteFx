@@ -73,23 +73,13 @@ namespace LiteFx.Context.NHibernate
 		{
 			SessionFactoryManager.Current.CommitTransaction();
 		}
-	}
-
-	/// <summary>
-	/// Generic ID NHibernate base context adapter.
-	/// </summary>
-	/// <typeparam name="TId"></typeparam>
-	public abstract class NHibernateContextAdapter<TId> : NHibernateContextAdapter, IContext<TId>
-		where TId : IEquatable<TId>
-	{
-		public NHibernateContextAdapter(SessionFactoryManager sessionFactoryManager) : base(sessionFactoryManager) { }
 
 		/// <summary>
 		/// Exclui uma entidade do contexto pelo seu Identificador.
 		/// </summary>
 		/// <typeparam name="T">Tipo do entidade.</typeparam>
 		/// <param name="id">Identificador do entidade.</param>
-		public virtual T Delete<T>(TId id)
+		public T Delete<T, TId>(TId id) where TId : IEquatable<TId>
 		{
 			var obj = CurrentSession.Get<T>(id);
 			Delete(obj);

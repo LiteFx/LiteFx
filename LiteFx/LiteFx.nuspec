@@ -5,16 +5,16 @@
     <version>$version$</version>
     <title>$title$</title>
     <authors>Douglas Aguiar</authors>
-	<licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
-	<projectUrl>http://litefx.codeplex.com/</projectUrl>
-	<iconUrl>http://www.nuget.org/Media/Default/Packages/LiteFx/0.9.0/litefx-logo.png</iconUrl>
-	<requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<description>A framework that helps the use of DDD patterns.</description>
-	<summary>A framework that helps the use of DDD patterns.</summary>
-	<tags>LiteFx DDD Repository Specification</tags>
+	  <licenseUrl>http://litefx.codeplex.com/license</licenseUrl>
+	  <projectUrl>http://litefx.codeplex.com/</projectUrl>
+	  <iconUrl>http://www.nuget.org/Media/Default/Packages/LiteFx/0.9.0/litefx-logo.png</iconUrl>
+	  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	  <description>A framework that helps the use of DDD patterns.</description>
+	  <summary>A framework that helps the use of DDD patterns.</summary>
+	  <tags>LiteFx DDD Repository Specification</tags>
     <copyright>Copyright 2015</copyright>
   </metadata>  
-<files>
-	<file src="..\Release\pt-br\LiteFx.resources.dll" target="lib\net40\pt-br\LiteFx.resources.dll" />
-</files>
+  <files>
+	  <file src="..\Release\pt-br\LiteFx.resources.dll" target="lib\net40\pt-br\LiteFx.resources.dll" />
+  </files>
 </package>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Sample.Infrastructure
 {
-    public class SampleContext : NHibernateContextAdapter<int>, ISampleContext
+    public class SampleContext : NHibernateContextAdapter, ISampleContext
     {
         public SampleContext(SessionFactoryManager sessionFactoryManager) : base(sessionFactoryManager) { }
 
