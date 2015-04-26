@@ -86,7 +86,7 @@ namespace LiteFx.Repository
     public abstract class RepositoryBase<TEntity, TId, TContext> : RepositoryBase<TEntity, TContext>, IRepository<TEntity, TId>
         where TEntity : EntityBase<TId>
         where TContext : class, IContext
-        where TId : struct, IEquatable<TId>, IComparable<TId>
+        where TId : IEquatable<TId>, IComparable<TId>
     {
         public RepositoryBase(TContext context) : base(context) { }
 
