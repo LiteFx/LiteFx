@@ -28,7 +28,8 @@ namespace LiteFx.Context.NHibernate
 			ReflectionHelper.GetMethodDefinition<IEquatable<Boolean>>(x => x.Equals(true)),
 			ReflectionHelper.GetMethodDefinition<IEquatable<Char>>(x => x.Equals((Char)0)),
 			ReflectionHelper.GetMethodDefinition<IEquatable<Decimal>>(x => x.Equals((Decimal)0)),
-			ReflectionHelper.GetMethodDefinition<IEquatable<Guid>>(x => x.Equals(Guid.Empty))
+			ReflectionHelper.GetMethodDefinition<IEquatable<Guid>>(x => x.Equals(Guid.Empty)),
+			ReflectionHelper.GetMethodDefinition<IEquatable<string>>(x => x.Equals(string.Empty))
 			};
 		}
 		
