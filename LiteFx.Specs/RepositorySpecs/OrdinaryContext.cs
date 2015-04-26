@@ -5,18 +5,13 @@ using System.Text;
 
 namespace LiteFx.Specs.RepositorySpecs
 {
-    public interface IOrdinaryContext : IContext<int> 
+    public interface IOrdinaryContext : IContext 
     {
         IQueryable<Entity> Entities { get; }
     }
 
     public class OrdinaryContext : IOrdinaryContext
     {
-        public T Delete<T>(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IQueryable<T> GetQueryableObject<T>() where T : class
         {
             if (typeof(T) == typeof(Entity))
@@ -54,5 +49,11 @@ namespace LiteFx.Specs.RepositorySpecs
         {
             throw new NotImplementedException();
         }
-    }
+
+
+		public T Delete<T, TId>(TId id) where TId : IEquatable<TId>
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

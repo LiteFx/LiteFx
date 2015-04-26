@@ -29,26 +29,17 @@ namespace LiteFx
         /// <param name="entity">Entity to be deleted.</param>
         void Delete(object entity);
 
+		/// <summary>
+		/// Delete an entity by id.
+		/// </summary>
+		/// <typeparam name="T">Entity type.</typeparam>
+		/// <param name="id">Entity id.</param>
+		T Delete<T, TId>(TId id) where TId : IEquatable<TId>;
+
         /// <summary>
         /// Detach entity from context.
         /// </summary>
         /// <param name="entity">Entity to be detached</param>
         void Detach(object entity);
-    }
-
-    /// <summary>
-    /// Interface that will be implemented by classes that represent contexts.
-    /// These contexts could persist the modifications in a DataBase, XML Files, memory and etc.
-    /// </summary>
-    /// <typeparam name="TId">Type of id.</typeparam>
-    public interface IContext<TId> : IContext
-        where TId : IEquatable<TId>
-    {
-        /// <summary>
-        /// Delete an entity by id.
-        /// </summary>
-        /// <typeparam name="T">Entity type.</typeparam>
-        /// <param name="id">Entity id.</param>
-        T Delete<T>(TId id);
     }
 }

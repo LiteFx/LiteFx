@@ -82,6 +82,7 @@
     <Compile Include="SessionFactoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LiteFx.NHibernate.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

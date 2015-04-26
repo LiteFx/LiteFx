@@ -122,7 +122,7 @@ namespace LiteFx.Specs.RepositorySpecs
         [Then(@"the Context Delete by id method shold be called")]
         public void ThenTheContextDeleteByIdMethodSholdBeCalled()
         {
-            mockContext.Verify(c => c.Delete<Entity>(It.IsAny<int>()), Times.Once());
+            mockContext.Verify(c => c.Delete<Entity, int>(It.IsAny<int>()), Times.Once());
         }
     }
 }
