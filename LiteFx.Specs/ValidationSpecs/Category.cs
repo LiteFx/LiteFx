@@ -60,7 +60,7 @@ namespace LiteFx.Specs.ValidationSpecs
             Assert<CategoryWithSubCategory>()
                 .Que(c => c.Position)
                     .Minimo(0)
-                    .NaoSejaNulo()
+                    .EhRequerido()
                 .Quando(c => c.SubCategory.Position)
                     .MaiorQueOuIgual(() => 0);
 

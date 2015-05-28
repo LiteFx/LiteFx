@@ -38,7 +38,7 @@ namespace LiteFx.Validation
         /// </summary>
         /// <param name="propertyName">Property name reference to get the client validation rules.</param>
         /// <returns><see cref="ClientValidationRule"/></returns>
-        public IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName)
+        public IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName, EntityBase entity)
         {
             var predicates = Assertions
                 .Where(a => a.AccessorMemberNames.Contains(propertyName) && a.WhenAssertion == null)
@@ -50,6 +50,23 @@ namespace LiteFx.Validation
                 predicate.ClienteValidationRule.ErrorMessage = string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(propertyName));
                 yield return predicate.ClienteValidationRule;
             }
+
+			var assertionsWithWhen = Assertions
+				.Where(a => a.AccessorMemberNames.Contains(propertyName) && a.WhenAssertion != null && a.BasePredicates.Any(p => p.ClienteValidationRule != null));
+
+			foreach (var assertion in assertionsWithWhen)
+			{
+				if (assertion.WhenAssertion.Evaluate(entity, null))
+				{
+					var predicatesWithWhen = assertion.BasePredicates.Where(p => p.ClienteValidationRule != null);
+
+					foreach (var predicate in predicatesWithWhen)
+					{
+						predicate.ClienteValidationRule.ErrorMessage = string.Format(predicate.ValidationMessage, ValidationHelper.ResourceManager.GetString(propertyName));
+						yield return predicate.ClienteValidationRule;
+					}
+				}
+			}
         }
     }
 
