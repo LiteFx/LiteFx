@@ -8,7 +8,7 @@ namespace LiteFx.Validation
 	{
 		List<Assertion> Assertions { get; }
 		IEnumerable<ValidationResult> Validate(object instanceReference, IList<ValidationResult> validationContext);
-        IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName);
+        IEnumerable<ClientValidationRule> GetClientValidationData(string propertyName, EntityBase entity);
 	}
 
 	public interface IAssert<out T> : IAssert

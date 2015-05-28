@@ -54,3 +54,9 @@ Scenario: When get client validation from a Type it cannot execute the validatio
 	Given a new derived Type
 	When I call the GetClientValidationData method passing the property Name
 	Then the client validation rule collection should be have the required rule
+
+Scenario: When get client validation from a Type using when it has to show the client validations
+	Given a new derived Type
+	When I set the subcategory
+	And I call the GetClientValidationData method passing the property Position
+	Then the client validation rule collection should be have the required rule

@@ -98,7 +98,7 @@ namespace LiteFx
 			if (assert == null)
 				ConfigureValidation();
 
-            return assert.GetClientValidationData(propertyName);
+            return assert.GetClientValidationData(propertyName, this);
 		}
 		#endregion
 	}

@@ -75,6 +75,12 @@ namespace LiteFx.Specs.ValidationSpecs
 			results = type.Validate();
 		}
 
+		[When(@"I set the subcategory")]
+		public void WhenISetTheSubcategory()
+		{
+			((CategoryWithSubCategory)type).SubCategory = new CategoryWithSubCategory() { Id = 3, Name = "Stub", Position = 1 };
+		}
+
         [When(@"I call the GetClientValidationData method passing the property (.*)")]
         public void WhenICallTheGetClientValidationDataMethodPassingThePropertyName(string propertyName)
         {
