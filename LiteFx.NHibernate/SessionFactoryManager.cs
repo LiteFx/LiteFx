@@ -106,6 +106,7 @@ namespace LiteFx.Context.NHibernate
                 {
                     session.DefaultReadOnly = true;
                     session.FlushMode = FlushMode.Never;
+					BeginReadOnlyTransaction();
                 }
                 else
                 {
@@ -124,13 +125,6 @@ namespace LiteFx.Context.NHibernate
                 {
                     Trace.WriteLine("Begining NHibernate Transaction.", getTraceCategory());
 
-                    if (ReadOnly)
-                    {
-                        session.DefaultReadOnly = false;
-                        session.FlushMode = FlushMode.Auto;
-                        ReadOnly = false;
-                    }
-
                     ITransaction transaction = session.BeginTransaction();
 
                     return transaction;
@@ -139,6 +133,36 @@ namespace LiteFx.Context.NHibernate
 
             throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
         }
+
+		public ITransaction BeginReadOnlyTransaction()
+		{
+			if (IsSessionActive)
+			{
+				if (!session.Transaction.IsActive)
+				{
+					Trace.WriteLine("Begining ReadOnly NHibernate Transaction.", getTraceCategory());
+
+					ITransaction transaction = session.BeginTransaction();
+
+					return transaction;
+				}
+			}
+
+			throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
+		}
+
+		public void SetReadOnlyOff() 
+		{
+			if (ReadOnly)
+			{
+				Trace.WriteLine("Current transaction - set readonly off.", getTraceCategory());
+
+				session.DefaultReadOnly = false;
+				session.FlushMode = FlushMode.Auto;
+				ReadOnly = false;
+			}
+		}
+
 
         public virtual void DisposeSession()
         {
