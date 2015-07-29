@@ -185,18 +185,6 @@ namespace LiteFx.Context.NHibernate
                 {
                     Flush();
                     Trace.WriteLine("Commiting NHibernate Transaction.", getTraceCategory());
-
-					if (sessionFactory.Statistics.IsStatisticsEnabled)
-					{
-						Trace.WriteLine(string.Format("{0} queries executed.", sessionFactory.Statistics.QueryExecutionCount), getTraceCategory());
-						if (sessionFactory.Statistics.QueryExecutionCount > 5)
-							Trace.TraceWarning("Query count to high! Watch out!");
-
-						Trace.WriteLine(string.Format("{0} entities loaded.", sessionFactory.Statistics.EntityLoadCount), getTraceCategory());
-						if (sessionFactory.Statistics.EntityLoadCount > 200)
-							Trace.TraceWarning("To many records! Watch out!");
-					}
-
                     session.Transaction.Commit();
                 }
             }

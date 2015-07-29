@@ -93,6 +93,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateMember.cs" />
     <Compile Include="IAggregateRoot.cs" />
+    <Compile Include="IDomainResult.cs" />
     <Compile Include="Specification\CombinedLambdaSpecification.cs" />
     <Compile Include="Validation\Accessor.cs" />
     <Compile Include="Validation\Assert.cs" />
