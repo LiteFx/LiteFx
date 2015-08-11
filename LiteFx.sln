@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{598E0D42-AA74-4D57-8D05-532E7FAC2585}"
 	ProjectSection(SolutionItems) = preProject
+		.hgignore = .hgignore
+		.hgtags = .hgtags
 		AssemblyVersion.cs = AssemblyVersion.cs
+		build.cmd = build.cmd
+		build.xml = build.xml
 		litefx.pfx = litefx.pfx
 		LiteFx.vsmdi = LiteFx.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig

@@ -89,11 +89,14 @@
     <Compile Include="DomainEvents\IDomainEvent.cs" />
     <Compile Include="DomainEvents\IDomainEventHandler.cs" />
     <Compile Include="DomainEvents\IDomainEventStore.cs" />
+    <Compile Include="DomainResult\ErrorResult.cs" />
+    <Compile Include="DomainResult\OkResult.cs" />
+    <Compile Include="DomainResult\UnauthorizedResult.cs" />
     <Compile Include="EntityBaseWithValidation.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateMember.cs" />
     <Compile Include="IAggregateRoot.cs" />
-    <Compile Include="IDomainResult.cs" />
+    <Compile Include="DomainResult\IDomainResult.cs" />
     <Compile Include="Specification\CombinedLambdaSpecification.cs" />
     <Compile Include="Validation\Accessor.cs" />
     <Compile Include="Validation\Assert.cs" />

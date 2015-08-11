@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
-namespace LiteFx
+namespace LiteFx.DomainResult
 {
-	public interface IDomainResult
-	{
-	}
-
 	public class ErrorResult : IDomainResult
 	{
 		List<ValidationResult> messages;
@@ -65,22 +60,26 @@ namespace LiteFx
 		}
 	}
 
-	public class OkResult : OkResult<string>
+	public class ErrorResult<T> : ErrorResult, IDomainResult<T>
 	{
-		public OkResult()
+		private T body;
+		public T Body
 		{
-			body = string.Empty;
+			get { return body; }
 		}
-	}
 
-	public class OkResult<T> : IDomainResult
-	{
-		protected T body;
-		public T Body { get { return body; } }
+		public ErrorResult(T body)
+		{
+			this.body = body;
+		}
 
-		public OkResult() { }
+		public ErrorResult(T body, string key, string message) : base(key, message)
+		{
+			this.body = body;
+		}
 
-		public OkResult(T body)
+		public ErrorResult(T body, string message)
+			: base(message)
 		{
 			this.body = body;
 		}
