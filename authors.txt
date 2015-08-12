@@ -1,1 +1,5 @@
 douglasaguiar = Douglas Aguiar <doaguiar@gmail.com>
+doaguiar = Douglas Aguiar <doaguiar@gmail.com>
+tiago.saldanha = tiagomaximo
+tiagomaximo = tiagomaximo
+flavio.silva = Flávio Silva <flavio1110@gmail.com>
