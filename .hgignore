@@ -32,6 +32,7 @@ syntax: glob
 *.nupkg
 [Tt]humbs.db
 [Bb]in
+.git/
 [Db]ebug*/
 [Oo]bj/
 [Rr]elease*/
