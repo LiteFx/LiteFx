@@ -72,6 +72,10 @@
       <DependentUpon>RaisingDomainEvents.feature</DependentUpon>
     </Compile>
     <Compile Include="DomainEventsSpecs\RaisingDomainEventsStepDefinition.cs" />
+    <Compile Include="DomainResultUnitTests\UnauthorizedResultTest.cs" />
+    <Compile Include="DomainResultUnitTests\OkResultTest.cs" />
+    <Compile Include="DomainResultUnitTests\ForbiddenResultTest.cs" />
+    <Compile Include="DomainResultUnitTests\ErrorResultTest.cs" />
     <Compile Include="EntitySpecs\Category.cs" />
     <Compile Include="EntitySpecs\EntitiesEquality.feature.cs">
       <AutoGen>True</AutoGen>

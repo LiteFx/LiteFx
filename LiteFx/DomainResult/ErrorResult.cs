@@ -58,6 +58,35 @@ namespace LiteFx.DomainResult
 				messages.Add(new ValidationResult(message));
 			return this;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is ErrorResult))
+				return false;
+
+			if (this.Messages.Count() != (obj as ErrorResult).Messages.Count())
+				return false;
+
+			for (int i = 0; i < this.Messages.Count(); i++)
+			{
+				var elementDest = (obj as ErrorResult).Messages.ElementAt(i);
+				var elementSource = this.Messages.ElementAt(i);
+
+				if (!elementSource.ErrorMessage.Equals(elementDest.ErrorMessage))
+					return false;
+
+				if (elementDest.MemberNames.Count() != elementSource.MemberNames.Count())
+					return false;
+
+				for (int j = 0; j < elementDest.MemberNames.Count(); j++)
+				{
+					if (!elementDest.MemberNames.ElementAt(j).Equals(elementSource.MemberNames.ElementAt(j)))
+						return false;
+				}
+			}
+
+			return true;
+		}
 	}
 
 	public class ErrorResult<T> : ErrorResult, IDomainResult<T>
@@ -73,7 +102,8 @@ namespace LiteFx.DomainResult
 			this.body = body;
 		}
 
-		public ErrorResult(T body, string key, string message) : base(key, message)
+		public ErrorResult(T body, string key, string message)
+			: base(key, message)
 		{
 			this.body = body;
 		}
@@ -82,6 +112,14 @@ namespace LiteFx.DomainResult
 			: base(message)
 		{
 			this.body = body;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is ErrorResult<T>))
+				return false;
+
+			return base.Equals(obj);
 		}
 	}
 }

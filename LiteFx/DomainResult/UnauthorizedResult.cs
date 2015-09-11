@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace LiteFx.DomainResult
 {
 	public class UnauthorizedResult : IDomainResult<string>
@@ -16,6 +12,17 @@ namespace LiteFx.DomainResult
 		public UnauthorizedResult(string message)
 		{
 			body = message;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is UnauthorizedResult))
+				return false;
+
+			if (!this.body.Equals((obj as UnauthorizedResult).body))
+				return false;
+
+			return true;
 		}
 	}
 }
