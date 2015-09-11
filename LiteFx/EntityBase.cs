@@ -12,7 +12,7 @@ namespace LiteFx
 	public abstract class EntityBase<TId> : EntityBase, IEquatable<EntityBase<TId>>
 		where TId : IEquatable<TId>
 	{
-        private int? hashcodeCache;
+		private int? hashcodeCache;
 
 		/// <summary>
 		/// Entity id.
@@ -20,19 +20,19 @@ namespace LiteFx
 		[ScaffoldColumn(false)]
 		public virtual TId Id { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [ScaffoldColumn(false)]
-        public virtual bool Transient { get { return Id.Equals(default(TId)); } }
+		/// <summary>
+		///
+		/// </summary>
+		[ScaffoldColumn(false)]
+		public virtual bool Transient { get { return Id.Equals(default(TId)); } }
 
 		public virtual bool Equals(EntityBase<TId> other)
 		{
 			if (ReferenceEquals(other, null)) return false;
 
-            if (ReferenceEquals(this, other)) return true;
+			if (ReferenceEquals(this, other)) return true;
 
-            if (this.Transient || other.Transient) return false;
+			if (this.Transient || other.Transient) return false;
 
 			if (!isSameTypeOf(other)) return false;
 
@@ -56,14 +56,14 @@ namespace LiteFx
 
 		public override int GetHashCode()
 		{
-            if (hashcodeCache.HasValue) return hashcodeCache.Value;
+			if (hashcodeCache.HasValue) return hashcodeCache.Value;
 
 			if (Transient)
 				hashcodeCache = base.GetHashCode();
-            else
-			    hashcodeCache = GetType().GetHashCode() + Id.GetHashCode();
+			else
+				hashcodeCache = GetType().GetHashCode() + Id.GetHashCode();
 
-            return hashcodeCache.Value;
+			return hashcodeCache.Value;
 		}
 
 		public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)

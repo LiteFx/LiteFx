@@ -24,5 +24,16 @@ namespace LiteFx.DomainResult
 		{
 			this.body = body;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is OkResult))
+				return false;
+
+			if (!this.body.Equals((obj as OkResult<T>).body))
+				return false;
+
+			return true;
+		}
 	}
 }
