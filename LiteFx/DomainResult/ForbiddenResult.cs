@@ -16,13 +16,18 @@ namespace LiteFx.DomainResult
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is ForbiddenResult))
+			ForbiddenResult newObj = obj as ForbiddenResult;
+			if ((object)newObj == null)
 				return false;
 
-			if (!this.body.Equals((obj as ForbiddenResult).body))
-				return false;
+			if (object.ReferenceEquals(this, obj))
+				return true;
 
-			return true;
+			var body = newObj.body;
+			if (body.GetType().IsPrimitive || body is string)
+				return this.Body.Equals(body);
+			else
+				return this.body.GetType().Equals(body.GetType());
 		}
 	}
 }

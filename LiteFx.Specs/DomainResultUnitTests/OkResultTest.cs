@@ -23,5 +23,23 @@ namespace LiteFx.Specs.DomainResultUnitTests
 
 			Assert.IsFalse(resultDest.Equals(resultSource));
 		}
+
+		[TestMethod]
+		public void DoisOkResultIntIguaisDevemRetornarEqualIgualATrue()
+		{
+			OkResult<int> resultDest = new OkResult<int>(1);
+			OkResult<int> resultSource = new OkResult<int>(1);
+
+			Assert.IsTrue(resultDest.Equals(resultSource));
+		}
+
+		[TestMethod]
+		public void DoisOkResultIntDiferentesDevemRetornarEqualIgualAFalse()
+		{
+			OkResult<int> resultDest = new OkResult<int>(0);
+			OkResult<int> resultSource = new OkResult<int>(1);
+
+			Assert.IsFalse(resultDest.Equals(resultSource));
+		}
 	}
 }

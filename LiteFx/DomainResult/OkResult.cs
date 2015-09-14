@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LiteFx.DomainResult
 {
@@ -25,15 +22,20 @@ namespace LiteFx.DomainResult
 			this.body = body;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(Object obj)
 		{
-			if (!(obj is OkResult))
+			OkResult<T> newObj = obj as OkResult<T>;
+			if ((object)newObj == null)
 				return false;
 
-			if (!this.body.Equals((obj as OkResult<T>).body))
-				return false;
+			if (object.ReferenceEquals(this, obj))
+				return true;
 
-			return true;
+			var body = newObj.body;
+			if (body.GetType().IsPrimitive || body is string)
+				return this.Body.Equals(body);
+			else
+				return this.body.GetType().Equals(body.GetType());
 		}
 	}
 }
