@@ -59,22 +59,22 @@ namespace LiteFx.DomainResult
 			return this;
 		}
 
-		public override bool Equals(Object obj)
+		public override bool Equals(object obj)
 		{
-			ErrorResult newObj = obj as ErrorResult;
-			if ((object)newObj == null)
+			var newObj = obj as ErrorResult;
+			if (newObj == null)
 				return false;
 
-			if (object.ReferenceEquals(this, obj))
+			if (ReferenceEquals(this, obj))
 				return true;
 
-			if (this.Messages.Count() != newObj.Messages.Count())
+			if (Messages.Count() != newObj.Messages.Count())
 				return false;
 
-			for (int i = 0; i < this.Messages.Count(); i++)
+			for (var i = 0; i < Messages.Count(); i++)
 			{
 				var elementDest = newObj.Messages.ElementAt(i);
-				var elementSource = this.Messages.ElementAt(i);
+				var elementSource = Messages.ElementAt(i);
 
 				if (!elementSource.ErrorMessage.Equals(elementDest.ErrorMessage))
 					return false;
@@ -82,7 +82,7 @@ namespace LiteFx.DomainResult
 				if (elementDest.MemberNames.Count() != elementSource.MemberNames.Count())
 					return false;
 
-				for (int j = 0; j < elementDest.MemberNames.Count(); j++)
+				for (var j = 0; j < elementDest.MemberNames.Count(); j++)
 				{
 					if (!elementDest.MemberNames.ElementAt(j).Equals(elementSource.MemberNames.ElementAt(j)))
 						return false;
@@ -118,16 +118,13 @@ namespace LiteFx.DomainResult
 			this.body = body;
 		}
 
-		public override bool Equals(Object obj)
+		public override bool Equals(object obj)
 		{
-			ErrorResult<T> newObj = obj as ErrorResult<T>;
-			if ((object)newObj == null)
+			var newObj = obj as ErrorResult<T>;
+			if (newObj == null)
 				return false;
 
-			if (object.ReferenceEquals(this, obj))
-				return true;
-
-			return base.Equals(obj);
+			return ReferenceEquals(this, obj) || base.Equals(obj);
 		}
 	}
 }

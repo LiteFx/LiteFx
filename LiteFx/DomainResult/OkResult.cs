@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace LiteFx.DomainResult
 {
 	public class OkResult : OkResult<string>
@@ -22,20 +21,13 @@ namespace LiteFx.DomainResult
 			this.body = body;
 		}
 
-		public override bool Equals(Object obj)
+		public override bool Equals(object obj)
 		{
-			OkResult<T> newObj = obj as OkResult<T>;
-			if ((object)newObj == null)
+			var newObj = obj as OkResult<T>;
+			if (newObj == null)
 				return false;
 
-			if (object.ReferenceEquals(this, obj))
-				return true;
-
-			var body = newObj.body;
-			if (body.GetType().IsPrimitive || body is string)
-				return this.Body.Equals(body);
-			else
-				return this.body.GetType().Equals(body.GetType());
+			return ReferenceEquals(this, obj) || Body.Equals(newObj.body);
 		}
 	}
 }
