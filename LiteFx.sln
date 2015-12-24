@@ -54,6 +54,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Infrastructure", "Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Web.Mvc", "Sample.Web.Mvc\Sample.Web.Mvc.csproj", "{77129F46-19F3-4CD8-A8D9-5B9D27C5B2BC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNet", "AspNet", "{9670D1C2-4F93-493E-8F1F-7770E4688A66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.AspNet.Identity", "LiteFx.AspNet.Identity\LiteFx.AspNet.Identity.csproj", "{58E3CAF4-E222-4F51-8AF4-163A102DD29C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteFx.AsyncEx", "LiteFx.AsyncEx\LiteFx.AsyncEx.csproj", "{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +181,26 @@ Global
 		{77129F46-19F3-4CD8-A8D9-5B9D27C5B2BC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{77129F46-19F3-4CD8-A8D9-5B9D27C5B2BC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{77129F46-19F3-4CD8-A8D9-5B9D27C5B2BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C}.Release|x86.ActiveCfg = Release|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AFA1C5C0-C08D-46A4-8280-5B91EC2E9603}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +218,7 @@ Global
 		{146A2878-17EB-46CA-AF83-8616F31E4964} = {7B20C787-BA4F-4539-A6FB-5755A4AA6078}
 		{6B94067B-1C18-4151-90C1-A25EAF0CECB7} = {7B20C787-BA4F-4539-A6FB-5755A4AA6078}
 		{77129F46-19F3-4CD8-A8D9-5B9D27C5B2BC} = {7B20C787-BA4F-4539-A6FB-5755A4AA6078}
+		{58E3CAF4-E222-4F51-8AF4-163A102DD29C} = {9670D1C2-4F93-493E-8F1F-7770E4688A66}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = LiteFx.vsmdi
