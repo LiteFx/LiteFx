@@ -75,7 +75,7 @@ namespace LiteFx.AspNet.Identity
 
 		public Task<TUser> FindByEmailAsync(string email)
 		{
-			throw new NotImplementedException();
+			return IdentityUserRepository.GetByEmailAsync(email);
 		}
 
 		public Task<string> GetEmailAsync(TUser user)

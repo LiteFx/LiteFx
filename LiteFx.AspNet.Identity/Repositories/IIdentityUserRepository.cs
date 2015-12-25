@@ -10,5 +10,6 @@ namespace LiteFx.AspNet.Identity.Repositories
 	{
 		Task<TUser> GetByNameAsync(string userName);
 		Task<string> GetPasswordHashAsync(TId userId);
+		Task<TUser> GetByEmailAsync(string email);
 	}
 }
