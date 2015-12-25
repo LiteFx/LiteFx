@@ -3,7 +3,7 @@ using System;
 
 namespace LiteFx.AspNet.Identity
 {
-	public class IdentityUser<TId> : EntityBase<TId>, IUser<TId>
+	public abstract class IdentityUser<TId> : EntityBaseWithValidation<TId>, IUser<TId>
 		where TId : IEquatable<TId>
 	{
 		public virtual string UserName { get; set; }
