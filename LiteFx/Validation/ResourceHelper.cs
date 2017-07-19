@@ -14,7 +14,7 @@ namespace LiteFx.Validation
 	public static class ResourceHelper
 	{
 		/// <summary>
-		/// 
+		/// GetString from ValidationHelper or Resource
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
