@@ -18,7 +18,7 @@ namespace LiteFx.Validation
         /// <returns></returns>
         public static Validator<T, string> ShouldBeAnEmail<T>(this Validator<T, string> validator)
         {
-            return IsSatisfiedByRegex(validator, new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Resources.TheFieldXShouldBeAnEmail);
+            return IsSatisfiedByRegex(validator, new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), ResourceHelper.GetString("TheFieldXShouldBeAnEmail"));
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace LiteFx.Validation
         /// <returns></returns>
         public static Validator<T, string> ShouldBeALink<T>(this Validator<T, string> validator)
         {
-            return IsSatisfiedByRegex(validator, new Regex(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"), Resources.TheFieldXShouldBeALink);
+            return IsSatisfiedByRegex(validator, new Regex(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"), ResourceHelper.GetString("TheFieldXShouldBeALink"));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace LiteFx.Validation
         /// <returns></returns>
         public static Validator<T, string> ShouldBeASlug<T>(this Validator<T, string> validator)
         {
-            return IsSatisfiedByRegex(validator, new Regex(@"^[a-z0-9-]+$"), Resources.TheFieldXShouldBeASlug);
+            return IsSatisfiedByRegex(validator, new Regex(@"^[a-z0-9-]+$"), ResourceHelper.GetString("TheFieldXShouldBeASlug"));
         }
     }
 }

@@ -121,69 +121,69 @@
     <value>Para criar um BusinessException o parâmetro ValidationResults precisa estar inválido.</value>
   </data>
   <data name="SomeBusinessRulesWasViolated" xml:space="preserve">
-    <value>Algumas regras de negócio foram violadas.</value>
+    <value>Niektóre reguły biznesowe zostały naruszone.</value>
   </data>
   <data name="TheFieldXCanNotBeANumber" xml:space="preserve">
-    <value>O campo '{0}' não pode ser um número.</value>
+    <value>Pole „{0}” nie może być liczbą.</value>
   </data>
   <data name="TheFieldXCanNotBeGreaterThanY" xml:space="preserve">
-    <value>O campo '{0}' não pode ser maior que '{1}'.</value>
+    <value>Pole „{0}” nie może być większa niż {1} '.</value>
   </data>
   <data name="TheFieldXCanNotBeLessThanY" xml:space="preserve">
-    <value>O campo '{0}' não pode ser menor que '{1}'.</value>
+    <value>Pole „{0}” nie może być mniejsza niż {1} '.</value>
   </data>
   <data name="TheFieldXCanNotHaveLessThanYCharacters" xml:space="preserve">
-    <value>O campo '{0}' não pode ter menos de '{1}' caracteres.</value>
+    <value>Pole „{0}” nie może być mniejsza niż „{1}” znaków.</value>
   </data>
   <data name="TheFieldXCanNotHaveMoreThanYCharacters" xml:space="preserve">
-    <value>O campo '{0}' não pode ter mais de '{1}' caracteres.</value>
+    <value>Pole „{0}” nie może mieć więcej niż „{1}” znaków.</value>
   </data>
   <data name="TheFieldXIsRequired" xml:space="preserve">
-    <value>O campo '{0}' é obrigatório.</value>
+    <value>Wymagane jest pole "{0}.</value>
   </data>
   <data name="TheFieldXMustBeANumber" xml:space="preserve">
-    <value>O campo '{0}' deve ser um número.</value>
+    <value>Pole „{0}” musi być liczbą.</value>
   </data>
   <data name="TheFieldXMustBeBetweenYandZ" xml:space="preserve">
-    <value>O campo '{0}' deve estar entre '{1}' e '{2}'.</value>
+    <value>Pole '{0}' powinno być pomiędzy "{1}" i „{2}.</value>
   </data>
   <data name="TheFieldXMustBeBetweenYandZCharacters" xml:space="preserve">
-    <value>O tamanho do campo '{0}' deve estar entre '{1}' e '{2}' caracteres.</value>
+    <value>Wielkość pola {0} "powinna być pomiędzy 1}„{”oraz„} {2 znaków.</value>
   </data>
   <data name="TheFieldXMustBeDifferentThanY" xml:space="preserve">
-    <value>O campo '{0}' deve ser diferente de '{1}'.</value>
+    <value>Pole '{0}' może być różne od '{1}'.</value>
   </data>
   <data name="TheFieldXMustBeEmpty" xml:space="preserve">
-    <value>O campo '{0}' deve estar vazio.</value>
+    <value>Pole „{0}” mogą być puste.</value>
   </data>
   <data name="TheFieldXMustBeEqualsY" xml:space="preserve">
-    <value>O campo '{0}' deve ser igual a '{1}'.</value>
+    <value>Pole '{0}' musi być równa "{1}".</value>
   </data>
   <data name="TheFieldXMustBeFalse" xml:space="preserve">
-    <value>O campo '{0}' deve ser Falso.</value>
+    <value>Pole „{0}” musi być fałszywe.</value>
   </data>
   <data name="TheFieldXMustBeNull" xml:space="preserve">
-    <value>O campo '{0}' deve ser nulo.</value>
+    <value>Pole „{0}” może być zerowy.</value>
   </data>
   <data name="TheFieldXMustBeNullOrEmpty" xml:space="preserve">
-    <value>O campo '{0}' deve ser nulo ou vazio.</value>
+    <value>Pole „{0}” musi być pustymi.</value>
   </data>
   <data name="TheFieldXMustBeTrue" xml:space="preserve">
-    <value>O campo '{0}' deve ser Verdadeiro.</value>
+    <value>Pole „{0}” musi być prawdą.</value>
   </data>
   <data name="TheFieldXMustHaveYCharacters" xml:space="preserve">
-    <value>O campo '{0}' dever ter '{1}' caracteres.</value>
+    <value>Pole '{0}' musi '{1}' znaków.</value>
   </data>
   <data name="TheFieldXShouldBeALink" xml:space="preserve">
-    <value>O campo '{0}' deve ser um link.</value>
+    <value>Pole „{0}” musi być linkiem.</value>
   </data>
   <data name="TheFieldXShouldBeAnEmail" xml:space="preserve">
-    <value>O campo '{0}' deve ser um e-mail.</value>
+    <value>Pole '{0}' musi być e-mail.</value>
   </data>
   <data name="TheFieldXShouldBeASlug" xml:space="preserve">
-    <value>O campo '{0}' deve ser um slug.</value>
+    <value>Pole „{0}” musi być ślimak.</value>
   </data>
   <data name="TheFieldXShouldBeGreaterThanY" xml:space="preserve">
-    <value>O campo '{0}' deve ser maior que '{1}'.</value>
+    <value>Pole '{0}' może być większa niż "{1}".</value>
   </data>
 </root>

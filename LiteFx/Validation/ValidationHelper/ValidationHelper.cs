@@ -55,7 +55,7 @@ namespace LiteFx.Validation
 
 		public static Validator<T, TResult> IsNull<T, TResult>(this Validator<T, TResult> validator)
 		{
-			return IsSatisfied(validator, p => p == null, Resources.TheFieldXMustBeNull);
+			return IsSatisfied(validator, p => p == null, ResourceHelper.GetString("TheFieldXMustBeNull"));
 		}
 
         public static Validator<T, TResult> Required<T, TResult>(this Validator<T, TResult> validator)
@@ -70,27 +70,27 @@ namespace LiteFx.Validation
 
 		public static Validator<T, TResult> IsNotNull<T, TResult>(this Validator<T, TResult> validator)
 		{
-            return IsSatisfied(validator, p => p != null, Resources.TheFieldXIsRequired, RequiredClientValidationRule.Rule);
+            return IsSatisfied(validator, p => p != null, ResourceHelper.GetString("TheFieldXIsRequired"), RequiredClientValidationRule.Rule);
 		}
 
 		public static Validator<T, bool> IsTrue<T>(this Validator<T, bool> validator)
 		{
-			return IsSatisfied(validator, p => p, Resources.TheFieldXMustBeTrue);
+			return IsSatisfied(validator, p => p, ResourceHelper.GetString("TheFieldXMustBeTrue"));
 		}
 
 		public static Validator<T, bool> IsFalse<T>(this Validator<T, bool> validator)
 		{
-			return IsSatisfied(validator, p => !p, Resources.TheFieldXMustBeFalse);
+			return IsSatisfied(validator, p => !p, ResourceHelper.GetString("TheFieldXMustBeFalse"));
 		}
 
 		public static Validator<T, double> IsNaN<T>(this Validator<T, double> validator)
 		{
-			return IsSatisfied(validator, p => double.IsNaN(p), Resources.TheFieldXCanNotBeANumber);
+			return IsSatisfied(validator, p => double.IsNaN(p), ResourceHelper.GetString("TheFieldXCanNotBeANumber"));
 		}
 
 		public static Validator<T, double> IsaNumber<T>(this Validator<T, double> validator)
 		{
-			return IsSatisfied(validator, p => !double.IsNaN(p), Resources.TheFieldXMustBeANumber);
+			return IsSatisfied(validator, p => !double.IsNaN(p), ResourceHelper.GetString("TheFieldXMustBeANumber"));
 		}
 	}
 }
