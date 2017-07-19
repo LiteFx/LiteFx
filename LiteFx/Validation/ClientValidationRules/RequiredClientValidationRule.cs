@@ -14,7 +14,7 @@ namespace LiteFx.Validation.ClientValidationRules
         public RequiredClientValidationRule()
         {
             ValidationType = "required";
-            ErrorMessage = Resources.TheFieldXIsRequired;
+            ErrorMessage = ResourceHelper.GetString("TheFieldXIsRequired");
         }
     }
 }

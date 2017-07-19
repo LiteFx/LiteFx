@@ -6,7 +6,7 @@ using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
 using System;
 using LiteFx.Context.NHibernate.Properties;
-
+using LiteFx.Validation;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -20,7 +20,7 @@ namespace LiteFx.Context.NHibernate
 			get
 			{
                 if (configuration == null)
-                    throw new InvalidOperationException(Resources.YouHaveToCallConfigurationManagerInitializeAtLiteFxWebNHibernateStart);
+                    throw new InvalidOperationException(ResourceHelper.GetString("YouHaveToCallConfigurationManagerInitializeAtLiteFxWebNHibernateStart"));
 
 				return configuration;
 			}
@@ -29,7 +29,7 @@ namespace LiteFx.Context.NHibernate
         public static void Initialize() 
         {
             if (configuration != null)
-                throw new InvalidOperationException(Resources.YouCanCallConfigurationManagerInitializeOnlyOnce);
+                throw new InvalidOperationException(ResourceHelper.GetString("YouCanCallConfigurationManagerInitializeOnlyOnce"));
 
             try
             {

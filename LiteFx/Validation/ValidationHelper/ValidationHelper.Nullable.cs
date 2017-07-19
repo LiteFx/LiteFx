@@ -12,7 +12,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(max) <= 0;
-			}, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", max));
+			}, string.Format(ResourceHelper.GetString("TheFieldXCanNotBeGreaterThanY"), "{0}", max));
 		}
 		
 		public static Validator<T, TResult?> Max<T, TResult>(this Validator<T, TResult?> validator, Func<TResult> value)
@@ -22,7 +22,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(value()) <= 0;
-			}, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", value()));
+			}, string.Format(ResourceHelper.GetString("TheFieldXCanNotBeGreaterThanY"), "{0}", value()));
 		}
 
 		public static Validator<T, TResult?> LessThan<T, TResult>(this Validator<T, TResult?> validator, Func<TResult> value)
@@ -32,7 +32,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(value()) < 0;
-			}, string.Format(Resources.TheFieldXCanNotBeGreaterThanY, "{0}", value()));
+			}, string.Format(ResourceHelper.GetString("TheFieldXCanNotBeGreaterThanY"), "{0}", value()));
 		}
 
 		public static Validator<T, TResult?> LessThanOrEqual<T, TResult>(this Validator<T, TResult?> validator, Func<TResult> value)
@@ -48,7 +48,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(min) >= 0;
-			}, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", min));
+			}, string.Format(ResourceHelper.GetString("TheFieldXCanNotBeLessThanY"), "{0}", min));
 		}
 
 		public static Validator<T, TResult?> Min<T, TResult>(this Validator<T, TResult?> validator, Func<TResult> value)
@@ -58,7 +58,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(value()) >= 0;
-			}, string.Format(Resources.TheFieldXCanNotBeLessThanY, "{0}", value()));
+			}, string.Format(ResourceHelper.GetString("TheFieldXCanNotBeLessThanY"), "{0}", value()));
 		}
 
 		public static Validator<T, TResult?> GreaterThan<T, TResult>(this Validator<T, TResult?> validator, TResult value)
@@ -74,7 +74,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(value()) > 0;
-			}, string.Format(Resources.TheFieldXShouldBeGreaterThanY, "{0}", value()));
+			}, string.Format(ResourceHelper.GetString("TheFieldXShouldBeGreaterThanY"), "{0}", value()));
 		}
 
 		public static Validator<T, TResult?> GreaterThanOrEqual<T, TResult>(this Validator<T, TResult?> validator, Func<TResult> value)
@@ -90,7 +90,7 @@ namespace LiteFx.Validation
 			{
 				if (p == null) return true;
 				return p.Value.CompareTo(min) >= 0 && p.Value.CompareTo(max) <= 0;
-			}, string.Format(Resources.TheFieldXMustBeBetweenYandZ, "{0}", min, max));
+			}, string.Format(ResourceHelper.GetString("TheFieldXMustBeBetweenYandZ"), "{0}", min, max));
 		}
 	}
 }

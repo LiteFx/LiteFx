@@ -8,7 +8,7 @@ namespace LiteFx.Validation
         public static Validator<T, TResult> AreEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
             where TResult : IEquatable<TResult>
         {
-            return IsSatisfied(validator, p => p == null || p.Equals(other), string.Format(Resources.TheFieldXMustBeEqualsY, "{0}", other));
+            return IsSatisfied(validator, p => p == null || p.Equals(other), string.Format(ResourceHelper.GetString("TheFieldXMustBeEqualsY"), "{0}", other));
         }
 
         public static Validator<T, TResult> NotEquals<T, TResult>(this Validator<T, TResult> validator, TResult other)
@@ -18,7 +18,7 @@ namespace LiteFx.Validation
             {
                 if (p == null) return true;
                 return !p.Equals(other);
-            }, string.Format(Resources.TheFieldXMustBeDifferentThanY, "{0}", other));
+            }, string.Format(ResourceHelper.GetString("TheFieldXMustBeDifferentThanY"), "{0}", other));
         }
     }
 }

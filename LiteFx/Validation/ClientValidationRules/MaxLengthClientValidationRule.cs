@@ -11,7 +11,7 @@ namespace LiteFx.Validation.ClientValidationRules
         {
             ValidationType = "length";
             ValidationParameters.Add("max", maxLength);
-            ErrorMessage = string.Format(Resources.TheFieldXCanNotHaveMoreThanYCharacters, "{0}", maxLength);
+            ErrorMessage = string.Format(ResourceHelper.GetString("TheFieldXCanNotHaveMoreThanYCharacters"), "{0}", maxLength);
         }
     }
 }

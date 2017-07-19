@@ -121,6 +121,7 @@
     <Compile Include="Validation\ClientValidationRules\RequiredClientValidationRule.cs" />
     <Compile Include="Validation\IAssert.cs" />
     <Compile Include="Validation\IValidatableEntity.cs" />
+    <Compile Include="Validation\ResourceHelper.cs" />
     <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Comparable.cs" />
     <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.EntityBase.cs" />
     <Compile Include="Validation\ValidationHelper\PtBr\ValidationHelperPtBr.Equatable.cs" />

@@ -13,7 +13,7 @@ namespace LiteFx.Validation
             {
                 if (p == null) return false;
                 return !p.Id.Equals(default(TId));
-            }, string.Format(Resources.TheFieldXIsRequired, "{0}"), RequiredClientValidationRule.Rule);
+            }, string.Format(ResourceHelper.GetString("TheFieldXIsRequired"), "{0}"), RequiredClientValidationRule.Rule);
         }
 
         public static Validator<T, EntityBase<TId>> IsRequired<T, TId>(this Validator<T, EntityBase<TId>> validator)

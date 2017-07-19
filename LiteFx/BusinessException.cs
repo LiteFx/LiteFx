@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteFx.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Permissions;
@@ -50,11 +51,11 @@ namespace LiteFx
 		/// </code>
 		/// </example>
 		public BusinessException(IList<ValidationResult> validationResults)
-			: base(Properties.Resources.SomeBusinessRulesWasViolated)
+			: base(ResourceHelper.GetString("SomeBusinessRulesWasViolated"))
 		{
 			//Nao há razao para repassar uma excecao se os resultados da validacao foram positivos
 			if (validationResults.Count == 0)
-				throw new ArgumentException(Properties.Resources.ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido);
+				throw new ArgumentException(ResourceHelper.GetString("ParaCriarUmaBusinessExceptionOValidationResultsPrecisaEstarInvalido"));
 
 			ValidationResults = validationResults;
 		}
@@ -75,7 +76,7 @@ namespace LiteFx
 		///         try
 		///         {
 		///             //Alguma validação que gere um exceção de regra de negócio
-		///             throw new BusinessException(Porperties.Resources.MyMessage);
+		///             throw new BusinessException(ResourceHelper.GetString("MyMessage"));
 		///         }
 		///         catch (Exception ex)
 		///         {
@@ -112,7 +113,7 @@ namespace LiteFx
 		///         }
 		///         catch (Exception ex)
 		///         {
-		///             throw new BusinessException(Porperties.Resources.MyMessage, ex);
+		///             throw new BusinessException(ResourceHelper.GetString("MyMessage"), ex);
 		///         }
 		///     }
 		/// }

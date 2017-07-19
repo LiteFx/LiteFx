@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using LiteFx.Context.NHibernate.Properties;
 using System.Diagnostics;
+using LiteFx.Validation;
 
 namespace LiteFx.Context.NHibernate
 {
@@ -37,7 +38,7 @@ namespace LiteFx.Context.NHibernate
             get
             {
                 if (sessionFactory == null)
-                    throw new InvalidOperationException(Resources.YouHaveToCallSessionFactoryManagerInitializeAtLiteFxWebNHibernateStart);
+                    throw new InvalidOperationException(ResourceHelper.GetString("YouHaveToCallSessionFactoryManagerInitializeAtLiteFxWebNHibernateStart"));
 
                 return sessionFactory;
             }
@@ -51,7 +52,7 @@ namespace LiteFx.Context.NHibernate
         public static void Initialize()
         {
             if (sessionFactory != null)
-                throw new InvalidOperationException(Resources.YouCanCallSessionFactoryManagerInitializeOnlyOnce);
+                throw new InvalidOperationException(ResourceHelper.GetString("YouCanCallSessionFactoryManagerInitializeOnlyOnce"));
 
             DomainEvents.DomainEvents.AsyncDomainEventHandlerError += DomainEvents_AsyncDomainEventHandlerError;
             DomainEvents.DomainEvents.AsyncDomainEventHandlerExecuted += DomainEvents_AsyncDomainEventHandlerExecuted;
@@ -131,7 +132,7 @@ namespace LiteFx.Context.NHibernate
                 }
             }
 
-            throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
+            throw new InvalidOperationException(ResourceHelper.GetString("YouCantBeginATransactionWithoutAnActiveNHibernateSession"));
         }
 
 		public ITransaction BeginReadOnlyTransaction()
@@ -148,7 +149,7 @@ namespace LiteFx.Context.NHibernate
 				}
 			}
 
-			throw new InvalidOperationException(Resources.YouCantBeginATransactionWithoutAnActiveNHibernateSession);
+			throw new InvalidOperationException(ResourceHelper.GetString("YouCantBeginATransactionWithoutAnActiveNHibernateSession"));
 		}
 
 		public void SetReadOnlyOff() 
